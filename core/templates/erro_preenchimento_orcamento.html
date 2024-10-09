@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <body>
+        <form method="POST" action="{% url 'core:resultado_orcamento' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+        
+            {% if form.tamanho.errors %}
+                <div style="color: red;">
+                    {{ form.tamanho.errors }}
+                </div>
+            {% endif %}
+        
+            {% if form.tipo_residuo.errors %}
+                <div style="color: red;">
+                    {{ form.tipo_residuo.errors }}
+                </div>
+            {% endif %}
+        
+            {% if form.quantidade.errors %}
+                <div style="color: red;">
+                    {{ form.quantidade.errors }}
+                </div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+            <div style="color: red;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        
+            <button type="submit">Enviar</button>
+        </form>
+        
+        <a class="btn btn-warning" href="{% url 'core:orcamento' %}" role="button">Voltar</a>
+    </body>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+Descrição:
+1 Passo:
+************Usuário********************	
+	Digitar o endereço do local que ficará a caçamba, ou selecionar em algum mapa;
+	Especificar o tipo de entulho que será descartado;
+	Data para entrega e retirada da caçamba;
+	tamanho da caçamba;
+	Quantidade de caçamba;
+2 Passo:
+***********Aplicação*******************
+	Vai disponibilizar os transportadores cadastrados no sistema, dentro do raio de trabalho determinado por cada transportador;
+	Deve aparecer os nomes dos transportadores, preço do serviço, endereço e imagem do local e a distância da empresa até o local da obra;
+3 Passo:
+********** Usuário ********************
+	Selecionar um transportador ou sair do sistema;
+	Ao selecionar o transportador, o usuário deve fornecer seu telefone de contato e esse receberá uma mensagem, via whatsapp ou html, informando que entraremos em contato em breve para confirmar a entrega da caçamba;
+	
+********* Transportador ********************	
+	Um alerta irá aparecer na tela do transportador informando sobre o pedido de caçamba;
+	O pedido deverá ser cancelado ou aceito;
+	Se aceito, o transportador irá informar via app todos os passos da caçamba.Exemplo: pedido aceito, caçamba em deslocamento, caçamba entregue, caçamba retirada, caçamba descartada.
+	
+********** Aplicação ************************	
+	Ao confirmar o serviço, o aplicativo enviará uma mensagem ao usuário, via whatsapp ou aplicativo, ratificando a entrega da caçamba e 
+um link para que ele se cadastre e acompanhe o seu pedido;
+	
+********* Transportador **************************
+	Ao informar o descarte do entulho, o serviço 
+		
+Pontos importantes:
+	
+	Ter a opção do usuário acompanhar o pedido da caçamba até o local de descarte;
+	Ter um opção de reclamação ou sugestão;
+	ter a opção de cancelar o serviço;
+	
+	
+	
+	
+	
+	
+		
+	
+	
+	
+	

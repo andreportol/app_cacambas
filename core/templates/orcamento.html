@@ -1,0 +1,164 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br" class="h-100" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    
+    <title>Orçamento</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    {# My_css #}
+   
+    <link href="{% static 'css/cover_interno.css' %}" rel="stylesheet">
+
+     <!-- Custom styles for this template -->
+    <link href="{% static 'css/cover.css' %}" rel="stylesheet"> 
+  </head>
+  
+    <body class="d-flex h-100 text-bg-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </symbol>
+        </svg>
+      
+        <div class="container pt-3">
+            <form class="form-control border text-bg-dark p-3" method="post" action="{% url 'core:resultado_orcamento' %}">      
+                {% csrf_token %}
+                <h3 class="text-center">Consulta para Descarte de Entulho</h3>
+                <div class="row pt-3">
+                    <div class="col-lg-12">
+                        <div class="input-group mb-2 pt-3">
+                            <button class="btn btn-outline-secondary btn-lg text-warning border border-end-0 border-warning rounded " type="button">Tamanho</button>
+                            <select class="form-select" id="inputGroupSelectTamanho" name="tamanho" required>
+                                <option value="2">caçamba de 2 m³</option>
+                                <option value="3">caçamba de 3 m³</option>
+                                <option value="4">caçamba de 4 m³</option>
+                                <option value="5">caminhão de 5 m³</option>
+                                <option value="12">caminhão de 12 m³</option>
+                                <option value="25">caminhão de 25 m³</option>
+                                <option value="25_roll">Roll on roll off 25M³</option>
+                                <option value="32_roll">Roll on roll off 32M³</option>
+                                <option selected>Escolha</option>
+                            </select>
+                        </div> 
+                           
+                        <div class="col-lg-12 border border-warning rounded p-2">
+                            <h1 class="text-warning border-bottom border-warning fs-4">Resíduos</h1>
+                            <div class="form-check">
+                                <input name="tipo_residuo"class="form-check-input" type="radio" value="classe_A" id="flexCheck_A">
+                                <label class="form-check-label" for="flexCheck_A">
+                                    CLASSE A - Alvenarias, concreto, argamassas e solos.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_B" id="flexCheck_B">
+                                <label class="form-check-label" for="flexCheck_B">
+                                    CLASSE B - Restos de madeira, metal, plástico, papel, papelão, vidros.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input name="tipo_residuo"class="form-check-input" type="radio" value="classe_A/B" id="flexCheck_AB">
+                                <label class="form-check-label" for="flexCheck_AB">
+                                    CLASSE A/B - Resíduos com materiais classe A e classe B.
+                                </label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_C" id="flexCheck_C">
+                                <label class="form-check-label" for="flexCheck_C">
+                                    CLASSE C - Resíduos sem tecnologia para reciclagem (gesso e isopor).
+                                </label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_D" id="flexCheck_D">
+                                <label class="form-check-label" for="flexCheck_D">
+                                    CLASSE D - Resíduos perigosos, tais como tintas, solventes, óleos e outros, ou aqueles contaminados procedente de obras em clínicas radiológicas, hospitais, instalações industriais, etc..
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="input-group mb-3 pt-3">
+                                <button class="btn btn-outline-secondary btn-lg text-warning border border-warning rounded p-2" type="button">Quantidade</button>
+                                <select class="form-select" id="inputGroupQuantidade" name="quantidade" required>
+                                    <option value="1">1 - Uma</option>
+                                    <option value="2">2 - Duas</option>
+                                    <option value="3">3 - Três</option>
+                                    <option selected>Escolha</option>
+                                </select>
+                            </div> 
+                        </div>    
+                    
+                    
+                    <div class="row border border-warning rounded p-2">
+                        <h1 class="text-warning border-bottom border-warning fs-4">Datas</h1>
+                        <div class="col-lg-6 col-md-12 col-sm-12 pt-2">
+                            <label for="data_inicio" class="form-label fs-5 text-white">Data início:</label>
+                            <input name="data_inicio" id="data_inicio" min="" class="form-control" type="date" required>
+                        </div>
+                        
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <label class="form-label fs-5 text-white pt-2">Data Retirada:</label>
+                            <input name="data_retirada" id="data_retirada" min="" max="" class="form-control" type="date" required>
+                        </div>
+                    </div>    
+                    <div class="row border border-warning rounded p-2 mt-3">
+                        <div class="col-lg-12">
+                            <h1 class="text-warning border-bottom border-warning fs-4">Local da Caçamba</h1>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">                  
+                            <label for="cep">CEP</label>
+                            <input name="cep" id="cep" class="form-control pb-2 mb-2" placeholder="CEP" maxlength="9" required autocomplete="on">
+                        </div>
+                        
+                        <div class="col-lg-9 col-md-8">
+                            <label for="logradouro">Logradouro</label>
+                            <input name="logradouro" id="logradouro" class="form-control pb-2 mb-2 bg-secondary bg-gradient" placeholder="Logradouro" readonly required>                                                       
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <label for="numero">Número</label>
+                            <input name="numero" id="numero" class="form-control pb-2 mb-2" placeholder="Número" required>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <label for="bairro">Bairro</label>
+                            <input name="bairro" id="bairro" class="form-control pb-2 mb-2 bg-secondary bg-gradient" placeholder="Bairro" readonly required>
+                        </div>
+                                        
+                        <div class="col-lg-6 col-md-8">
+                            <label for="cidade">Cidade</label>
+                            <input name="cidade" id="cidade" class="form-control pb-2 mb-2 bg-secondary bg-gradient" placeholder="Cidade" readonly required>
+                        </div>
+                    </div>                
+                                        
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-end pt-5">
+                            <button class="btn btn-outline-warning text-warning mx-2" type="submit">Consultar</button>
+                            <a class="btn btn-warning" href="{% url 'core:index' %}" role="button">Voltar</a>
+                        </div>
+                    </div>         
+                </div>
+            </form>
+        </div>  
+        <!-- Script formatação do Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        {# Meus Scripts #}
+        <!-- Script para formatação da data de inicio e retirada da caçamba -->
+        <script src="{% static 'js/formata_data.js' %}"></script> 
+        <!-- Script para consultar o ViaCEP -->
+        <script src="{% static 'js/consulta_cep.js' %}"></script>   
+    </body>
+</html>

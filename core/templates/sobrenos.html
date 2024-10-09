@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <header class="mb-auto">
+    <div>     
+      <h3 class="float-md-start mb-0">Entulho Fácil</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link fw-bold py-1 px-0" aria-current="page" href="{% url 'core:index' %}">Início</a>
+          <a class="nav-link fw-bold py-1 px-0 active" href="{% url 'core:sobrenos' %}">Sobre Nós</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:contato' %}">Contato</a>
+        </nav>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+<h1>Sobre a Entulho Fácil.</h1>
+    <p class="lead">A Entulho Fácil é uma empresa pioneira em Campo Grande - MS, dedicada a selecionar os melhores transportadores de entulho da construção civil. Nosso objetivo é facilitar o processo de solicitação de caçambas, garantindo que nossos clientes tenham acesso a opções seguras, práticas e eficientes.</p>
+    <p class="lead">Comprometida com a legislação local, a Entulho Fácil trabalha exclusivamente com transportadores devidamente registrados na prefeitura de Campo Grande, respeitando todos os decretos municipais relacionados ao descarte responsável de entulhos.</p>
+    <p class="lead">Assim, asseguramos que todo o processo seja realizado de forma legal e sustentável.
+        Por meio do nosso aplicativo, oferecemos aos usuários a liberdade de escolha, apresentando as melhores opções de preço, tamanho de caçamba e tipos de materiais descartáveis.</p> 
+    <p class="lead">Nossa missão é tornar o descarte de entulhos uma experiência simples e acessível, sempre com a responsabilidade ambiental em mente. 
+        Com a Entulho Fácil, você tem a garantia de um serviço de qualidade, alinhado às melhores práticas do setor.</p> 
+    <p class="lead">
+        <a href="{% url 'core:index' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Voltar</a>
+    </p>
+{% endblock %}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <header class="mb-auto">
+    <div>     
+      <h3 class="float-md-start mb-0">Entulho Fácil</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{% url 'core:index' %}">Início</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:sobrenos' %}">Sobre Nós</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:contato' %}">Contato</a>
+        </nav>
+    </div>
+  </header>
+{% endblock %}
+    
+{% block content %}
+    <h1>Entulho Fácil.</h1>
+    <p class="lead">Na nossa empresa, facilitamos a busca por transportadores de entulho de forma rápida, segura e econômica. Estamos aqui para tornar o seu processo mais simples e eficiente.</p>
+    <p class="lead">
+        <a href="{% url 'core:orcamento' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Solicitar</a>
+    </p>
+{% endblock %}
+    

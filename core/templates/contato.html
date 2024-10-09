@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <header class="mb-auto">
+    <div>     
+      <h3 class="float-md-start mb-0">Entulho Fácil</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link fw-bold py-1 px-0" aria-current="page" href="{% url 'core:index' %}">Início</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:sobrenos' %}">Sobre Nós</a>
+          <a class="nav-link fw-bold py-1 px-0 active" href="{% url 'core:contato' %}">Contato</a>
+        </nav>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+<h1 class="pb-5">Entulho Fácil.</h1>
+<button type="button" class="btn btn-success">Whatsapp</button>
+<button type="button" class="btn btn-primary">Telefone</button>
+<button type="button" class="btn btn-warning text-white">E-mail</button>
+<p class="lead pt-5">
+    <a href="{% url 'core:index' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Voltar</a>
+</p>
+{% endblock %}
