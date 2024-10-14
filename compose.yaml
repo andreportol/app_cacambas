@@ -1,0 +1,76 @@
+# Nomeando a rede
+networks:
+  nwcacamba:
+    driver: bridge
+# Nomeando o volume
+volumes:
+  pgdata:
+
+services:
+  nginx: # Nome do serviço
+    image: andreportol/nginx_cacamba:v1
+    ports:
+      - "8080:80"
+    build: 
+      dockerfile: ./docker/nginx.dockerfile
+      context: . # local onde vai ser construída a imagem
+    container_name: nginx_cacamba # nome do container
+    networks:
+      - nwcacamba
+    depends_on:
+      - app_cacamba_1
+      - app_cacamba_2
+      - app_cacamba_3
+  
+  db_postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    networks:
+      - nwcacamba
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    container_name: db_postgres_cacamba
+    
+  app_cacamba_1:
+    build:
+      dockerfile: ./docker/app.dockerfile
+      context: .
+    image: andreportol/app_cacamba:v1
+    container_name: app_cacamba_1
+    ports:
+      - "8000:8000"
+    networks:
+      - nwcacamba
+    depends_on:
+      - db_postgres
+
+  app_cacamba_2:
+    build:
+      dockerfile: ./docker/app.dockerfile
+      context: .
+    image: andreportol/app_cacamba:v1
+    container_name: app_cacamba_2
+    ports:
+      - "8000:8000"
+    networks:
+      - nwcacamba
+    depends_on:
+      - db_postgres
+  
+  app_cacamba_3:
+    build:
+      dockerfile: ./docker/app.dockerfile
+      context: .
+    image: andreportol/app_cacamba:v1
+    container_name: app_cacamba_3
+    ports:
+      - "8000:8000"
+    networks:
+      - nwcacamba
+    depends_on:
+      - db_postgres

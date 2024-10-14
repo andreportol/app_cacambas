@@ -20,7 +20,7 @@ RUN pip install --upgrade pip && \
 RUN python manage.py collectstatic --noinput
 
 # Definir o comando de entrada (ENTRYPOINT) fora do RUN
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8000", "ControleDocumentos.wsgi"]
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8000", "projeto_cacamba.wsgi"]
 
 # Expor a porta 8000
 EXPOSE 8000
