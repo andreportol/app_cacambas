@@ -8,12 +8,12 @@ volumes:
 
 services:
   nginx: # Nome do serviço
-    image: andreportol/nginx_cacamba:v1
+    image: andreportol/nginx_cacamba:v1 # nome da imagem caso não exista
     ports:
       - "80:80"
     build: 
       dockerfile: ./docker/nginx.dockerfile
-      context: . # local onde vai ser construída a imagem
+      context: . # Especifica o contexto de construção. O Docker precisa saber onde encontrar os arquivos necessários para construir a imagem. 
     container_name: nginx_cacamba # nome do container
     networks:
       - nwcacamba
@@ -43,7 +43,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_1
     ports:
-      - "8000:8000"
+      - "8000"
     networks:
       - nwcacamba
     depends_on:
@@ -56,7 +56,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_2
     ports:
-      - "8000:8000"
+      - "8000"
     networks:
       - nwcacamba
     depends_on:
@@ -69,7 +69,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_3
     ports:
-      - "8000:8000"
+      - "8000"
     networks:
       - nwcacamba
     depends_on:
