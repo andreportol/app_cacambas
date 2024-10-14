@@ -10,7 +10,7 @@ services:
   nginx: # Nome do serviço
     image: andreportol/nginx_cacamba:v1
     ports:
-      - "8080:80"
+      - "80:80"
     build: 
       dockerfile: ./docker/nginx.dockerfile
       context: . # local onde vai ser construída a imagem
