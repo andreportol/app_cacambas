@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models # type: ignore
 
 # Create your models here.
 class Base(models.Model):
@@ -60,7 +60,7 @@ class Transportador(Base):
     nome_fantasia = models.CharField(verbose_name='Nome transportador', max_length=150, unique=True)
     telefone_fixo = models.CharField(verbose_name='Telefone Fixo', max_length=16, blank=True)
     telefone_extra = models.CharField(verbose_name='Telefone Extra', max_length=16, blank=True)
-    telefone_celular = models.CharField(verbose_name='Telefone celular', max_length=10, blank=True)
+    telefone_celular = models.CharField(verbose_name='Telefone celular', max_length=16, blank=True)
     email = models.CharField(verbose_name='E-mail', max_length=150, blank=False)
     # Endereço
     logradouro = models.CharField(verbose_name='Logradouro', max_length=200)

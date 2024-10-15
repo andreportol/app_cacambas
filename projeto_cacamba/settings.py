@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 from decouple import config # type: ignore
 
+# Variável de ambiente para identificar o ambiente
+ENVIRONMENT = config('ENVIRONMENT', default='development')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,18 +80,30 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATABASE_HOST'),  # Default para localhost
-        'PORT': config('DATABASE_PORT'), 
+# Configuração para produção (ou ambiente principal)
+if ENVIRONMENT == "production":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DATABASE_NAME'),
+            'USER': config('DATABASE_USER'),
+            'PASSWORD': config('DATABASE_PASSWORD'),
+            'HOST': config('DATABASE_HOST'),  
+            'PORT': config('DATABASE_PORT') 
+        }
     }
-}
-
-
+else:
+# Banco para testes para realizar as migrações
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('TEST_DATABASE_NAME'),
+            'USER': config('TEST_DATABASE_USER'),
+            'PASSWORD': config('TEST_DATABASE_PASSWORD'),
+            'HOST': config('TEST_DATABASE_HOST'),
+            'PORT': config('TEST_DATABASE_PORT') 
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
