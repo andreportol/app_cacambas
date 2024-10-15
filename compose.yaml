@@ -43,7 +43,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_1
     ports:
-      - "8000"
+      - "8001:8000"
     networks:
       - nwcacamba
     depends_on:
@@ -56,7 +56,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_2
     ports:
-      - "8000"
+      - "8002:8000"
     networks:
       - nwcacamba
     depends_on:
@@ -69,7 +69,7 @@ services:
     image: andreportol/app_cacamba:v1
     container_name: app_cacamba_3
     ports:
-      - "8000"
+      - "8003:8000"
     networks:
       - nwcacamba
     depends_on:
