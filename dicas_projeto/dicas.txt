@@ -1,0 +1,41 @@
+Durante a fase de desenvolvimento, foi criado dois banco de dados.
+Um banco de dados é para rodar no container e outro para rodar na máquina local.
+O banco de dados local, serve para realizarmos os testes, pois estou atualizando constantemente a aplicação
+e através do servidor do python (server) eu consigo ver as falhas do projeto.
+
+Se utilizasse o docker durante a fase de desenvolvimento, a construção de imagens demoraria muito, 
+e possivelmente não teria o log dos erros.
+
+Para isso utilizei o python-decouple e o arquivo .env para realizar a seleção do banco de dados e esconder as variáveis
+sensíveis. 
+
+para subir a aplicação em um ambiente de produção, é necessário alterar o arquivo settings.py, nele
+será necessário deletar as linhas onde estão o banco de dados local host, e alterar também o arquivo compose.yaml:
+
+Alterações no compose.yaml
+services:
+  nginx: # Nome do serviço
+    ports:
+      - "82:80"  para  "80:80"
+  db_postgres:
+         ports:
+      - "5434:5432" para "5432:5432"
+Alterações no settings:
+ deletar: 
+    # Variável criada para seleção do banco de dados
+    ENVIRONMENT=config('ENVIRONMENT')
+ deletar:
+    if ENVIRONMENT == 'production':
+ e deletar:
+
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': config('TEST_DATABASE_NAME'),
+                'USER': config('TEST_DATABASE_USER'),
+                'PASSWORD': config('TEST_DATABASE_PASSWORD'),
+                'HOST': config('TEST_DATABASE_HOST'),  
+                'PORT': config('TEST_DATABASE_PORT') 
+            }
+        }

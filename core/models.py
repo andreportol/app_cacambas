@@ -1,4 +1,4 @@
-from django.db import models # type: ignore
+from django.db import models 
 
 # Create your models here.
 class Base(models.Model):
@@ -55,6 +55,22 @@ class Bairros_CG(models.Model):
     def __str__(self):
         return self.nome_bairro
 
+class Produto(models.Model):
+    NOME_PRODUTO_CHOICES = [
+        ('cacamba_2m', 'Caçamba 2m³'),
+        ('cacamba_3m', 'Caçamba 3m³'),
+        ('cacamba_4m', 'Caçamba 4m³'),
+        ('caminhao_5m', 'Caminhão 5m³'),
+        ('caminhao_12m', 'Caminhão 12m³'),
+        ('caminhao_25m', 'Caminhão 25m³'),
+        ('roll_roll_25', 'Roll Roll 25m³'),
+        ('roll_roll_32', 'Roll Roll 32m³'),
+    ]
+    nome = models.CharField(max_length=50, choices=NOME_PRODUTO_CHOICES, unique=True)
+
+    def __str__(self):
+        return self.get_nome_display()
+
 class Transportador(Base):
     # Contato
     nome_fantasia = models.CharField(verbose_name='Nome transportador', max_length=150, unique=True)
@@ -84,6 +100,8 @@ class Transportador(Base):
     # Serviços
     qtd_cacambas = models.IntegerField(verbose_name='Quantidade caçambas')
     regioes_trabalho = models.ManyToManyField(Regiao_CG, verbose_name='Regiões de Trabalho')
+    #produtos
+    produtos = models.ManyToManyField(Produto, through='TransportadorProduto')
     
     class Meta:
         verbose_name = 'Transportador'
@@ -92,7 +110,15 @@ class Transportador(Base):
     def __str__(self):
         return self.nome_fantasia
 
+# Uma classe intermediaria que serve para que cada transportador tenha um preço distinto por produto;
+class TransportadorProduto(models.Model):
+    #Transportador entre aspas significa que a classe Transportadora pode não ter sido criada ainda, ou seja, pode ser criada depois dessa classe.
+    transportador = models.ForeignKey('Transportador', on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    preco = models.DecimalField(max_digits=6, decimal_places=2, null=True)
 
+    def __str__(self):
+        return f"{self.transportador.nome_fantasia} - {self.produto.get_nome_display()} - R${self.preco}"
 
 
 
