@@ -10,7 +10,7 @@ services:
   nginx: # Nome do serviço
     image: andreportol/nginx_cacamba:v1 # nome da imagem caso não exista
     ports:
-      - "80:80"
+      - "82:80"
     build: 
       dockerfile: ./docker/nginx.dockerfile
       context: . # Especifica o contexto de construção. O Docker precisa saber onde encontrar os arquivos necessários para construir a imagem. 
@@ -29,7 +29,7 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     networks:
       - nwcacamba
     volumes:

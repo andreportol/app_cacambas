@@ -14,9 +14,6 @@ import os
 from pathlib import Path
 from decouple import config # type: ignore
 
-# Variável de ambiente para identificar o ambiente
-ENVIRONMENT = config('ENVIRONMENT', default='development')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-or@sp_*ei5q5n#higgnv%=^e&r%3tam-zvtimnoq3#+#0qm45b'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,29 +78,17 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # Configuração para produção (ou ambiente principal)
-if ENVIRONMENT == "production":
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DATABASE_NAME'),
-            'USER': config('DATABASE_USER'),
-            'PASSWORD': config('DATABASE_PASSWORD'),
-            'HOST': config('DATABASE_HOST'),  
-            'PORT': config('DATABASE_PORT') 
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),  
+        'PORT': config('DATABASE_PORT') 
     }
-else:
-# Banco para testes para realizar as migrações
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('TEST_DATABASE_NAME'),
-            'USER': config('TEST_DATABASE_USER'),
-            'PASSWORD': config('TEST_DATABASE_PASSWORD'),
-            'HOST': config('TEST_DATABASE_HOST'),
-            'PORT': config('TEST_DATABASE_PORT') 
-        }
-    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
