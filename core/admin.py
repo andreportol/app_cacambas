@@ -20,7 +20,7 @@ class TransportadorAdmin(admin.ModelAdmin):
     list_filter = ('regiao', 'is_ativo')
     readonly_fields = ('criado', 'modificado')
     inlines = [TransportadorProdutoInline]  # Adiciona o inline para gerenciar os produtos relacionados
-
+    ordering=['-is_ativo','nome_fantasia']  # Na tela admin mostra primeiro os ativos e em ordem alfabética
     def mostrar_regioes_trabalho(self, obj):
         return ", ".join([str(regiao) for regiao in obj.regioes_trabalho.all()])
 
@@ -32,6 +32,8 @@ class TransportadorAdmin(admin.ModelAdmin):
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('nome',)
     search_fields = ('nome',)
+    # ordena por ordem alfabética
+    ordering = ['nome']
 
 @admin.register(Regiao_CG)
 class Regiao_CGAdmin(admin.ModelAdmin):
@@ -42,8 +44,8 @@ class Regiao_CGAdmin(admin.ModelAdmin):
 
 @admin.register(Bairros_CG)
 class Bairros_CGAdmin(admin.ModelAdmin):
-    list_display = ('nome_regiao_regioes','nome_bairro')
-    search_fields = ('nome_bairro',)
+    list_display = ('nome_bairro','nome_regiao_regioes')
+    search_fields = ('nome_bairro','nome_regiao_regioes')
     list_filter = ('nome_regiao_regioes',)
     # ordena por ordem alfabética
-    ordering = ['nome_regiao_regioes']
+    ordering = ['nome_bairro']
