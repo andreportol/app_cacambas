@@ -98,7 +98,6 @@ class Transportador(Base):
     # Status
     is_ativo = models.BooleanField(verbose_name='Ativo',default=False)
     # Serviços
-    qtd_cacambas = models.IntegerField(verbose_name='Quantidade caçambas')
     regioes_trabalho = models.ManyToManyField(Regiao_CG, verbose_name='Regiões de Trabalho')
     #produtos
     produtos = models.ManyToManyField(Produto, through='TransportadorProduto')
@@ -116,6 +115,7 @@ class TransportadorProduto(models.Model):
     transportador = models.ForeignKey('Transportador', on_delete=models.CASCADE)
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     preco = models.DecimalField(max_digits=6, decimal_places=2, null=True)
+    qtd_produto = models.IntegerField(verbose_name='Quantidade do produto', null=True)
 
     def __str__(self):
         return f"{self.transportador.nome_fantasia} - {self.produto.get_nome_display()} - R${self.preco}"
