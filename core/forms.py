@@ -4,16 +4,16 @@ from django.core.exceptions import ValidationError
 
 # formulário de validação do template orcamento.html
 class ResultadoOrcamentoForm(forms.Form):
-    TAMANHO_CHOICES = [
+    PRODUTO_CHOICES = [
         ('', 'Escolha'),  # Valor inválido para seleção padrão
-        ('2', 'caçamba de 2 m³'),
-        ('3', 'caçamba de 3 m³'),
-        ('4', 'caçamba de 4 m³'),
-        ('5', 'caminhão de 5 m³'),
-        ('12', 'caminhão de 12 m³'),
-        ('25', 'caminhão de 25 m³'),
-        ('25_roll', 'Roll on roll off 25 m³'),
-        ('32_roll', 'Roll on roll off 32 m³'),
+        ('cacamba_2m', 'Caçamba 2m³'),
+        ('cacamba_3m', 'Caçamba 3m³'),
+        ('cacamba_4m', 'Caçamba 4m³'),
+        ('caminhao_5m', 'Caminhão 5m³'),
+        ('caminhao_12m', 'Caminhão 12m³'),
+        ('caminhao_25m', 'Caminhão 25m³'),
+        ('roll_roll_25', 'Roll Roll 25m³'),
+        ('roll_roll_32', 'Roll Roll 32m³'),
     ]
 
     TIPO_RESIDUO_CHOICES = [
@@ -33,16 +33,16 @@ class ResultadoOrcamentoForm(forms.Form):
     ]
 
 
-    tamanho = forms.ChoiceField(choices=TAMANHO_CHOICES, required=True)
+    produto = forms.ChoiceField(choices=PRODUTO_CHOICES, required=True)
     tipo_residuo = forms.ChoiceField(choices=TIPO_RESIDUO_CHOICES, required=True)
     quantidade = forms.ChoiceField(choices=QUANTIDADE_CHOICES, required=True)
     
-    # função de validação do tamanho
-    def clean_tamanho(self):
-        tamanho = self.cleaned_data.get('tamanho')
-        if not tamanho or tamanho not in ['2','3','4', '5', '12','25','25_roll','32_roll']:
-            raise forms.ValidationError("Por favor, selecione um tamanho válido.")
-        return tamanho
+    # função de validação do produto
+    def clean_produto(self):
+        produto = self.cleaned_data.get('produto')
+        if not produto or produto not in ['cacamba_2m','cacamba_3m','cacamba_4m', 'caminhao_5m', 'caminhao_12m','caminhao_25m','roll_roll_25','roll_roll_32']:
+            raise forms.ValidationError("Por favor, selecione um produto válido.")
+        return produto
     
     # função de validação do tipo de resíduo
     def clean_tipo_residuo(self):

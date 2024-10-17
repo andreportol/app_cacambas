@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .forms import ResultadoOrcamentoForm
-from geopy.geocoders import Nominatim
-from pprint import pprint
-import math
+from .models import Regiao_CG, Transportador, TransportadorProduto, Produto
 
 # Create your views here.
 class IndexTemplateView(TemplateView):
@@ -20,13 +18,13 @@ class OrcamentoForm(TemplateView):
 
 from django.shortcuts import render
 
-def resultado_orcamento(request):
+def resultado_orcamento_1(request):
     if request.method == 'POST':
         # forms.py -> formulario de validação dos dados
         form = ResultadoOrcamentoForm(request.POST)
         if form.is_valid():
             # Recupera os dados validados do formulário
-            tamanho = form.cleaned_data.get('tamanho')
+            produto = form.cleaned_data.get('produto')
             tipo_residuo = form.cleaned_data.get('tipo_residuo')
             quantidade = form.cleaned_data.get('quantidade')
             data_inicio = form.cleaned_data.get('data_inicio')
@@ -41,7 +39,7 @@ def resultado_orcamento(request):
 
             # Passa os dados para o template
             context = {
-                'tamanho': tamanho,
+                'produto': produto,
                 'tipo_residuo': tipo_residuo,
                 'quantidade': quantidade,
                 'data_inicio': data_inicio,
@@ -60,48 +58,70 @@ def resultado_orcamento(request):
         form = ResultadoOrcamentoForm()
     return render(request, 'erro_preenchimento_orcamento.html', {'form': form})
 
-def geolocalizacao(logradouro, numero, cidade, pais):
-    # Instantiate a new Nominatim client
-    app = Nominatim(user_agent="my_app")
+from django.shortcuts import render
+from .models import Bairros_CG, Regiao_CG, Transportador
 
-    # Get location raw data from the user
-    your_loc = f'{numero} {logradouro},{cidade}-MS,{pais}'
-    location = app.geocode(your_loc)
-    latitude = location.latitude
-    longitude = location.longitude
-    # Print raw data
-    pprint(f'latitude = {latitude} {longitude}')
+def resultado_orcamento(request):
+    if request.method == 'POST':
+        form = ResultadoOrcamentoForm(request.POST)
+        if form.is_valid():
+            # Filtra o bairro do usuário que solicitou a caçamba
+            bairro_usuario = form.cleaned_data.get('bairro')
+                       
+            # Verifica a qual região de Campo Grande pertence o bairro
+            try:
+                '''
+                    nome_bairro__icontains=bairro_usuario:
+                      -  O __icontains faz uma comparação parcial e insensível a maiúsculas/minúsculas.
+                      -  Isso significa que se o usuário digitar "centro" ou apenas parte do nome do bairro, como "cen", o Django ainda encontrará o bairro "Centro". Além disso, não faz distinção entre letras maiúsculas e minúsculas.
+                    nome_bairro=bairro_usuario:
+                      -  Essa comparação exige que o valor exato do campo nome_bairro no banco de dados seja igual
+                        ao valor de bairro_usuario.
+                      -  Ou seja, se o usuário digitar "Centro", o sistema só encontrará um bairro chamado exatamente "Centro". Se houver diferenças de maiúsculas e minúsculas ou espaços extras, a busca falhará.
+                '''
+                bairro = Bairros_CG.objects.get(nome_bairro__icontains=bairro_usuario)
+                regiao_selecionada = bairro.nome_regiao_regioes
+                
+                # Agora buscamos os transportadores que trabalham na região e estão ativos
+                transportadores = Transportador.objects.filter(regioes_trabalho=regiao_selecionada, is_ativo=True)
+                          
+                # Buscando o preço do produto por transportador
+                produto_desejado = form.cleaned_data.get('produto')
+                produto = Produto.objects.get(nome=produto_desejado)  # Aqui você busca o objeto do produto pelo nome
+                
+                # Lista para armazenar transportadores que têm o produto desejado
+                transportadores_com_produto = []
+                
+                for t in transportadores:
+                    # Verifica se o transportador possui o produto desejado
+                    if t.produtos.filter(nome=produto_desejado).exists():
+                        # Encontra o preço do produto para o transportador
+                        transportador_produto = TransportadorProduto.objects.get(transportador=t, produto__nome=produto_desejado)
+                        
+                        # Adiciona o transportador e o preço à lista
+                        transportadores_com_produto.append({
+                            'transportador': t.nome_fantasia,  # Nome do transportador
+                            'preco': transportador_produto.preco  # Preço do produto
+                        })
+
+                # Ordena a lista de transportadores pelo preço (em ordem crescente)
+                transportadores_com_produto = sorted(transportadores_com_produto, key=lambda x: x['preco'])
+
+                # Renderiza os transportadores no template (aqui você poderia passar os transportadores para o template)
+                return render(request, 'resultado_orcamento.html', {
+                    'form': form,
+                    'transportadores_com_produto': transportadores_com_produto,
+                    'regiao_selecionada': regiao_selecionada,
+                    'produto_desejado' : produto,
+                })
+            except Bairros_CG.DoesNotExist:
+                # Se o bairro não for encontrado, exibe uma mensagem de erro
+                print("Bairro não encontrado.")
+                return render(request, 'resultado_orcamento.html', {
+                    'form': form,
+                    'error': 'Bairro não encontrado.',
+                })
     
-def calcular_distancia_haversine(lat1, lon1, lat2, lon2):
-    # Converter latitude e longitude de graus para radianos
-    lat1 = math.radians(lat1)
-    lon1 = math.radians(lon1)
-    lat2 = math.radians(lat2)
-    lon2 = math.radians(lon2)
-
-    # Diferenças das coordenadas
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
-
-    # Fórmula de Haversine
-    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    # Raio da Terra em quilômetros (use 6371 para quilômetros, 3956 para milhas)
-    r = 6371
-
-    # Distância em quilômetros
-    distance = r * c
-    return distance
-
-# Latitude e longitude do ponto inicial (por exemplo, -20.5098492, -54.6612137)
-lat1 = -20.5098492
-lon1 = -54.6612137
-
-# Latitude e longitude de um segundo ponto (exemplo)
-lat2 = -23.550520
-lon2 = -46.633308
-
-# Calcular a distância
-distancia = calcular_distancia_haversine(lat1, lon1, lat2, lon2)
-print(f"A distância é de {distancia:.2f} km")
+    # Se não for POST, renderiza o formulário
+    form = ResultadoOrcamentoForm()
+    return render(request, 'resultado_orcamento.html', {'form': form})
