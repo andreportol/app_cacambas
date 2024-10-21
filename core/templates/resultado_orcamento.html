@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="py-3 h2 text-white fw-bold text-decoration-underline">Resultado do Orçamento</h2>
-<p class="text-start text-warning text-decoration-underline">Produto: {{produto_desejado }}</p>
+<h2 class="py-3 h2 text-white Semibold weight text-decoration-underline">Resultado do Orçamento</h2>
+<div class="d-flex justify-content-start border border-2 border-white rounded mb-2 pt-2 px-2">
+    <div class="row align-items-center">
+                                                                                                {# &nbsp; -> Non-breaking space#}
+        <p class="text-start text-white"><strong class="text-decoration-underline">Produto:</strong>&nbsp;{{produto_desejado }}</p>
+        <p class="text-start text-white"><strong class="text-decoration-underline">Quantidade:</strong>&nbsp;{{quantidade_desejada}} unidades</p>
+    </div>    
+</div>
+
 <div class="border border-white border-2 rounded">
     {% if transportadores_com_produto %}
         <!-- Adicione a classe 'table-responsive' para responsividade -->
@@ -11,7 +18,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Transportador</th>
-                        <th scope="col">Preço</th>
+                        <th scope="col">Valor total</th>
                         <th scope="col">Selecione</th>
                     </tr>
                 </thead>

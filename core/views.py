@@ -92,6 +92,10 @@ def resultado_orcamento(request):
                 # Lista para armazenar transportadores que têm o produto desejado
                 transportadores_com_produto = []
                 
+                # Quantidade de produto selecionado
+                quantidade_desejada = form.cleaned_data.get('quantidade')
+                quantidade_desejada = int(quantidade_desejada)
+                
                 for t in transportadores:
                     # Verifica se o transportador possui o produto desejado
                     if t.produtos.filter(nome=produto_desejado).exists():
@@ -101,7 +105,7 @@ def resultado_orcamento(request):
                         # Adiciona o transportador e o preço à lista
                         transportadores_com_produto.append({
                             'transportador': t.nome_fantasia,  # Nome do transportador
-                            'preco': transportador_produto.preco  # Preço do produto
+                            'preco': transportador_produto.preco * quantidade_desejada # Preço do produto
                         })
 
                 # Ordena a lista de transportadores pelo preço (em ordem crescente)
@@ -113,6 +117,7 @@ def resultado_orcamento(request):
                     'transportadores_com_produto': transportadores_com_produto,
                     'regiao_selecionada': regiao_selecionada,
                     'produto_desejado' : produto,
+                    'quantidade_desejada' : quantidade_desejada,
                 })
             except Bairros_CG.DoesNotExist:
                 # Se o bairro não for encontrado, exibe uma mensagem de erro
