@@ -10,20 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os
+import os , dj_database_url
 from pathlib import Path
 from decouple import config 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.paht.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-# Variável criada para seleção do banco de dados
-ENVIRONMENT=config('ENVIRONMENT')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,29 +77,10 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-if ENVIRONMENT == 'production':
     # Configuração para produção (ou ambiente principal)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DATABASE_NAME'),
-            'USER': config('DATABASE_USER'),
-            'PASSWORD': config('DATABASE_PASSWORD'),
-            'HOST': config('DATABASE_HOST'),  
-            'PORT': config('DATABASE_PORT') 
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('TEST_DATABASE_NAME'),
-            'USER': config('TEST_DATABASE_USER'),
-            'PASSWORD': config('TEST_DATABASE_PASSWORD'),
-            'HOST': config('TEST_DATABASE_HOST'),  
-            'PORT': config('TEST_DATABASE_PORT') 
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASES_URL'),conn_max_age=600),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -134,6 +115,7 @@ USE_L10N = True # serve para deixar o formato da data em 'd/m/Y'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+LANGUAGE_CODE='pt-br'
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -143,3 +125,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGOUT_REDIRECT_URL = 'index'

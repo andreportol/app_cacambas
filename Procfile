@@ -1,0 +1,1 @@
+web : gunicorn projeto_cacamba.wsgi --log-file -

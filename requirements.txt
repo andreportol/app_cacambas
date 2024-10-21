@@ -2,14 +2,11 @@ asgiref==3.8.1
 coverage==7.6.1
 Django==5.1.2
 django-stdimage==5.0.1
-geographiclib==2.0
-geopy==2.4.1
 gunicorn==23.0.0
-model-mommy==2.0.0
 packaging==24.1
-pillow==10.4.0
+Pillow
 progressbar2==3.43.1
-psycopg2-binary==2.9.9
+psycopg2-binary
 python-decouple==3.8
 python-utils==2.3.0
 pytz==2019.2
