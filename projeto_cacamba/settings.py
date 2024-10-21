@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
     # Configuração para produção (ou ambiente principal)
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASES_URL'),conn_max_age=600),
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),conn_max_age=600),
 }
 
 # Password validation
