@@ -17,7 +17,7 @@ from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
     # Configuração para produção (ou ambiente principal)
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),conn_max_age=600),
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age = 600)
 }
 
 # Password validation
@@ -113,6 +113,7 @@ USE_I18N = True
 
 USE_L10N = True # serve para deixar o formato da data em 'd/m/Y'
 
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
