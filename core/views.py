@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .forms import ResultadoOrcamentoForm
-from .models import Regiao_CG, Transportador, TransportadorProduto, Produto
+from .models import TransportadorProduto, Produto, Bairros_CG, Transportador
+from django.shortcuts import render
+from django.contrib import messages
 
 # Create your views here.
 class IndexTemplateView(TemplateView):
@@ -17,49 +19,6 @@ class OrcamentoForm(TemplateView):
     template_name = 'orcamento.html'
 
 from django.shortcuts import render
-
-def resultado_orcamento_1(request):
-    if request.method == 'POST':
-        # forms.py -> formulario de validação dos dados
-        form = ResultadoOrcamentoForm(request.POST)
-        if form.is_valid():
-            # Recupera os dados validados do formulário
-            produto = form.cleaned_data.get('produto')
-            tipo_residuo = form.cleaned_data.get('tipo_residuo')
-            quantidade = form.cleaned_data.get('quantidade')
-            data_inicio = form.cleaned_data.get('data_inicio')
-            data_retirada = form.cleaned_data.get('data_retirada')
-            cep = form.cleaned_data.get('cep')
-            logradouro = form.cleaned_data.get('logradouro')
-            numero = form.cleaned_data.get('numero')
-            bairro = form.cleaned_data.get('bairro')
-            cidade = form.cleaned_data.get('cidade')
-            # método para georeferenciar o endereço
-            #geolocalizacao(logradouro, numero, cidade='Campo Grande', pais='Brasil')
-
-            # Passa os dados para o template
-            context = {
-                'produto': produto,
-                'tipo_residuo': tipo_residuo,
-                'quantidade': quantidade,
-                'data_inicio': data_inicio,
-                'data_retirada': data_retirada,
-                'cep': cep,
-                'logradouro': logradouro,
-                'numero': numero,
-                'bairro': bairro,
-                'cidade': cidade
-            }
-            return render(request, 'resultado_orcamento.html', context)
-        else:
-            # Se o formulário for inválido, ele exibirá os erros no template de erro_preenchimento_orcamento
-            return render(request, 'erro_preenchimento_orcamento.html', {'form': form})
-    else:
-        form = ResultadoOrcamentoForm()
-    return render(request, 'erro_preenchimento_orcamento.html', {'form': form})
-
-from django.shortcuts import render
-from .models import Bairros_CG, Regiao_CG, Transportador
 
 def resultado_orcamento(request):
     if request.method == 'POST':
@@ -92,9 +51,12 @@ def resultado_orcamento(request):
                 # Lista para armazenar transportadores que têm o produto desejado
                 transportadores_com_produto = []
                 
-                # Quantidade de produto selecionado
+                # Buscando a quantidade de produto selecionado
                 quantidade_desejada = form.cleaned_data.get('quantidade')
                 quantidade_desejada = int(quantidade_desejada)
+                
+                # Buscando o tipo de resíduo selecionado
+                tipo_entulho = form.cleaned_data.get('tipo_residuo')
                 
                 for t in transportadores:
                     # Verifica se o transportador possui o produto desejado
@@ -118,15 +80,28 @@ def resultado_orcamento(request):
                     'regiao_selecionada': regiao_selecionada,
                     'produto_desejado' : produto,
                     'quantidade_desejada' : quantidade_desejada,
+                    'tipo_entulho' : tipo_entulho,
                 })
             except Bairros_CG.DoesNotExist:
                 # Se o bairro não for encontrado, exibe uma mensagem de erro
-                print("Bairro não encontrado.")
-                return render(request, 'resultado_orcamento.html', {
-                    'form': form,
-                    'error': 'Bairro não encontrado.',
+                # Adicione uma mensagem de erro
+                messages.error(request, 'Ocorreu um erro!')
+                # buscando informações de form.py
+                logradouro = form.cleaned_data.get('logradouro')               
+                numero = form.cleaned_data.get('numero') 
+                bairro = form.cleaned_data.get('bairro') 
+                print(logradouro)
+                print(numero)
+                print(bairro)
+                return render(request, 'regiao_nao_encontrado.html', {                  
+                    'error': 'Bairro não cadastrado!',
+                    'logradouro': logradouro,
+                    'numero' : numero,
+                    'bairro': bairro,
                 })
     
     # Se não for POST, renderiza o formulário
     form = ResultadoOrcamentoForm()
-    return render(request, 'resultado_orcamento.html', {'form': form})
+    return render(request, 'resultado_orcamento.html', 
+                {'form': form,
+                 })

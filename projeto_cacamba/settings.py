@@ -25,12 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
+#SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+#DEBUG = True
 
 ALLOWED_HOSTS = ['entulhofacil.up.railway.app']
-
+#ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app']
 
 
@@ -82,10 +83,22 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
     # Configuração para produção (ou ambiente principal)
+
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age = 600),
 }
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('TEST_DATABASE_NAME'),
+        'USER': config('TEST_DATABASE_USER'),
+        'PASSWORD': config('TEST_DATABASE_PASSWORD'),
+        'HOST': config('TEST_DATABASE_HOST'),
+        'PORT': config('TEST_DATABASE_PORT', default='5432'),  # Padrão é vazio
+    }
+}
+'''
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
