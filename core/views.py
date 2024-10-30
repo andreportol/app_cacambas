@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from .forms import ResultadoOrcamentoForm
 from .models import TransportadorProduto, Produto, Bairros_CG, Transportador
-from django.shortcuts import render
 from django.contrib import messages
+
 
 # Create your views here.
 class IndexTemplateView(TemplateView):
@@ -17,8 +17,6 @@ class SobrenosTemplateView(TemplateView):
 
 class OrcamentoForm(TemplateView):
     template_name = 'orcamento.html'
-
-from django.shortcuts import render
 
 def resultado_orcamento(request):
     if request.method == 'POST':
@@ -50,13 +48,18 @@ def resultado_orcamento(request):
                             
                     # Buscando o produto desejado
                     produto_desejado = form.cleaned_data.get('produto')
+                    #print(produto_desejado)
                     produto = Produto.objects.filter(nome=produto_desejado).first()
 
                     # Verifica se o produto existe
                     if not produto:
+                        #print(produto)
                         return render(request, 'produto_nao_encontrado.html', {
-                            'error': 'Desculpe! O produto selecionado não está disponível no seu bairro.',
+                            'error': 'Desculpe!O produto selecionado não está disponível para o seu bairro!',
                         })
+                    
+                    if produto_desejado == '':
+                        return render(request, 'erro_preenchimento_orcamento.html') 
                     
                     # Lista para armazenar transportadores que têm o produto desejado
                     transportadores_com_produto = []
@@ -101,14 +104,14 @@ def resultado_orcamento(request):
                     bairro = form.cleaned_data.get('bairro')
                     
                     return render(request, 'regiao_nao_encontrado.html', {                  
-                        'error': 'Bairro não cadastrado!',
+                        'error': 'Desculpe, mas o bairro não está cadastrado em nosso sistema!',
                         'logradouro': logradouro,
                         'numero': numero,
                         'bairro': bairro,
                     })
             else:
                 return render(request, 'cidade_nao_encontrada.html', {
-                    'error': 'Desculpe! No momento não estamos atendendo em sua cidade!',
+                    'error': 'Desculpe, mas no momento não estamos atendendo em sua cidade!',
                 })
 
     # Se não for POST, renderiza o formulário

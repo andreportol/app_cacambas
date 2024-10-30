@@ -7,6 +7,7 @@
         {% for message in messages %}
             <div class="alert alert-white text-warning fs-4 my-0 py-0" role="alert">
                 {{error}}
+                <p class="fs-6">Selecione a região do seu bairro para que possamos prosseguir com o seu pedido</p>
             </div>
         {% endfor %}
     {% endif %}
@@ -18,7 +19,7 @@
                     <input class="form-control pb-2 my-2" type="text" value="{{logradouro}}" id="logradouro" name="logradouro">
                     <input class="form-control pb-2 my-2" type="text" value="{{numero}}" id="num_porta" name="nr_porta">
                     <input class="form-control pb-2 my-2" type="text" value="{{bairro}}" id="bairro" name="bairro">
-                    <input name="regioes_urbana" class="form-control" list="datalistRegioes" id="exampleDataList" placeholder="Clique para Selecionar a Região">
+                    <input name="regioes_urbana" class="form-control border border-3 border-danger" autofocus  list="datalistRegioes" id="exampleDataList" required placeholder="Clique para Selecionar a Região">
                     <datalist id="datalistRegioes">
                         <option value="Anhanduizinho">
                         <option value="Bandeira">
@@ -30,7 +31,7 @@
                     </datalist>
                 </div>
             </div>
-            <p class="text-white text-start pt-2">Em caso de dúvidas, use o mapa abaixo para consultar.</p>
+            <p class="text-white text-start pt-2">Se tiver dúvidas, utilize o mapa abaixo para consulta.</p>
             <div class="row">
                 <div class="col-12">
                     <img src="{% static 'img/regioes_urbana.png' %}" class="img-fluid border border-2 rounded" alt="regiões">

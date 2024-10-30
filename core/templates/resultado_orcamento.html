@@ -1,63 +1,73 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="py-3 h2 text-white Semibold weight text-decoration-underline">Resultado do Orçamento</h2>
-<div class="d-flex justify-content-start border border-2 border-white rounded mb-2 pt-2 px-2">
-    <div class="row align-items-center">
-                                                                                                {# &nbsp; -> Non-breaking space#}
-        <p class="text-start text-white"><strong class="text-decoration-underline">Produto selecionado:</strong>&nbsp;{{produto_desejado }}</p>
-        <p class="text-start text-white"><strong class="text-decoration-underline">Quantidade:</strong>&nbsp;{{quantidade_desejada}} unidades</p>
-        <p class="text-start text-white"><strong class="text-decoration-underline">Entulho:</strong>&nbsp;{{tipo_entulho}}</p>
-    </div> 
-       
-</div>
-<p class="d-flex justify-content-start gap-1">
-    <a class="btn btn-light fw-bold border-white bg-white" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Saiba mais
-    </a>           
-</p>
-<div class="collapse" id="collapseExample">
-    <div class="card card-body text-white bg-dark border border-2 rounded mb-2 fs-6">
-        Os critérios de seleção dos prestadores de serviço são:<br>
-         - Menor valor oferecido ao usuário do sistema;<br>
-         - Maior nota de avaliação dada pelos clientes;<br>
-         - Transportadores localizados próximos ao cliente. 
-    </div>
-</div>
+{# verifica se tag tem algum valor, ou seja, não está vazia #}    
+{% if transportadores_com_produto %}
+        <h2 class="py-3 h2 text-white Semibold weight text-decoration-underline">Resultado do Orçamento</h2>
+        <div class="d-flex justify-content-start border border-2 border-white rounded mb-2 pt-2 px-2">
+            <div class="row align-items-center">                                                                                                    {# &nbsp; -> Non-breaking space#}
+                <p class="text-start text-white"><strong class="text-decoration-underline">Produto selecionado:</strong>&nbsp;{{produto_desejado }}</p>
+                <p class="text-start text-white"><strong class="text-decoration-underline">Quantidade:</strong>&nbsp;{{quantidade_desejada}} unidades</p>
+                <p class="text-start text-white"><strong class="text-decoration-underline">Entulho:</strong>&nbsp;{{tipo_entulho}}</p>
+            </div>             
+        </div>
+        <p class="d-flex justify-content-start gap-1">
+            <a class="btn btn-light fw-bold border-white bg-white" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Saiba mais
+            </a>           
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body text-white bg-dark border border-2 rounded mb-2 fs-6">
+                Os critérios de seleção dos prestadores de serviço são:<br>
+                - Menor valor oferecido ao usuário do sistema;<br>
+                - Maior nota de avaliação atribuída pelos clientes;<br>
+                - Transportadores localizados próximos ao cliente. 
+            </div>
+        </div>
 
-<div class="border border-white border-2 rounded">
-    {% if transportadores_com_produto %}
-        <!-- Adicione a classe 'table-responsive' para responsividade -->
-        <div class="table-responsive pt-3">
-            <table class="table table-dark table-striped text-center align-middle ">
-                <thead>
-                    <tr>
-                        <th scope="col">Transportador</th>
-                        <th scope="col">Valor total</th>
-                        <th scope="col">Selecione</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in transportadores_com_produto %}
+        <div class="border border-white border-2 rounded">            
+            <!-- Adicione a classe 'table-responsive' para responsividade -->
+            <div class="table-responsive pt-3">
+                <table class="table table-dark table-striped text-center align-middle ">
+                    <thead>
                         <tr>
-                            <td class="align-middle">{{ item.transportador }}</td>
-                            <td class="align-middle">{{ item.preco }}</td>
-                            <td class="center-input">
-                                <div class="form-check">
-                                    <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                </div>
-                            </td>
+                            <th scope="col">Transportador</th>
+                            <th scope="col">Valor total</th>
+                            <th scope="col">Selecione</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div> <!-- Fim do table-responsive -->
+                    </thead>
+                    <tbody>
+                        {% for item in transportadores_com_produto %}
+                            <tr>
+                                <td class="align-middle">{{ item.transportador }}</td>
+                                <td class="align-middle">{{ item.preco }}</td>
+                                <td class="center-input">
+                                    <div class="form-check">
+                                        <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div> <!-- Fim do table-responsive -->
+            <div class="d-flex justify-content-around py-3">
+                <a class="btn btn-primary" href="{% url 'core:index' %}" role="button">Confirmar</a>
+                <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
+            </div> 
+        </div>
     {% else %}
-        <p>Nenhum transportador encontrado para o produto selecionado na região.</p>
-    {% endif %}
-    <div class="d-flex justify-content-around py-3">
-        <a class="btn btn-primary" href="{% url 'core:index' %}" role="button">Confirmar</a>
-        <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
-    </div>      
-</div>
+    <div class="container mt-5 pt-5">
+        <div class="row mt-5 pt-5">
+            <div class="col-sm-12">
+                <p class="text-white fs-2" >Nenhum transportador disponível para o produto selecionado nesta região.</p>
+                <div class="d-flex justify-content-around py-3">            
+                <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
+                </div> 
+            </div>
+        </div>
+    </div>    
+    
+    {% endif %}        
+
 {% endblock %}

@@ -42,8 +42,9 @@
                 <div class="row pt-3">
                     <div class="col-lg-12">
                         <div class="input-group mb-2 pt-3">
-                            <button class="btn btn-outline-secondary btn-lg text-warning border border-end-0 border-warning rounded " type="button">Tamanho</button>
+                            <button class="btn btn-outline-secondary btn-lg text-warning border border-end-0 border-warning rounded " type="button">Produto</button>
                             <select class="form-select" id="inputGroupSelectTamanho" name="produto" required>
+                                <option value="" selected>Escolha</option>
                                 <option value="cacamba_2m">caçamba de 2 m³</option>
                                 <option value="cacamba_3m">caçamba de 3 m³</option>
                                 <option value="cacamba_4m">caçamba de 4 m³</option>
@@ -52,13 +53,12 @@
                                 <option value="caminhao_25m">caminhão de 25 m³</option>
                                 <option value="roll_roll_25">Roll on roll off 25M³</option>
                                 <option value="roll_roll_32">Roll on roll off 32M³</option>
-                                <option selected>Escolha</option>
                             </select>
                         </div> 
                         <div class="col-lg-12 border border-warning rounded p-2">
                             <h1 class="text-warning border-bottom border-warning fs-4">Resíduos</h1>
                             <div class="form-check">
-                                <input name="tipo_residuo"class="form-check-input" type="radio" value="classe_A" id="flexCheck_A">
+                                <input name="tipo_residuo"class="form-check-input" type="radio" value="classe_A" id="flexCheck_A" required>
                                 <label class="form-check-label" for="flexCheck_A">
                                     CLASSE A - Alvenarias, concreto, argamassas e solos.
                                 </label>
@@ -94,10 +94,10 @@
                             <div class="input-group mb-3 pt-3">
                                 <button class="btn btn-outline-secondary btn-lg text-warning border border-warning rounded p-2" type="button">Quantidade</button>
                                 <select class="form-select" id="inputGroupQuantidade" name="quantidade" required>
+                                    <option value="" selected>Escolha</option>
                                     <option value="1">1 - Uma</option>
                                     <option value="2">2 - Duas</option>
                                     <option value="3">3 - Três</option>
-                                    <option selected>Escolha</option>
                                 </select>
                             </div> 
                         </div>    
