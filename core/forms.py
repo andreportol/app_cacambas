@@ -40,7 +40,6 @@ class ResultadoOrcamentoForm(forms.Form):
     # função de validação do produto
     def clean_produto(self):
         produto = self.cleaned_data.get('produto')
-        print(produto)
         if not produto or produto not in ['cacamba_2m','cacamba_3m','cacamba_4m', 'caminhao_5m', 'caminhao_12m','caminhao_25m','roll_roll_25','roll_roll_32']:
             raise forms.ValidationError("Por favor, selecione um produto válido.")
         return produto
