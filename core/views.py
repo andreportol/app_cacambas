@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .forms import ResultadoOrcamentoForm
+from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm
 from .models import TransportadorProduto, Produto, Bairros_CG, Transportador
-from django.contrib import messages
 
 
 # Create your views here.
@@ -34,7 +33,15 @@ def resultado_orcamento(request):
 
 
 def processar_orcamento_campo_grande(request, form):
+    # informações que serão carregadas no template para serem
+    # repassadas a outro template ( confirmar_pedido.html )
     bairro_usuario = form.cleaned_data.get('bairro')
+    num_porta = form.cleaned_data.get('numero')
+    cidade = form.cleaned_data.get('cidade')
+    logradouro = form.cleaned_data.get('logradouro')
+    data_inicio = form.cleaned_data.get('data_inicio')
+    data_retirada = form.cleaned_data.get('data_retirada')
+    
     try:
         regiao_selecionada = buscar_regiao_por_bairro(bairro_usuario)
         transportadores = buscar_transportadores_por_regiao(regiao_selecionada)
@@ -57,6 +64,10 @@ def processar_orcamento_campo_grande(request, form):
             'produto_desejado': produto,
             'quantidade_desejada': quantidade_desejada,
             'tipo_entulho': tipo_entulho,
+            'bairro' : bairro_usuario,
+            'logradouro': logradouro,
+            'num_porta' : num_porta,
+            'cidade': cidade,
         })
 
     except Bairros_CG.DoesNotExist:
@@ -148,3 +159,33 @@ def cidade_nao_atendida(request):
     return render(request, 'cidade_nao_encontrada.html', {
         'error': 'Desculpe, mas no momento não estamos atendendo em sua cidade!',
     })
+
+
+def confirmar_pedido(request):  
+    if request.method == 'POST':
+        form = ConfirmarPedidoForm(request.POST)       
+        if form.is_valid():
+            transportador = form.cleaned_data.get('transportador_selecionado')
+            produto = form.cleaned_data.get('produto_desejado')
+            tipo_entulho = form.cleaned_data.get('tipo_entulho')
+            quantidade_desejada = form.cleaned_data.get('quantidade_desejada')
+            logradouro = form.cleaned_data.get('logradouro')
+            num_porta = form.cleaned_data.get('num_porta')
+            bairro_usuario = form.cleaned_data.get('bairro')
+            cidade = form.cleaned_data.get('cidade')
+            #data_inicio = form.cleaned_data.get('data_inicio')
+            #data_retirada = form.cleaned_data.get('data_retirada')
+            
+            context = {
+                'form': form, 
+                'transportador' : transportador,
+                'produto': produto,
+                'tipo_entulho': tipo_entulho,
+                'quantidade_desejada': quantidade_desejada,                
+                'bairro' : bairro_usuario,
+                'logradouro': logradouro,
+                'num_porta' : num_porta,
+                'cidade': cidade,
+                
+            }
+            return render(request, 'confirmar_pedido.html', context)

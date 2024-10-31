@@ -2,18 +2,9 @@
 {% load static %}
 
 {% block content %}
- 
-    {% if messages %}       
-        {% for message in messages %}
-            <div class="alert alert-white text-warning fs-4 my-0 py-0" role="alert">
-                {{error}}
-                <p class="fs-6">Selecione a região do seu bairro para que possamos prosseguir com o seu pedido</p>
-            </div>
-        {% endfor %}
-    {% endif %}
-       
     <div class="container">
-        <form action="{#}" method="post">
+        <p class="p-2 fs-5 text-warning text-center border border-2 border-white rounded">Selecione a região do seu bairro para que possamos prosseguir com o seu pedido</p>
+        <form action="{#}" method="post" class="border border-2 rounded p-2">
             <div class="row">
                 <div class="col-12">
                     <input class="form-control pb-2 my-2" type="text" value="{{logradouro}}" id="logradouro" name="logradouro">
@@ -31,7 +22,7 @@
                     </datalist>
                 </div>
             </div>
-            <p class="text-white text-start pt-2">Se tiver dúvidas, utilize o mapa abaixo para consulta.</p>
+            <p class="text-white text-center pt-2">Se tiver dúvidas, utilize o mapa abaixo para consulta.</p>
             <div class="row">
                 <div class="col-12">
                     <img src="{% static 'img/regioes_urbana.png' %}" class="img-fluid border border-2 rounded" alt="regiões">

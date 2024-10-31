@@ -3,14 +3,14 @@
 {% block content %}
   <body>
     <h1>Resultado da Consulta</h1>
-    <p>Tamanho: {{ produto }} m³</p>
-    <p>Tipo de Resíduo: {{ tipo_residuo }}</p>
-    <p>Quantidade: {{ quantidade }} unidades</p>
+    <p>Transportador: {{transportador}}</p>
+    <p>Produto: {{ produto }}</p>
+    <p>Tipo de Resíduo: {{ tipo_entulho }}</p>
+    <p>Quantidade: {{ quantidade_desejada }} unidades</p>
     <p>Data de Início: {{ data_inicio }}</p>
     <p>Data de Retirada: {{ data_retirada }}</p>
-    <p>CEP: {{ cep }}</p>
     <p>Logradouro: {{ logradouro }}</p>
-    <p>Número: {{ numero }}</p>
+    <p>Número: {{ num_porta }}</p>
     <p>Bairro: {{ bairro }}</p>
     <p>Cidade: {{ cidade }}</p>
     <a class="btn btn-warning" href="{% url 'core:index' %}" role="button">Voltar</a>

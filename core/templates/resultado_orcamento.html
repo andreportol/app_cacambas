@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{# verifica se tag tem algum valor, ou seja, não está vazia #}    
-{% if transportadores_com_produto %}
+    {# verifica se tag tem algum valor, ou seja, não está vazia #}    
+    {% if transportadores_com_produto %}
+    <form method="post" action="{% url 'core:confirmar_pedido' %}">    
+        {% csrf_token %}
         <h2 class="py-3 h2 text-white Semibold weight text-decoration-underline">Resultado do Orçamento</h2>
+        
         <div class="d-flex justify-content-start border border-2 border-white rounded mb-2 pt-2 px-2">
-            <div class="row align-items-center">                                                                                                    {# &nbsp; -> Non-breaking space#}
-                <p class="text-start text-white"><strong class="text-decoration-underline">Produto selecionado:</strong>&nbsp;{{produto_desejado }}</p>
-                <p class="text-start text-white"><strong class="text-decoration-underline">Quantidade:</strong>&nbsp;{{quantidade_desejada}} unidades</p>
-                <p class="text-start text-white"><strong class="text-decoration-underline">Entulho:</strong>&nbsp;{{tipo_entulho}}</p>
+            <div class="row align-items-center">                                                                                                   
+                <p class="text-start text-white"><strong class="text-decoration-underline">Produto selecionado:</strong>&nbsp;{{ produto_desejado }}</p>
+                <p class="text-start text-white"><strong class="text-decoration-underline">Quantidade:</strong>&nbsp;{{ quantidade_desejada }} unidades</p>
+                <p class="text-start text-white"><strong class="text-decoration-underline">Entulho:</strong>&nbsp;{{ tipo_entulho }}</p>
             </div>             
         </div>
+        
+        <!-- Collapse Section -->
         <p class="d-flex justify-content-start gap-1">
             <a class="btn btn-light fw-bold border-white bg-white" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Saiba mais
@@ -24,11 +29,11 @@
                 - Transportadores localizados próximos ao cliente. 
             </div>
         </div>
-
+    
+        <!-- Table Section -->
         <div class="border border-white border-2 rounded">            
-            <!-- Adicione a classe 'table-responsive' para responsividade -->
             <div class="table-responsive pt-3">
-                <table class="table table-dark table-striped text-center align-middle ">
+                <table class="table table-dark table-striped text-center align-middle">
                     <thead>
                         <tr>
                             <th scope="col">Transportador</th>
@@ -43,31 +48,47 @@
                                 <td class="align-middle">{{ item.preco }}</td>
                                 <td class="center-input">
                                     <div class="form-check">
-                                        <input class="form-check-input mx-2" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                                        <input class="form-check-input mx-2" type="radio" name="transportador_selecionado" id="transportador_{{ forloop.counter }}" value="{{ item.transportador }}" required>
                                     </div>
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-            </div> <!-- Fim do table-responsive -->
+            </div>
+            
+            <!-- Campos ocultos carregando os valores das variáveis do template -->
+            <input type="hidden" name="produto_desejado" value="{{ produto_desejado }}">
+            <input type="hidden" name="quantidade_desejada" value="{{ quantidade_desejada }}">
+            <input type="hidden" name="tipo_entulho" value="{{ tipo_entulho }}">
+            <!--
+            <input type="hidden" name="data_inicio" value="{{ data_inicio }}">
+            <input type="hidden" name="data_retirada" value="{{ data_retirada }}">
+            -->
+            <input type="hidden" name="logradouro" value="{{ logradouro }}">
+            <input type="hidden" name="num_porta" value="{{ num_porta }}">
+            <input type="hidden" name="bairro" value="{{ bairro }}">
+            <input type="hidden" name="cidade" value="{{ cidade }}">
+            
             <div class="d-flex justify-content-around py-3">
-                <a class="btn btn-primary" href="{% url 'core:index' %}" role="button">Confirmar</a>
+                <button class="btn btn-primary" type="submit">Solicitar</button>
                 <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
             </div> 
         </div>
-    {% else %}
-    <div class="container mt-5 pt-5">
-        <div class="row mt-5 pt-5">
-            <div class="col-sm-12">
-                <p class="text-white fs-2" >Nenhum transportador disponível para o produto selecionado nesta região.</p>
-                <div class="d-flex justify-content-around py-3">            
-                <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
-                </div> 
-            </div>
-        </div>
-    </div>    
+    </form>
     
+    {% else %}
+        <div class="container mt-5 pt-5">
+            <div class="row mt-5 pt-5">
+                <div class="col-sm-12">
+                    <p class="text-white fs-2" >Nenhum transportador disponível para o produto selecionado nesta região.</p>
+                    <div class="d-flex justify-content-around py-3">            
+                    <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
+                    </div> 
+                </div>
+            </div>
+        </div>    
+        
     {% endif %}        
 
 {% endblock %}

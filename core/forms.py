@@ -86,3 +86,16 @@ class ResultadoOrcamentoForm(forms.Form):
     numero = forms.CharField(max_length=10)
     bairro = forms.CharField(max_length=80)
     cidade = forms.CharField(max_length=100)
+
+
+class ConfirmarPedidoForm(forms.Form):
+    transportador_selecionado = forms.CharField(max_length=120)
+    produto_desejado = forms.CharField(max_length=120)
+    tipo_entulho = forms.CharField(max_length=15)
+    quantidade_desejada = forms.CharField(max_length=12)
+    logradouro = forms.CharField(max_length=100)
+    num_porta = forms.CharField(max_length=10)
+    bairro = forms.CharField(max_length=80)
+    cidade = forms.CharField(max_length=100)
+    #data_inicio = forms.CharField(max_length=100)
+    #data_retirada = forms.CharField(max_length=100)
