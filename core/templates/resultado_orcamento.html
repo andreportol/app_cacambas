@@ -48,7 +48,7 @@
                                 <td class="align-middle">{{ item.preco }}</td>
                                 <td class="center-input">
                                     <div class="form-check">
-                                        <input class="form-check-input mx-2" type="radio" name="transportador_selecionado" id="transportador_{{ forloop.counter }}" value="{{ item.transportador }}" required>
+                                        <input class="form-check-input mx-2" type="radio" name="transportador_selecionado" id="transportador_{{ forloop.counter }}" value="{{ item.transportador }}|{{ item.preco }}" required>
                                     </div>
                                 </td>
                             </tr>
@@ -61,10 +61,8 @@
             <input type="hidden" name="produto_desejado" value="{{ produto_desejado }}">
             <input type="hidden" name="quantidade_desejada" value="{{ quantidade_desejada }}">
             <input type="hidden" name="tipo_entulho" value="{{ tipo_entulho }}">
-            <!--
-            <input type="hidden" name="data_inicio" value="{{ data_inicio }}">
-            <input type="hidden" name="data_retirada" value="{{ data_retirada }}">
-            -->
+            <input type="hidden" name="data_inicio" value="{{ data_inicio|date:'d-m-Y' }}">
+            <input type="hidden" name="data_retirada" value="{{ data_retirada|date:'d-m-Y' }}">
             <input type="hidden" name="logradouro" value="{{ logradouro }}">
             <input type="hidden" name="num_porta" value="{{ num_porta }}">
             <input type="hidden" name="bairro" value="{{ bairro }}">
@@ -72,7 +70,7 @@
             
             <div class="d-flex justify-content-around py-3">
                 <button class="btn btn-primary" type="submit">Solicitar</button>
-                <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
+                <a class="btn btn-light fw-bold border-warning bg-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
             </div> 
         </div>
     </form>
@@ -81,9 +79,9 @@
         <div class="container mt-5 pt-5">
             <div class="row mt-5 pt-5">
                 <div class="col-sm-12">
-                    <p class="text-white fs-2" >Nenhum transportador disponível para o produto selecionado nesta região.</p>
+                    <p class="text-white fs-2" >Não há transportadores disponíveis para o produto selecionado nesta região.</p>
                     <div class="d-flex justify-content-around py-3">            
-                    <a class="btn btn-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
+                    <a class="btn btn-light fw-bold border-warning bg-warning px-4" href="{% url 'core:index' %}" role="button">Voltar</a>        
                     </div> 
                 </div>
             </div>

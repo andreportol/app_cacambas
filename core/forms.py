@@ -97,5 +97,5 @@ class ConfirmarPedidoForm(forms.Form):
     num_porta = forms.CharField(max_length=10)
     bairro = forms.CharField(max_length=80)
     cidade = forms.CharField(max_length=100)
-    #data_inicio = forms.CharField(max_length=100)
-    #data_retirada = forms.CharField(max_length=100)
+    data_inicio = forms.CharField(max_length=100)
+    data_retirada = forms.CharField(max_length=100)

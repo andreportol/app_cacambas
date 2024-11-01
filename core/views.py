@@ -64,6 +64,8 @@ def processar_orcamento_campo_grande(request, form):
             'produto_desejado': produto,
             'quantidade_desejada': quantidade_desejada,
             'tipo_entulho': tipo_entulho,
+            'data_inicio' : data_inicio,
+            'data_retirada' : data_retirada,
             'bairro' : bairro_usuario,
             'logradouro': logradouro,
             'num_porta' : num_porta,
@@ -132,7 +134,7 @@ def produto_nao_encontrado(request):
     Renderiza uma página informando que o produto não foi encontrado.
     """
     return render(request, 'produto_nao_encontrado.html', {
-        'error': 'Desculpe! O produto selecionado não está disponível para o seu bairro!',
+        'error': 'Desculpe, mas o produto selecionado não está disponível para o seu bairro!',
     })
 
 
@@ -165,27 +167,30 @@ def confirmar_pedido(request):
     if request.method == 'POST':
         form = ConfirmarPedidoForm(request.POST)       
         if form.is_valid():
-            transportador = form.cleaned_data.get('transportador_selecionado')
-            produto = form.cleaned_data.get('produto_desejado')
-            tipo_entulho = form.cleaned_data.get('tipo_entulho')
-            quantidade_desejada = form.cleaned_data.get('quantidade_desejada')
-            logradouro = form.cleaned_data.get('logradouro')
-            num_porta = form.cleaned_data.get('num_porta')
-            bairro_usuario = form.cleaned_data.get('bairro')
-            cidade = form.cleaned_data.get('cidade')
-            #data_inicio = form.cleaned_data.get('data_inicio')
-            #data_retirada = form.cleaned_data.get('data_retirada')
-            
-            context = {
-                'form': form, 
-                'transportador' : transportador,
-                'produto': produto,
-                'tipo_entulho': tipo_entulho,
-                'quantidade_desejada': quantidade_desejada,                
-                'bairro' : bairro_usuario,
-                'logradouro': logradouro,
-                'num_porta' : num_porta,
-                'cidade': cidade,
-                
-            }
+            transportador_selecionado = form.cleaned_data.get('transportador_selecionado')
+            if transportador_selecionado:
+                transportador, preco = transportador_selecionado.split('|')
+                produto = form.cleaned_data.get('produto_desejado')
+                tipo_entulho = form.cleaned_data.get('tipo_entulho')
+                quantidade_desejada = form.cleaned_data.get('quantidade_desejada')
+                logradouro = form.cleaned_data.get('logradouro')
+                num_porta = form.cleaned_data.get('num_porta')
+                bairro_usuario = form.cleaned_data.get('bairro')
+                cidade = form.cleaned_data.get('cidade')
+                data_inicio = form.cleaned_data.get('data_inicio')
+                data_retirada = form.cleaned_data.get('data_retirada')
+                context = {
+                    'form': form, 
+                    'transportador' : transportador,
+                    'produto': produto,
+                    'preco': preco,
+                    'tipo_entulho': tipo_entulho,
+                    'quantidade_desejada': quantidade_desejada,                
+                    'data_inicio' : data_inicio,
+                    'data_retirada': data_retirada,
+                    'logradouro': logradouro,
+                    'bairro' : bairro_usuario,
+                    'num_porta' : num_porta,
+                    'cidade': cidade,                
+                }
             return render(request, 'confirmar_pedido.html', context)
