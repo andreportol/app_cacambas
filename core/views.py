@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm
+from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm, AvisoConfirmacaoForm
 from .models import TransportadorProduto, Produto, Bairros_CG, Transportador
 
 
@@ -163,6 +163,7 @@ def cidade_nao_atendida(request):
     })
 
 
+# Método confirmar_pedido
 def confirmar_pedido(request):  
     if request.method == 'POST':
         form = ConfirmarPedidoForm(request.POST)       
@@ -170,27 +171,52 @@ def confirmar_pedido(request):
             transportador_selecionado = form.cleaned_data.get('transportador_selecionado')
             if transportador_selecionado:
                 transportador, preco = transportador_selecionado.split('|')
-                produto = form.cleaned_data.get('produto_desejado')
-                tipo_entulho = form.cleaned_data.get('tipo_entulho')
-                quantidade_desejada = form.cleaned_data.get('quantidade_desejada')
-                logradouro = form.cleaned_data.get('logradouro')
-                num_porta = form.cleaned_data.get('num_porta')
-                bairro_usuario = form.cleaned_data.get('bairro')
-                cidade = form.cleaned_data.get('cidade')
-                data_inicio = form.cleaned_data.get('data_inicio')
-                data_retirada = form.cleaned_data.get('data_retirada')
-                context = {
-                    'form': form, 
-                    'transportador' : transportador,
-                    'produto': produto,
+                # Salvando os dados na sessão para recuperá-los em qualquer template dentro da sessão
+                request.session['pedido_data'] = {
+                    'transportador': transportador,
                     'preco': preco,
-                    'tipo_entulho': tipo_entulho,
-                    'quantidade_desejada': quantidade_desejada,                
-                    'data_inicio' : data_inicio,
-                    'data_retirada': data_retirada,
-                    'logradouro': logradouro,
-                    'bairro' : bairro_usuario,
-                    'num_porta' : num_porta,
-                    'cidade': cidade,                
+                    'produto': form.cleaned_data.get('produto_desejado'),
+                    'tipo_entulho': form.cleaned_data.get('tipo_entulho'),
+                    'quantidade_desejada': form.cleaned_data.get('quantidade_desejada'),
+                    'data_inicio': form.cleaned_data.get('data_inicio'),
+                    'data_retirada': form.cleaned_data.get('data_retirada'),
+                    'logradouro': form.cleaned_data.get('logradouro'),
+                    'num_porta': form.cleaned_data.get('num_porta'),
+                    'bairro': form.cleaned_data.get('bairro'),
+                    'cidade': form.cleaned_data.get('cidade'),
                 }
-            return render(request, 'confirmar_pedido.html', context)
+            return render(request, 'confirmar_pedido.html', request.session['pedido_data'])
+
+
+# Método aviso_confirmacao
+def aviso_confirmacao(request):
+    if request.method == 'POST':
+        form = AvisoConfirmacaoForm(request.POST)
+        if form.is_valid():
+            nome_cliente = form.cleaned_data.get('nome_cliente')
+            telefone_cliente = form.cleaned_data.get('telefone_cliente')
+        # Recupera ou inicializa pedido_data com os dados existentes na sessão
+        pedido_data = request.session.get('pedido_data', {})
+        # Adiciona novos valores ao dicionário pedido_data
+        pedido_data.update({
+            'nome_cliente': nome_cliente,
+            'telefone_cliente': telefone_cliente,
+        })
+        # Atualiza a sessão com o dicionário pedido_data modificado
+        request.session['pedido_data'] = pedido_data
+    return render(request, 'aviso_confirmacao.html', pedido_data)
+
+    
+    '''
+    Recuperar um dicionário chamado pedido_data que foi salvo em request.session
+    Se pedido_data não estiver presente na sessão, será retornado um dicionário vazio {} para evitar erros de chave inexistente.
+    
+    pedido_data = request.session.get('pedido_data', {})
+    
+    Acesso no template:
+    No template aviso_confirmacao.html, você pode acessar as variáveis simplesmente 
+    pelo nome das chaves de pedido_data. Por exemplo, se pedido_data contiver 
+    {'transportador': 'Transportadora ABC', 'produto': 'Caçamba', 'preco': '200.00'}, 
+    você acessará esses valores com {{ transportador }}, {{ produto }}, e {{ preco }} 
+    diretamente.
+    '''
