@@ -60,17 +60,16 @@
                     <th scope="row">Telefone</th>
                     <td colspan="2">
                         <input name="telefone_cliente" class="form-control" type="tel" placeholder="(67) 99252-0749" 
-                               pattern="\(\d{2}\) \d{5}-\d{4}" maxlength="15" required>
+                                pattern="^\(\d{2}\) \d{5}-\d{4}$" maxlength="15" required  oninput="formatarTelefone(this)">
                     </td>                    
                 </tr>
             </tbody>
         </table>
-
         <div class="d-flex justify-content-around mb-3">
             <button class="btn btn-light fw-bold border-white bg-white" type="submit">Confirmar</button>
             <a class="btn btn-light fw-bold border-warning bg-warning" href="{% url 'core:index' %}" role="button">Voltar</a>
         </div>
     </form>
   </body>
-  <script src="{% static 'js/formata_telefone.js' %}"></script>
+  <script src="{% static 'js/formata_telefone.js' %}"></script> 
 {% endblock %}

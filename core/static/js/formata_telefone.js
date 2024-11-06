@@ -1,14 +1,15 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const phoneInput = document.querySelector('input[name="telefone_cliente"]');
+// scripts.js
+function formatarTelefone(input) {
+    let valor = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    let formatado = valor;
+
+    if (valor.length <= 2) {
+        formatado = `(${valor}`;
+    } else if (valor.length <= 7) {
+        formatado = `(${valor.slice(0, 2)}) ${valor.slice(2)}`;
+    } else {
+        formatado = `(${valor.slice(0, 2)}) ${valor.slice(2, 7)}-${valor.slice(7, 11)}`;
+    }
     
-    phoneInput.addEventListener("input", function() {
-        let value = phoneInput.value.replace(/\D/g, ""); // Remove todos os caracteres não numéricos
-        if (value.length > 11) value = value.slice(0, 11); // Limita a 11 dígitos
-        
-        // Aplica a máscara
-        value = value.replace(/^(\d{2})(\d)/, "($1) $2"); // Adiciona parênteses ao DDD
-        value = value.replace(/(\d{5})(\d{4})$/, "$1-$2"); // Adiciona o traço
-        
-        phoneInput.value = value; // Atualiza o valor do input com a máscara
-    });
-});
+    input.value = formatado;
+}
