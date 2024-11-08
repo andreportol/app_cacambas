@@ -24,19 +24,10 @@ class ResultadoOrcamentoForm(forms.Form):
         ('classe_C', 'CLASSE C - Resíduos sem tecnologia para reciclagem (gesso e isopor).'),
         ('classe_D', 'CLASSE D - Resíduos perigosos, tais como tintas, solventes, óleos e outros, ou aqueles contaminados procedente de obras em clínicas radiológicas, hospitais, instalações industriais, etc..')
     ]
-
-    QUANTIDADE_CHOICES = [
-        ('', 'Escolha'),  # Valor inválido para seleção padrão
-        ('1', '1 - Uma'),
-        ('2', '2 - Duas'),
-        ('3', '3 - Três'),
-    ]
-
-
     produto = forms.ChoiceField(choices=PRODUTO_CHOICES, required=True)
     tipo_residuo = forms.ChoiceField(choices=TIPO_RESIDUO_CHOICES, required=True)
-    quantidade = forms.ChoiceField(choices=QUANTIDADE_CHOICES, required=True)
-    
+    quantidade = forms.IntegerField(max_value=10, min_value=1, required=True)
+        
     # função de validação do produto
     def clean_produto(self):
         produto = self.cleaned_data.get('produto')
@@ -49,14 +40,7 @@ class ResultadoOrcamentoForm(forms.Form):
         tipo_residuo = self.cleaned_data.get('tipo_residuo')
         if not tipo_residuo or tipo_residuo not in ['classe_A', 'classe_B', 'classe_A/B', 'classe_C', 'classe_D']:
             raise forms.ValidationError("Por favor, selecione um tipo de resíduo válido.")
-        return tipo_residuo
-    
-    def clean_quantidade(self):
-        quantidade = self.cleaned_data.get('quantidade')
-        if not quantidade or quantidade not in ['1', '2', '3']:
-            raise forms.ValidationError("Por favor, selecione uma quantidade válida.")
-        return quantidade
-    
+        return tipo_residuo  
     
     data_inicio = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date'}))
     data_retirada = forms.DateField(required=True, widget=forms.DateInput(attrs={'type': 'date'}))

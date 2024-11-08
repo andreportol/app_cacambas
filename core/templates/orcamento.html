@@ -95,18 +95,16 @@
                     </div>
                 </div>    
                 <div class="row">
-                    <div class="col-lg-12 border border-warning rounded p-2 mt-3">
-                        <div class="input-group mb-3 pt-3">
-                            <button class="btn btn-outline-secondary btn-lg text-white border border-white rounded p-2" type="button">Quantidade</button>
-                            <select class="form-select" id="inputGroupQuantidade" name="quantidade" required>
-                                <option value="" selected>Escolha</option>
-                                <option value="1">1 - Uma</option>
-                                <option value="2">2 - Duas</option>
-                                <option value="3">3 - Três</option>
-                            </select>
-                        </div> 
+                    <div class="col-lg-12 border border-warning rounded mt-3 p-2">
+                        <h1 class="text-warning border-bottom border-warning fs-4">Quantidade</h1>
+                        <div class="input-group align-items-center">
+                            <input class="form-control rounded-pill text-center py-2" placeholder="0" name="quantidade" value="0" id="quantidade" required readonly>
+                            <button id="soma" type="button" class="btn btn-lg btn-light fw-bold border-white bg-white rounded-circle ms-2 rounded-circle ms-2">+</button>
+                            <button id="subtracao" type="button" class="btn btn-lg btn-light fw-bold border-white bg-white rounded-circle ms-2">-</button>
+                        </div>                     
                     </div>    
-                </div>                    
+                </div> 
+                                  
                 <div class="row border border-warning rounded p-2 mt-3">
                     <h1 class="text-warning border-bottom border-warning fs-4">Datas</h1>
                     <div class="col-lg-6 col-md-12 col-sm-12 pt-2">
@@ -149,7 +147,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="d-flex justify-content-end pt-5">
-                            <button class="btn btn-outline-warning text-warning mx-2" type="submit">Consultar</button>
+                            <button class="btn btn-outline-warning mx-2" type="submit">Consultar</button>
                             <a class="btn btn-light fw-bold border-warning bg-warning" href="{% url 'core:index' %}" role="button">Voltar</a>
                         </div>
                     </div>
@@ -159,6 +157,8 @@
         <!-- Script formatação do Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         {# Meus Scripts #}
+        <!-- Script para formatação da quantidade de caçamba -->
+        <script src="{% static 'js/quantidade_cacamba.js' %}"></script> 
         <!-- Script para formatação da data de inicio e retirada da caçamba -->
         <script src="{% static 'js/formata_data.js' %}"></script> 
         <!-- Script para consultar o ViaCEP -->
