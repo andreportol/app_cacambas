@@ -1,27 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block header %}
-
+<link href="{% static 'css/my_css.css' %}" rel="stylesheet">
 <nav class="navbar cover-container pb-4 text-start">
-  <div class="container-fluid">
-    <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon text-white"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-lg-0" aria-label="breadcrumb">
-        <li class="nav-item pt-3">
-          <a class="nav-link text-white" aria-current="page" href="#">Clientes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white px-0" href="#">Transportadores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white px-0" href="{% url 'admin:index' %}">Administração</a>
-        </li>
-      </ul>      
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div>
+      <button class="navbar-toggler bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-lg-0" aria-label="breadcrumb">
+          <li class="nav-item pt-3">
+            <a class="nav-link text-white" aria-current="page" href="#">Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white px-0" href="#">Transportadores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white px-0" href="{% url 'admin:index' %}">Administração</a>
+          </li>
+        </ul>
+      </div>
     </div>
+    
+    <!-- Espaço para o nome do usuário alinhado à direita -->
+    <span class="navbar-text text-white">
+      {% if user.is_authenticated %}
+        Olá, {{ user.username }}
+      {% else %}
+      <button type="button" class="btn btn-outline-light"><a href="#" class="text-white">Entrar</a></button>  
+      
+      {% endif %}
+    </span>
   </div>
 </nav>
+
+
+
 
 <header class="mb-auto">
     <div>     
