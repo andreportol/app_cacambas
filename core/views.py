@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm, AvisoConfirmacaoForm
-from .models import TransportadorProduto, Produto, Bairros_CG, Transportador
-
+from .models import TransportadorProduto, Produto, Bairros_CG, Transportador, Regiao_CG
+from datetime import datetime
 
 # Create your views here.
 class IndexTemplateView(TemplateView):
@@ -22,58 +22,136 @@ def resultado_orcamento(request):
         form = ResultadoOrcamentoForm(request.POST)
         if form.is_valid():
             cidade = form.cleaned_data.get('cidade')
-
             if cidade == 'Campo Grande':
+                request.session['orcamento'] = {
+                    'produto': form.cleaned_data.get('produto'),
+                    'tipo_entulho': form.cleaned_data.get('tipo_residuo'),
+                    'quantidade_desejada': form.cleaned_data.get('quantidade'),
+                    'bairro': form.cleaned_data.get('bairro'),
+                    'logradouro': form.cleaned_data.get('logradouro'),
+                    'num_porta': form.cleaned_data.get('numero'),
+                    'cidade': cidade,
+                    'data_inicio': str(form.cleaned_data.get('data_inicio')),  # Adicionado
+                    'data_retirada': str(form.cleaned_data.get('data_retirada')),  # Adicionado
+                }
                 return processar_orcamento_campo_grande(request, form)
             else:
                 return cidade_nao_atendida(request)
-
     form = ResultadoOrcamentoForm()
     return render(request, 'resultado_orcamento.html', {'form': form})
 
 
-def processar_orcamento_campo_grande(request, form):
-    # informações que serão carregadas no template para serem
-    # repassadas a outro template ( confirmar_pedido.html )
-    bairro_usuario = form.cleaned_data.get('bairro')
-    num_porta = form.cleaned_data.get('numero')
-    cidade = form.cleaned_data.get('cidade')
-    logradouro = form.cleaned_data.get('logradouro')
+
+def processar_orcamento_campo_grande(request, form=None):  
+    # Recuperando dados da sessão e fornecendo valores padrão caso estejam ausentes
+    orcamento_data = request.session.get('orcamento', {})
+    produto_desejado = orcamento_data.get('produto')
+    tipo_entulho = form.cleaned_data.get('tipo_residuo')
+    quantidade_desejada = orcamento_data.get('quantidade_desejada')
     data_inicio = form.cleaned_data.get('data_inicio')
     data_retirada = form.cleaned_data.get('data_retirada')
+    orcamento_data.update({
+        'data_inicio': str(data_inicio),
+        'data_retirada': str(data_retirada),
+    })
+    logradouro = orcamento_data.get('logradouro')
+    num_porta = orcamento_data.get('num_porta', 'Número não informado')
+    cidade = orcamento_data.get('cidade', 'Cidade não informada')
+    bairro_usuario = orcamento_data.get('bairro', '')
+    produto_desejado = orcamento_data.get('produto')
     
     try:
-        regiao_selecionada = buscar_regiao_por_bairro(bairro_usuario)
-        transportadores = buscar_transportadores_por_regiao(regiao_selecionada)
-
-        produto_desejado, produto = verificar_produto(form)
-        if not produto:
-            return produto_nao_encontrado(request)
-
-        quantidade_desejada = verificar_quantidade(form)
-        tipo_entulho = form.cleaned_data.get('tipo_residuo')
-
-        transportadores_com_produto = verificar_transportadores_com_produto(
-            transportadores, produto_desejado, produto, quantidade_desejada
-        )
-
-        return render(request, 'resultado_orcamento.html', {
-            'form': form,
-            'transportadores_com_produto': transportadores_com_produto,
-            'regiao_selecionada': regiao_selecionada,
-            'produto_desejado': produto,
-            'quantidade_desejada': quantidade_desejada,
-            'tipo_entulho': tipo_entulho,
-            'data_inicio' : data_inicio,
-            'data_retirada' : data_retirada,
-            'bairro' : bairro_usuario,
+        bairro = Bairros_CG.objects.get(nome_bairro__icontains=bairro_usuario)
+        regiao_selecionada = buscar_regiao_por_bairro(bairro.nome_bairro)
+    except Bairros_CG.DoesNotExist:        
+        return render(request, 'regiao_nao_encontrado.html', {
+            'bairro': bairro_usuario,
             'logradouro': logradouro,
-            'num_porta' : num_porta,
-            'cidade': cidade,
+            'numero': num_porta,
         })
 
-    except Bairros_CG.DoesNotExist:
-        return bairro_nao_encontrado(request, form)
+    # Continue o processamento com a região selecionada
+    transportadores = buscar_transportadores_por_regiao(regiao_selecionada)  
+    produto = verificar_produto(produto_desejado)
+     
+    if not produto:
+        return produto_nao_encontrado(request) 
+    
+    transportadores_com_produto = verificar_transportadores_com_produto(
+        transportadores, produto_desejado, produto, quantidade_desejada
+    )
+
+    return render(request, 'resultado_orcamento.html', {
+        'form': form,
+        'transportadores_com_produto': transportadores_com_produto,
+        'regiao_selecionada': regiao_selecionada,
+        'produto_desejado': produto,
+        'quantidade_desejada': quantidade_desejada,
+        'tipo_entulho': tipo_entulho,
+        'data_inicio': data_inicio,
+        'data_retirada': data_retirada,
+        'bairro': bairro_usuario,
+        'logradouro': logradouro,
+        'num_porta': num_porta,
+        'cidade': cidade,
+    })
+
+
+def processar_orcamento_regiao_manual(request):
+    if request.method == 'POST':
+        # Obtém os dados do orçamento da sessão
+        orcamento_data = request.session.get('orcamento', {})
+        tipo_entulho = orcamento_data.get('tipo_entulho')
+        data_inicio = orcamento_data.get('data_inicio')
+        data_retirada = orcamento_data.get('data_retirada')
+        logradouro = orcamento_data.get('logradouro')
+        num_porta = orcamento_data.get('num_porta', 'Número não informado')
+        cidade = orcamento_data.get('cidade', 'Cidade não informada')
+        bairro_usuario = orcamento_data.get('bairro', '')
+        
+        # Recupera a quantidade do produto selecionado
+        quantidade_desejada = orcamento_data.get('quantidade_desejada')
+        
+        # Obtém a região selecionada enviada pelo formulário
+        regiao_selecionada = request.POST.get('regiao_urbana', '').upper()
+        
+        if regiao_selecionada:
+            # Atualiza os dados do orçamento com a região selecionada
+            orcamento_data.update({'regiao': regiao_selecionada})
+            request.session['orcamento'] = orcamento_data
+
+            # Processa os dados com base na região e no orçamento
+            transportadores = buscar_transportadores_por_regiao(regiao_selecionada)
+          
+            produto_desejado = orcamento_data.get('produto')   
+            produto = verificar_produto(produto_desejado)
+            
+            if not produto:
+                return produto_nao_encontrado(request)
+
+            transportadores_com_produto = verificar_transportadores_com_produto(
+                transportadores, produto_desejado, produto, quantidade_desejada
+            )
+                
+            # Renderiza o template de resultado do orçamento
+            return render(request, 'resultado_orcamento.html', {
+                'transportadores_com_produto': transportadores_com_produto,
+                'regiao_selecionada': regiao_selecionada,
+                'produto_desejado': produto,
+                'quantidade_desejada': quantidade_desejada,
+                'tipo_entulho': tipo_entulho,
+                'data_inicio': data_inicio,
+                'data_retirada': data_retirada,
+                'bairro': bairro_usuario,
+                'logradouro': logradouro,
+                'num_porta': num_porta,
+                'cidade': cidade,
+            })
+
+        # Se a região não foi enviada
+        return render(request, 'regiao_nao_encontrado.html', {
+            'erro': 'Por favor, selecione uma região válida.'
+        })
 
 
 def buscar_regiao_por_bairro(bairro_usuario):
@@ -84,21 +162,24 @@ def buscar_regiao_por_bairro(bairro_usuario):
     return bairro.nome_regiao_regioes
 
 
-def buscar_transportadores_por_regiao(regiao_selecionada):
-    """
-    Busca transportadores que trabalham na região selecionada e estão ativos.
-    """
-    return Transportador.objects.filter(regioes_trabalho=regiao_selecionada, is_ativo=True)
+def buscar_transportadores_por_regiao(nome_regiao):
+    try:
+        regiao = Regiao_CG.objects.get(nome_regiao=nome_regiao)
+        return Transportador.objects.filter(regioes_trabalho=regiao)
+    except Regiao_CG.DoesNotExist:
+        return []
 
 
-def verificar_produto(form):
+def verificar_produto(produto_desejado):
     """
-    Verifica se o produto desejado existe e foi selecionado corretamente.
+    Retorna o produto desejado e o objeto do banco de dados correspondente.
     """
-    produto_desejado = form.cleaned_data.get('produto')
-    produto = Produto.objects.filter(nome=produto_desejado).first()
-    
-    return produto_desejado, produto
+    try:
+        produto = Produto.objects.get(nome=produto_desejado)
+        return produto
+    except Produto.DoesNotExist:
+        # Retorna None para indicar que o produto não foi encontrado
+        return produto_desejado, None
 
 
 def verificar_quantidade(form):
@@ -164,28 +245,52 @@ def cidade_nao_atendida(request):
 
 
 # Método confirmar_pedido
-def confirmar_pedido(request):  
+def confirmar_pedido(request):
+
+    # Recupera os dados existentes da sessão de orçamento
+    orcamento_data = request.session.get('orcamento', {})
+    
     if request.method == 'POST':
-        form = ConfirmarPedidoForm(request.POST)       
+        form = ConfirmarPedidoForm(request.POST)
         if form.is_valid():
-            transportador_selecionado = form.cleaned_data.get('transportador_selecionado')
+            transportador_selecionado = form.cleaned_data.get('transportador_selecionado')         
             if transportador_selecionado:
+                # Divide o transportador e preço
                 transportador, preco = transportador_selecionado.split('|')
-                # Salvando os dados na sessão para recuperá-los em qualquer template dentro da sessão
-                request.session['pedido_data'] = {
+                # Exemplo de dados de sessão com formatação ajustada
+                
+                data_inicio = orcamento_data.get('data_inicio')
+                data_inicio_formatada = datetime.strptime(data_inicio, '%Y-%m-%d').strftime('%d-%m-%Y')
+                orcamento_data['data_inicio'] = data_inicio_formatada
+                
+                data_retirada = orcamento_data.get('data_retirada')
+                data_retirada_formatada = datetime.strptime(data_retirada, '%Y-%m-%d').strftime('%d-%m-%Y')
+                orcamento_data['data_retirada'] = data_retirada_formatada
+                # Atualiza os dados da sessão de orçamento com os novos dados do formulário
+                orcamento_data.update({
                     'transportador': transportador,
                     'preco': preco,
                     'produto': form.cleaned_data.get('produto_desejado'),
                     'tipo_entulho': form.cleaned_data.get('tipo_entulho'),
                     'quantidade_desejada': form.cleaned_data.get('quantidade_desejada'),
-                    'data_inicio': form.cleaned_data.get('data_inicio'),
-                    'data_retirada': form.cleaned_data.get('data_retirada'),
                     'logradouro': form.cleaned_data.get('logradouro'),
                     'num_porta': form.cleaned_data.get('num_porta'),
                     'bairro': form.cleaned_data.get('bairro'),
                     'cidade': form.cleaned_data.get('cidade'),
-                }
-            return render(request, 'confirmar_pedido.html', request.session['pedido_data'])
+                })
+
+                # Salva os dados consolidados na sessão
+                request.session['pedido_data'] = orcamento_data
+
+                # Renderiza o template com os dados da sessão
+                return render(request, 'confirmar_pedido.html', {'form': form, 'orcamento_data': orcamento_data})
+        
+        # Se o formulário não for válido, renderiza novamente com o formulário e erros
+        return render(request, 'erro_confirmar_pedido.html')
+    
+    # Se o método não for POST, inicializa o formulário com os dados existentes do orçamento
+    form = ConfirmarPedidoForm(initial=orcamento_data)
+    return render(request, 'confirmar_pedido.html', {'form': form, 'orcamento_data': orcamento_data})
 
 
 # Método aviso_confirmacao

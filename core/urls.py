@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import IndexTemplateView, ContatoTemplateView, SobrenosTemplateView, \
-            OrcamentoForm, resultado_orcamento, confirmar_pedido, aviso_confirmacao 
+            OrcamentoForm, resultado_orcamento, confirmar_pedido, aviso_confirmacao, \
+            processar_orcamento_regiao_manual 
 
 app_name = 'core' # se no módulo urls.py do projeto tem o namespace, esse atributo é obrigatorio 
 
@@ -12,4 +13,5 @@ urlpatterns = [
     path('resultado_orcamento/', resultado_orcamento, name='resultado_orcamento'),
     path('confirmar_pedido/', confirmar_pedido, name='confirmar_pedido'),
     path('aviso_confirmacao/', aviso_confirmacao, name='aviso_confirmacao'),
+    path('processar_orcamento_regiao_manual/', processar_orcamento_regiao_manual, name='processar_orcamento_regiao_manual'),
 ]

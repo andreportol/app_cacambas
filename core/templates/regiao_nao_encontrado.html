@@ -4,14 +4,14 @@
 {% block content %}
     <div class="container">
         <p class="p-2 fs-5 text-warning text-center border border-2 border-white rounded">Selecione a região do seu bairro para que possamos prosseguir com o seu pedido</p>
-        <form action="{% url 'core:resultado_orcamento' %}" method="post" class="border border-2 rounded p-2">
+        <form action="{% url 'core:processar_orcamento_regiao_manual' %}" method="post" class="border border-2 rounded p-2">
             {% csrf_token %}
                 <div class="row">
                     <div class="col-12">
                         <input class="form-control pb-2 my-2" type="text" value="{{logradouro}}" id="logradouro" name="logradouro">
                         <input class="form-control pb-2 my-2" type="text" value="{{numero}}" id="num_porta" name="nr_porta">
                         <input class="form-control pb-2 my-2" type="text" value="{{bairro}}" id="bairro" name="bairro">
-                        <input name="regioes_urbana" class="form-control border border-3 border-danger" autofocus  list="datalistRegioes" id="exampleDataList" required placeholder="Clique para Selecionar a Região">
+                        <input name="regiao_urbana" class="form-control border border-3 border-danger" autofocus  list="datalistRegioes" id="exampleDataList" required placeholder="Clique para Selecionar a Região">
                         <datalist id="datalistRegioes">
                             <option value="Anhanduizinho">
                             <option value="Bandeira">
