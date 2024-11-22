@@ -15,9 +15,7 @@ class Usuario(Base):
     nr_porta = models.CharField(verbose_name='Número de porta', max_length=5)
     cep = models.CharField(verbose_name='CEP', max_length=9)
     bairro = models.CharField(verbose_name='Bairro', max_length=100)
-    latitude = models.CharField(verbose_name='Latitude', max_length=13, blank=False)
-    longitude = models.CharField(verbose_name='Longitude', max_length=13, blank=False)
-    
+        
     class Meta:
         verbose_name = 'Usuário'
         verbose_name_plural = 'Usuários'

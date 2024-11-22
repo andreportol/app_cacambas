@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django import forms
 from django.core.exceptions import ValidationError
+from .models import Usuario
 
 # formulário de validação do template orcamento.html
 class ResultadoOrcamentoForm(forms.Form):
@@ -88,3 +89,12 @@ class ConfirmarPedidoForm(forms.Form):
 class AvisoConfirmacaoForm(forms.Form):
     nome_cliente = forms.CharField(max_length=120)
     telefone_cliente = forms.CharField(max_length=15)
+
+class CadastroUsuarioForm(forms.ModelForm):
+    class Meta:
+        # Modelo base
+        model = Usuario
+        fields = [
+            'nome_usuario',
+            'telefone',
+        ]

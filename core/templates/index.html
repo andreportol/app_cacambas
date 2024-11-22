@@ -28,17 +28,15 @@
     <!-- Espaço para o nome do usuário alinhado à direita -->
     <span class="navbar-text text-white">
       {% if user.is_authenticated %}
-        Olá, {{ user.username }}
+        Olá, {{ user.first_name }} {{ user.last_name}}
       {% else %}
-      <button type="button" class="btn btn-outline-light"><a href="#" class="text-white">Entrar</a></button>  
-      
+      <button class="border border-1 border-white rounded bg-dark text-white p-2" type="button" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="py-3 my-3 fs-6 text-light" href="{% url 'core:cadastro_usuario' %}">Entrar</a>
+      </button>      
       {% endif %}
     </span>
   </div>
 </nav>
-
-
-
 
 <header class="mb-auto">
     <div>     

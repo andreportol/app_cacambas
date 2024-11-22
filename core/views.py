@@ -1,6 +1,6 @@
-from django.shortcuts import redirect, render
-from django.views.generic import TemplateView
-from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm, AvisoConfirmacaoForm
+from django.shortcuts import render
+from django.views.generic import TemplateView, CreateView
+from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm, AvisoConfirmacaoForm, CadastroUsuarioForm
 from .models import TransportadorProduto, Produto, Bairros_CG, Transportador, Regiao_CG
 from datetime import datetime
 
@@ -39,7 +39,6 @@ def resultado_orcamento(request):
                 return cidade_nao_atendida(request)
     form = ResultadoOrcamentoForm()
     return render(request, 'resultado_orcamento.html', {'form': form})
-
 
 
 def processar_orcamento_campo_grande(request, form=None):  
@@ -325,3 +324,8 @@ def aviso_confirmacao(request):
     você acessará esses valores com {{ transportador }}, {{ produto }}, e {{ preco }} 
     diretamente.
     '''
+
+class CadastroUsuarioCreateView(CreateView):
+    template_name = 'cadastro_usuario.html'
+    model='Usuario'
+    form_class= CadastroUsuarioForm

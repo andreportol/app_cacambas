@@ -3,7 +3,7 @@ from .models import Usuario, Transportador, Regiao_CG, Bairros_CG,Produto, Trans
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('nome_usuario', 'telefone', 'logradouro', 'nr_porta', 'bairro', 'cep', 'latitude', 'longitude', 'criado', 'modificado')
+    list_display = ('nome_usuario', 'telefone', 'logradouro', 'nr_porta', 'bairro', 'cep', 'criado', 'modificado')
     search_fields = ('nome_usuario', 'telefone', 'logradouro', 'bairro', 'cep')
     list_filter = ('bairro',)
     readonly_fields = ('criado', 'modificado')
