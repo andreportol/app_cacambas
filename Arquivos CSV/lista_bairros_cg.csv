@@ -1,0 +1,854 @@
+"id","nome_bairro","nome_regiao_regioes_id"
+902,José Abrão,SEGREDO
+903,Núcleo Habitacional José Abrão,SEGREDO
+904,Parque dos Laranjais,SEGREDO
+905,Jardim das Paineiras,SEGREDO
+906,Vila Oeste,SEGREDO
+907,Manoel Taveira,SEGREDO
+908,Núcleo Parque dos Laranjais,SEGREDO
+909,Jardim das Virtudes,SEGREDO
+910,Nasser,SEGREDO
+911,Vila Nasser,SEGREDO
+912,Santa Luzia,SEGREDO
+913,Vila Cox,SEGREDO
+914,Jardim Alto São Francisco,SEGREDO
+915,Jardim das Acácias,SEGREDO
+916,Vila Lili,SEGREDO
+917,Parque Residencial Azaléia,SEGREDO
+918,Jardim Veneza,SEGREDO
+919,Loteamento Municipal Dr. Miguel Vieira Ferreira,SEGREDO
+920,Jardim Fluminense,SEGREDO
+921,Nossa Senhora das Graças,SEGREDO
+922,Vila Nilza,SEGREDO
+923,Jardim Paquetá,SEGREDO
+924,Coophasul,SEGREDO
+925,Vila Nossa Senhora Aparecida,SEGREDO
+926,Vila Neuza,SEGREDO
+927,Vila Marli,SEGREDO
+928,Vila Novo Horizonte,SEGREDO
+929,Bosque da Saúde,SEGREDO
+930,São Caetano,SEGREDO
+931,Jardim Paradiso,SEGREDO
+932,Jardim Monte Alto,SEGREDO
+933,Loteamento Dona Dedé,SEGREDO
+934,Setvillage I,SEGREDO
+935,Setvillage II,SEGREDO
+936,Água Limpa Park,SEGREDO
+937,Residencial Carajás,SEGREDO
+938,Morada dos Deuses,SEGREDO
+939,Residencial Alto Tamandaré Residencial Recanto do Cerrado,SEGREDO
+940,Residencial Recanto do Cerrado,SEGREDO
+941,Bom Retiro,SEGREDO
+942,Residencial Tolentino,SEGREDO
+943,Jardim da Mooca,SEGREDO
+944,Monte Castelo,SEGREDO
+945,Residencial Vale do Sol I,SEGREDO
+946,Residencial Vale do Sol II,SEGREDO
+947,Residencial Vale do Sol III,SEGREDO
+948,Residencial Indaiá,SEGREDO
+949,Jardim São Paulo ,SEGREDO
+950,Vila São João Bosco,SEGREDO
+951,Residencial Otávio Pécora,SEGREDO
+952,Jardim Bosque de Avilan,SEGREDO
+953,Center Park,SEGREDO
+954,Jardim Aruba,SEGREDO
+955,Loteamento Campo Dourado,SEGREDO
+956,Loteamento Costa Verde,SEGREDO
+957,Praia da Urca,SEGREDO
+958,Residencial Gabura,SEGREDO
+959,Mata do Segredo,SEGREDO
+960,Jardim das Cerejeiras,SEGREDO
+961,Jardim Campo Novo,SEGREDO
+962,Jardim Presidente,SEGREDO
+963,Jardim Campo Belo,SEGREDO
+964,Loteamento Municipal Salinas,SEGREDO
+965,Loteamento Municipal Cristaldo,SEGREDO
+966,Núcleo das Cerejeiras,SEGREDO
+967,Jardim Nascente do Segredo,SEGREDO
+968,Residencial Gama,SEGREDO
+969,Arnaldino da Silva,SEGREDO
+970,Treviso,SEGREDO
+971,Coronel Antonino,SEGREDO
+972,Conjunto Residencial Estrela do Sul,SEGREDO
+973,Jardim Imperial,SEGREDO
+974,Jardim Mirasol,SEGREDO
+975,Eldorado,SEGREDO
+976,Vila Califórnia,SEGREDO
+977,Vila Triângulo,SEGREDO
+978,Guanabara,SEGREDO
+979,Morada Verde,SEGREDO
+980,Conjunto Residencial Nova Olinda,SEGREDO
+981,Jardim Campo Verde,SEGREDO
+982,Loteamento Municipal Raízes,SEGREDO
+983,Favela Rio de Janeiro,SEGREDO
+984,Favela Guatambu,SEGREDO
+985,Beco da Liberdade,SEGREDO
+986,Favela Nacional,SEGREDO
+987,Loteamento Municipal Jaburu,SEGREDO
+988,Núcleo Morada Verde,SEGREDO
+989,Parque Izabel Garden’s,SEGREDO
+990,Jardim Talismã,SEGREDO
+991,Residencial Atlântico Sul,SEGREDO
+992,Loteamento Morada do Sossego,SEGREDO
+993,Jardim Barcelona,SEGREDO
+994,Morada do Sossego II,SEGREDO
+995,Recanto Pantaneiro,SEGREDO
+996,Villa Ravenna,SEGREDO
+997,Villa Ravenna II,SEGREDO
+998,Ary Abussafi de Lima,SEGREDO
+999,Gregório Correa,SEGREDO
+1000,Nova Lima,SEGREDO
+1001,Jardim Anache,SEGREDO
+1002,Jardim Columbia,SEGREDO
+1003,Loteamento Municipal Pereira Borges,SEGREDO
+1004,Favela Jardim Anache,SEGREDO
+1005,área F,SEGREDO
+1006,Jardim Vida Nova,SEGREDO
+1007,Loteamento Vida Nova II,SEGREDO
+1008,Loteamento Tarsila do Amaral,SEGREDO
+1009,Loteamento Vida Nova III,SEGREDO
+1010,José Prates,SEGREDO
+1011,Coriolando da Silva Correa I,SEGREDO
+1012,Coriolando da Silva Correa II,SEGREDO
+1013,José Tavares do Couto,SEGREDO
+1014,Oscar Salazar Moura da Cruz,SEGREDO
+1015,Parque Iguatemi,SEGREDO
+1016,Seminário,SEGREDO
+1017,Jardim Seminário,SEGREDO
+1018,Jardim Seminário II,SEGREDO
+1019,Vila Santa Lúcia,SEGREDO
+1020,Vila Jardim Maria Amélia,SEGREDO
+1021,Vila Nossa Senhora da Conceição,SEGREDO
+1022,Jardim Oracília,SEGREDO
+1023,Vila Dalila,SEGREDO
+1024,Vila Leda,SEGREDO
+1025,Vila Antonieta,SEGREDO
+1026,Vila São Roque,SEGREDO
+1027,Vila Saraiva,SEGREDO
+1028,Portal do Gramado,SEGREDO
+1029,São Benedito,SEGREDO
+1030,Lagoa da Cruz,SEGREDO
+1031,Vila Lídia,SEGREDO
+1032,North Park,SEGREDO
+1033,Taveirópolis,LAGOA
+1034,Vila Taveiropolis,LAGOA
+1035,Santos Dumont,LAGOA
+1036,Vila Belo Horizonte,LAGOA
+1037,Bandeirantes,LAGOA
+1038,Vila Bandeirantes,LAGOA
+1039,Coophavila,LAGOA
+1040,Desmembramento Esteban Cornelas ,LAGOA
+1041,Vila Jurema,LAGOA
+1042,Caiçara,LAGOA
+1043,Vila dos Marimbas,LAGOA
+1044,Vila Jardim Anahy,LAGOA
+1045,Vila Jardim Anahy  ,LAGOA
+1046,Vila Maringá,LAGOA
+1048,União,LAGOA
+1049,Parque Residencial União,LAGOA
+1050,Parque Residencial União II,LAGOA
+1051,Residencial Oliveira I,LAGOA
+1052,Residencial Oliveira II,LAGOA
+1053,Residencial Oliveira III,LAGOA
+1054,Residencial das Flores,LAGOA
+1055,Parque Residencial dos Girassóis,LAGOA
+1056,Leblon,LAGOA
+1058,Jardim Leblon  ,LAGOA
+1059,Vila Jussara,LAGOA
+1060,Conjunto Habitacional Bonança,LAGOA
+1061,Jardim Europa,LAGOA
+1062,Coophamat,LAGOA
+1063,Jardim da Lapa,LAGOA
+1064,Desmembramento Flório Alcebíades Brandão,LAGOA
+1065,Jardim Antarctica,LAGOA
+1066,Vila Ouro Fino,LAGOA
+1067,Jardim Tatiana,LAGOA
+1068,Vila Ospampas,LAGOA
+1069,Loteamento Bonjardim,LAGOA
+1070,Núcleo Habitacional Buriti,LAGOA
+1071,Alto Leblon,LAGOA
+1072,São Conrado,LAGOA
+1073,Jardim São Conrado ,LAGOA
+1074,Jardim Santa Emília,LAGOA
+1075,Loteamento Municipal Interpraia,LAGOA
+1076,Vila Major Juares,LAGOA
+1077,Residencial Aquárius I,LAGOA
+1078,Residencial Aquárius II,LAGOA
+1079,Tijuca,LAGOA
+1080,Jardim Tijuca,LAGOA
+1082,Jardim dos Boggi,LAGOA
+1083,Vila Vilma,LAGOA
+1084,São Pedro,LAGOA
+1085,Jardim Verdes Mares,LAGOA
+1086,Residencial Barra da Tijuca,LAGOA
+1087,Residencial Barra da Tijuca II,LAGOA
+1088,Caiobá,LAGOA
+1089,Portal Caiobá,LAGOA
+1090,Portal Caiobá II,LAGOA
+1091,Rancho Alegre II,LAGOA
+1092,Vila Fernanda,LAGOA
+1093,Rivieira Park,LAGOA
+1094,Jardim Rancho Alegre I,LAGOA
+1095,Bela Laguna,LAGOA
+1096,Batistão,LAGOA
+1097,Jardim Batistão,LAGOA
+1098,São Jorge da Lagoa,LAGOA
+1099,Jardim Mato Grosso,LAGOA
+1100,Conjunto Residencial Serra Azul,LAGOA
+1101,Lagoa Park,LAGOA
+1102,Jardim Villa Lobos,LAGOA
+1103,Jardim Villa Lobos II,LAGOA
+1104,Coophavila II,LAGOA
+1105,Jardim Vila Kellem,LAGOA
+1106,Jardim Ouro Verde  ,LAGOA
+1107,Favela Tarumã,LAGOA
+1108,Tarumã,LAGOA
+1109,Jardim Tarumã,LAGOA
+1110,Conjunto Residencial Tarumã,LAGOA
+1111,Portal das Laranjeiras,LAGOA
+1112,Jardim Sol Poente,LAGOA
+1113,Jardim Corcovado,LAGOA
+1114,Vila Jandaia,LAGOA
+1115,Arapongas,LAGOA
+1116,Sobrinho,IMBIRUSSU
+1117,Vila Sobrinho,IMBIRUSSU
+1118,Vila Acrópolis,IMBIRUSSU
+1119,Vila Santa Rita,IMBIRUSSU
+1120,Vila Rosalina,IMBIRUSSU
+1121,Vila Nossa Senhora Auxiliadora,IMBIRUSSU
+1122,Cophaco,IMBIRUSSU
+1123,Parque dos Ipês,IMBIRUSSU
+1124,Jardim Leonidia,IMBIRUSSU
+1125,Coopermat,IMBIRUSSU
+1126,Vila Alba,IMBIRUSSU
+1127,Vila Espanhola,IMBIRUSSU
+1128,Jardim Ipanema,IMBIRUSSU
+1129,Vila Duque de Caxias,IMBIRUSSU
+1130,Vila Cinamomo,IMBIRUSSU
+1131,Lar do Trabalhador,IMBIRUSSU
+1132,Residencial Parque dos Flamingos,IMBIRUSSU
+1133,Vila Aviação,IMBIRUSSU
+1134,Parque São Domingos,IMBIRUSSU
+1135,Vila Oeste ,IMBIRUSSU
+1136,Loteamento Papa João Paulo II,IMBIRUSSU
+1137,Santo Amaro,IMBIRUSSU
+1138,Vila Santo Amaro,IMBIRUSSU
+1139,Vila Jardim Beija-Flor,IMBIRUSSU
+1140,Parque dos Laranjais ,IMBIRUSSU
+1141,Manoel Taveira ,IMBIRUSSU
+1142,Santa Carmélia,IMBIRUSSU
+1143,Jardim Itapuã,IMBIRUSSU
+1144,Coophatrabalho,IMBIRUSSU
+1145,Vila Dr. Jair Garcia,IMBIRUSSU
+1146,Jardim Canadá,IMBIRUSSU
+1147,Vila São Marcos,IMBIRUSSU
+1148,Vila Almeida ,IMBIRUSSU
+1149,Vila Palmira,IMBIRUSSU
+1150,Jardim Mandala,IMBIRUSSU
+1151,Residencial Sírio Libanês I,IMBIRUSSU
+1152,Residencial Sírio Libanês II,IMBIRUSSU
+1153,Jardim das Virtudes ,IMBIRUSSU
+1154,Residencial Hugo Rodrigues,IMBIRUSSU
+1155,Santo Antônio,IMBIRUSSU
+1156,Jardim Imá,IMBIRUSSU
+1157,Vila Nova,IMBIRUSSU
+1158,Loteamento Municipal Jaguaribe,IMBIRUSSU
+1159,Vila Doriza,IMBIRUSSU
+1160,Jardim Petrópolis ,IMBIRUSSU
+1161,Vila Bosque da Saudade,IMBIRUSSU
+1162,Vila Coutinho,IMBIRUSSU
+1163,Vila Sílvia Regina,IMBIRUSSU
+1164,Panamá,IMBIRUSSU
+1165,Jardim Panamá,IMBIRUSSU
+1166,Jardim Panamá II,IMBIRUSSU
+1167,Jardim Panamá III,IMBIRUSSU
+1168,Jardim Panamá IV,IMBIRUSSU
+1169,Jardim Panamá V,IMBIRUSSU
+1170,Jardim Panamá VI,IMBIRUSSU
+1171,Parque Residencial dos Bancários,IMBIRUSSU
+1172,Residencial Sagarana,IMBIRUSSU
+1173,Jardim Aroeira,IMBIRUSSU
+1174,Recanto dos Pássaros,IMBIRUSSU
+1175,Jardim do Zé Pereira,IMBIRUSSU
+1176,Residencial Ana Maria do Couto,IMBIRUSSU
+1177,Parque Residencial Bellinate,IMBIRUSSU
+1178,Residencial Búzios,IMBIRUSSU
+1179,Portal do Panamá,IMBIRUSSU
+1180,Jardim Mathilde,IMBIRUSSU
+1181,Bosque das Araras,IMBIRUSSU
+1182,Popular,IMBIRUSSU
+1183,Nova Campo Grande Bloco 11,IMBIRUSSU
+1184,Nova Campo Grande Bloco  ,IMBIRUSSU
+1185,Jardim das Reginas,IMBIRUSSU
+1186,Loteamento Municipal Macaé,IMBIRUSSU
+1187,Jardim Sayonara,IMBIRUSSU
+1188,Jardim Pantanal,IMBIRUSSU
+1189,Jardim Aeroporto,IMBIRUSSU
+1190,Jardim Itália,IMBIRUSSU
+1191,Bosque Santa Mônica,IMBIRUSSU
+1192,Bosque Santa Mônica II,IMBIRUSSU
+1193,Vila Romana,IMBIRUSSU
+1194,Nova Campo Grande,IMBIRUSSU
+1195,Nova Campo Grande Bloco 01,IMBIRUSSU
+1196,Nova Campo Grande Bloco 02,IMBIRUSSU
+1197,Nova Campo Grande Bloco 03,IMBIRUSSU
+1198,Nova Campo Grande Bloco 04,IMBIRUSSU
+1199,Nova Campo Grande Bloco 05,IMBIRUSSU
+1200,Nova Campo Grande Bloco 06,IMBIRUSSU
+1201,Nova Campo Grande Bloco 07,IMBIRUSSU
+1202,Nova Campo Grande Bloco 08,IMBIRUSSU
+1203,Vila Eliane ,IMBIRUSSU
+1204,Vila Serradinho,IMBIRUSSU
+1205,Jardim Carioca,IMBIRUSSU
+1206,Residencial Nelson Trad,IMBIRUSSU
+1207,Núcleo Industrial,IMBIRUSSU
+1208,Jardim Inápolis,IMBIRUSSU
+1209,Vila Manoel Secco Thomé,IMBIRUSSU
+1210,Vila Entroncamento ,IMBIRUSSU
+1211,Pólo Empresarial Oeste,IMBIRUSSU
+1212,Morada Imperial,IMBIRUSSU
+1213,Bairro Jardim Paulista,BANDEIRA
+1214,Jardim Paulista,BANDEIRA
+1215,Vila Progresso,BANDEIRA
+1216,Bairro TV Morena,BANDEIRA
+1217,Jardim TV Morena,BANDEIRA
+1218,Jardim Paulista ,BANDEIRA
+1219,Paranaense ,BANDEIRA
+1220,Vila Carlota ,BANDEIRA
+1221,Vila Vilasboas,BANDEIRA
+1222,Jardim Alegre ,BANDEIRA
+1223,Vila Portinho Frederico Pache ,BANDEIRA
+1224,Indiana Park,BANDEIRA
+1225,Jardim Mansur,BANDEIRA
+1226,Jardim Auxiliadora ,BANDEIRA
+1227,Jardim Ipanema ,BANDEIRA
+1228,Parque Dallas,BANDEIRA
+1229,Residencial Vila Olímpica,BANDEIRA
+1230,Villas Park Residence,BANDEIRA
+1231,Amantini Residence,BANDEIRA
+1232,São Lourenço,BANDEIRA
+1233,Jardim São Lourenço,BANDEIRA
+1234,Jardim Ibirapuera ,BANDEIRA
+1235,Vila Almeida Lima,BANDEIRA
+1236,Vila Zoe,BANDEIRA
+1237,Vila Antônio Vendas,BANDEIRA
+1238,Tiradentes Suplemento,BANDEIRA
+1239,Tiradentes ,BANDEIRA
+1240,Residencial Nova Tiradentes,BANDEIRA
+1241,Jardim Flamboyant,BANDEIRA
+1242,Jardim Flamboyant II,BANDEIRA
+1243,Desbarrancado ,BANDEIRA
+1244,Parque Residencial Arnaldo Estevão de Figueiredo,BANDEIRA
+1245,Parque Residencial Arnaldo Estevão de Figueiredo II,BANDEIRA
+1246,Loteamento Municipal Dalva de Oliveira,BANDEIRA
+1247,Loteamento Municipal Dalva de Oliveira II,BANDEIRA
+1248,Loteamento Municipal Cavan,BANDEIRA
+1249,Núcleo Tiradentes,BANDEIRA
+1250,Regina,BANDEIRA
+1251,Residencial Itatiaia,BANDEIRA
+1252,Vila Jardim São Bernardo,BANDEIRA
+1253,Jardim Vitória,BANDEIRA
+1254,Parque Residencial Anhembi,BANDEIRA
+1255,Loteamento Portobello,BANDEIRA
+1256,Loteamento Marçal de Souza,BANDEIRA
+1257,Jardim Cristo Redentor,BANDEIRA
+1258,Loteamento Estrela Parque,BANDEIRA
+1259,Jardim São Judas Tadeu,BANDEIRA
+1260,Jardim Jerusalém,BANDEIRA
+1261,Parque Residencial Maria Aparecida Pedrossian,BANDEIRA
+1262,Panorama,BANDEIRA
+1263,Vivendas do Parque,BANDEIRA
+1264,Jardim Samambaia,BANDEIRA
+1265,Residencial Oiti,BANDEIRA
+1266,Núcleo Panorama,BANDEIRA
+1267,Parque Residencial Damha,BANDEIRA
+1268,Parque Residencial Damha II,BANDEIRA
+1269,Parque Residencial Damha III,BANDEIRA
+1270,Parque Residencial Damha IV,BANDEIRA
+1271,Rita Vieira,BANDEIRA
+1272,Parque Rita Vieira,BANDEIRA
+1273,Vila Dom Pedrito,BANDEIRA
+1274,Vila Morumbi ,BANDEIRA
+1275,Coopharádio,BANDEIRA
+1276,Chácara José Antônio Pereira,BANDEIRA
+1277,Jardim LAGOA Dourada,BANDEIRA
+1278,Jardim Nossa Senhora do Perpétuo Socorro,BANDEIRA
+1279,Jardim Itamaracá,BANDEIRA
+1280,Jardim Anhanguera,BANDEIRA
+1281,Jardim Águas Vivas,BANDEIRA
+1282,Carlota,BANDEIRA
+1283,Vila Ieda,BANDEIRA
+1284,Vila Dr. Albuquerque ,BANDEIRA
+1285,Jardim Itapema,BANDEIRA
+1286,Dr. Albuquerque,BANDEIRA
+1287,Vila Olinda,BANDEIRA
+1288,Vila Progresso 3º ,BANDEIRA
+1289,Vila Maciel,BANDEIRA
+1290,Universitário  A,BANDEIRA
+1291,Universitário  B,BANDEIRA
+1292,Residencial Betaville,BANDEIRA
+1293,Vila Concórdia,BANDEIRA
+1294,Vila Santo Eugênio,BANDEIRA
+1295,Jardim Ametista,BANDEIRA
+1296,Jardim Tropical,BANDEIRA
+1297,Pequena Flor I,BANDEIRA
+1298,Jardim das Perdizes,BANDEIRA
+1299,Recanto das Palmeiras,BANDEIRA
+1300,Jardim Campo Limpo,BANDEIRA
+1301,Núcleo Habitacional Recanto dos Rouxinóis,BANDEIRA
+1302,Jardim Moema,BANDEIRA
+1303,Sitiocas Alvorada,BANDEIRA
+1304,Jardim Campina Verde,BANDEIRA
+1305,Jardim Campo Alto,BANDEIRA
+1306,Jardim Pacaembu,BANDEIRA
+1307,Núcelo Campina Verde,BANDEIRA
+1308,Jardim Indianápolis,BANDEIRA
+1309,Vila Julieta,BANDEIRA
+1310,Jardim Antares,BANDEIRA
+1311,Edson Brito Garcia,BANDEIRA
+1312,Loteamento Volpe,BANDEIRA
+1313,Loteamento Volpe II,BANDEIRA
+1314,Moreninha,BANDEIRA
+1315,Núcleo Habitacional Moreninha I,BANDEIRA
+1316,Núcleo Habitacional Moreninha II,BANDEIRA
+1317,Núcleo Habitacional Moreninha III,BANDEIRA
+1318,Loteamento Moreninha IV,BANDEIRA
+1319,Chácara Novo Horizonte,BANDEIRA
+1320,Jardim Santa Felicidade,BANDEIRA
+1321,Vila Cidade Morena,BANDEIRA
+1322,Loteamento Municipal Ribeira,BANDEIRA
+1323,Jardim Gramado,BANDEIRA
+1324,Jardim Nova Capital,BANDEIRA
+1325,Jardim Nova Jerusalém,BANDEIRA
+1326,Jardim do Córrego,BANDEIRA
+1327,Residencial Terra dos Pequis,BANDEIRA
+1328,Paraíso do Lageado,BANDEIRA
+1329,Taquarussu,ANHANDUIZINHO
+1330,Jardim Taquarussu,ANHANDUIZINHO
+1331,Cohafama,ANHANDUIZINHO
+1332,Vila Santo Afonso,ANHANDUIZINHO
+1333,Vila Afonso Pena,ANHANDUIZINHO
+1334,Vila Afonso Pena Júnior,ANHANDUIZINHO
+1335,Vila Itamarat,ANHANDUIZINHO
+1336,Jockey Club,ANHANDUIZINHO
+1337,Vila Jardim Jockey Club,ANHANDUIZINHO
+1338,Vila Marcos Roberto,ANHANDUIZINHO
+1339,Vila Bom Jesus,ANHANDUIZINHO
+1340,Vila Santa Amélia Baís,ANHANDUIZINHO
+1341,Residencial Santa Celina,ANHANDUIZINHO
+1342,América,ANHANDUIZINHO
+1343,Vila Jardim América,ANHANDUIZINHO
+1344,Vila Valparaíso,ANHANDUIZINHO
+1345,Piratininga,ANHANDUIZINHO
+1346,Vila Piratininga,ANHANDUIZINHO
+1347,Jardim Nhanhá,ANHANDUIZINHO
+1348,Promorar,ANHANDUIZINHO
+1349,Vila Ipiranga,ANHANDUIZINHO
+1350,Núcleo Piratininga,ANHANDUIZINHO
+1351,Vila Getúlia Barbosa,ANHANDUIZINHO
+1352,Vitta Bella,ANHANDUIZINHO
+1353,Jacy,ANHANDUIZINHO
+1354,Jardim Jacy,ANHANDUIZINHO
+1355,Vila Nova Bandeirantes,ANHANDUIZINHO
+1356,Guanandi,ANHANDUIZINHO
+1357,Favela Dona Neta,ANHANDUIZINHO
+1358,Favela Núcleo Guanandi I,ANHANDUIZINHO
+1359,Aero Rancho,ANHANDUIZINHO
+1360,Loteamento Guanandi II,ANHANDUIZINHO
+1361,Núcleo Aero Rancho I Q.21,ANHANDUIZINHO
+1362,Núcleo Aero Rancho Q.5-A,ANHANDUIZINHO
+1363,Jardim das Hortênsias I,ANHANDUIZINHO
+1364,Jardim das Hortênsias II,ANHANDUIZINHO
+1365,Jardim das Hortênsias III,ANHANDUIZINHO
+1366,Parati,ANHANDUIZINHO
+1367,Jardim Parati,ANHANDUIZINHO
+1368,Jardim Parati II,ANHANDUIZINHO
+1369,Granja Bandeira ,ANHANDUIZINHO
+1370,Loteamento Alto da Boa Vista e Jardim das Nações,ANHANDUIZINHO
+1371,Pioneiros,ANHANDUIZINHO
+1372,Jardim Colonial,ANHANDUIZINHO
+1373,Residencial do Lago,ANHANDUIZINHO
+1374,Vila Adelina,ANHANDUIZINHO
+1375,Vila Maciel ,ANHANDUIZINHO
+1376,Universitário C,ANHANDUIZINHO
+1377,Vila Jardim Pioneiros,ANHANDUIZINHO
+1378,Vila Santa Branca,ANHANDUIZINHO
+1379,Vila Santa Branca  ,ANHANDUIZINHO
+1380,Jardim Santa Úrsula,ANHANDUIZINHO
+1381,Recanto das Andorinhas,ANHANDUIZINHO
+1382,Jardim das Mansões Universitárias,ANHANDUIZINHO
+1383,Conjunto Habitacional Jardim Anápolis,ANHANDUIZINHO
+1384,Jardim Rubiácea,ANHANDUIZINHO
+1385,Jardim Jane,ANHANDUIZINHO
+1386,Jardim Botafogo,ANHANDUIZINHO
+1387,Jardim Morenão,ANHANDUIZINHO
+1388,Jardim Vicentino,ANHANDUIZINHO
+1389,Jardim Roselândia,ANHANDUIZINHO
+1390,Residencial Botafogo,ANHANDUIZINHO
+1391,Parque Residencial Lisboas,ANHANDUIZINHO
+1392,Jardim Botânico,ANHANDUIZINHO
+1393,Jardim Botânico II,ANHANDUIZINHO
+1394,Jardim Agulhas Negras,ANHANDUIZINHO
+1395,Porto Galo,ANHANDUIZINHO
+1396,Residencial Geraldo Correa da Silva,ANHANDUIZINHO
+1397,Alves Pereira,ANHANDUIZINHO
+1398,Vila Alves Pereira,ANHANDUIZINHO
+1399,Universitário D,ANHANDUIZINHO
+1400,Jardim Monumento,ANHANDUIZINHO
+1401,Vila Antunes,ANHANDUIZINHO
+1402,Parque do Trabalhador,ANHANDUIZINHO
+1403,Residencial João Scarano,ANHANDUIZINHO
+1404,Jardim Colibri,ANHANDUIZINHO
+1405,Jardim Colibri II,ANHANDUIZINHO
+1406,Núcleo Habitacional Universitárias I,ANHANDUIZINHO
+1407,Núcleo Habitacional Universitárias II,ANHANDUIZINHO
+1408,Jardim Macapá,ANHANDUIZINHO
+1409,Loteamento Municipal Alan Soares,ANHANDUIZINHO
+1410,Núcleo Colibri II,ANHANDUIZINHO
+1411,Núcleo Alves Pereira,ANHANDUIZINHO
+1412,Jardim Nashville,ANHANDUIZINHO
+1413,Vila Clélia,ANHANDUIZINHO
+1414,Loteamento Porto Seguro,ANHANDUIZINHO
+1415,Residencial Ilhéus,ANHANDUIZINHO
+1416,Cidade Nova,ANHANDUIZINHO
+1417,Centenário,ANHANDUIZINHO
+1418,Jardim Centenário,ANHANDUIZINHO
+1419,Granja São Luiz ,ANHANDUIZINHO
+1420,Jardim Monte Alegre,ANHANDUIZINHO
+1421,Desmembramento Carlinda Pereira Contar,ANHANDUIZINHO
+1422,Vila Nogueira,ANHANDUIZINHO
+1423,Vila Amapá,ANHANDUIZINHO
+1424,Vila Aimoré,ANHANDUIZINHO
+1425,Vila Aimoré II,ANHANDUIZINHO
+1426,Parque Residencial Iracy Coelho Netto,ANHANDUIZINHO
+1427,Parque Residencial Iracy Coelho Netto II,ANHANDUIZINHO
+1428,Parque Residencial Iracy Coelho Netto III,ANHANDUIZINHO
+1429,Núcleo Centenário,ANHANDUIZINHO
+1430,Núcleo Vila Nogueira,ANHANDUIZINHO
+1431,Jardim Pênfigo,ANHANDUIZINHO
+1432,Residencial Vila Bela,ANHANDUIZINHO
+1433,Residencial Ouro Preto,ANHANDUIZINHO
+1434,Jardim Manaíra,ANHANDUIZINHO
+1435,Jardim Monterey,ANHANDUIZINHO
+1436,Jardim Radialista,ANHANDUIZINHO
+1437,Loteamento Residencial Cedrinho,ANHANDUIZINHO
+1438,Jardim das Princesas I,ANHANDUIZINHO
+1439,Jardim das Princesas II,ANHANDUIZINHO
+1440,Vila Áurea,ANHANDUIZINHO
+1441,Lageado,ANHANDUIZINHO
+1442,Parque do Lageado,ANHANDUIZINHO
+1443,Loteamento Municipal Dom Antônio Barbosa,ANHANDUIZINHO
+1444,Parque do Sol,ANHANDUIZINHO
+1445,Jardim Colorado,ANHANDUIZINHO
+1446,Residencial José Teruel Filho,ANHANDUIZINHO
+1447,Parque dos Sabiás,ANHANDUIZINHO
+1448,Los Angeles,ANHANDUIZINHO
+1449,Jardim Los Angeles,ANHANDUIZINHO
+1450,Jardim Sumatra,ANHANDUIZINHO
+1451,Jardim Morada do Sol,ANHANDUIZINHO
+1452,Jardim Uirapuru,ANHANDUIZINHO
+1453,Loteamento Vespasiano Martins,ANHANDUIZINHO
+1454,Residencial Terra Morena,ANHANDUIZINHO
+1455,Centro-Oeste,ANHANDUIZINHO
+1456,Jardim Centro Oeste,ANHANDUIZINHO
+1457,Jardim Marajoara,ANHANDUIZINHO
+1458,Jardim Bálsamo,ANHANDUIZINHO
+1459,Jardim Campo Nobre,ANHANDUIZINHO
+1460,Jardim das Macaúbas,ANHANDUIZINHO
+1461,Jardim das Meninas,ANHANDUIZINHO
+1462,Loteamento Municipal Brandão,ANHANDUIZINHO
+1463,Núcleo Jardim das Macaúbas,ANHANDUIZINHO
+1464,Jardim Canguru,ANHANDUIZINHO
+1465,Jardim Paulo Coelho Machado,ANHANDUIZINHO
+1466,Parque Novo Século,ANHANDUIZINHO
+1467,Jardim Mário Covas,ANHANDUIZINHO
+1468,Varandas do Campo,ANHANDUIZINHO
+1469,Autonomista,PROSA
+1470,Taquari,PROSA
+1471,Loteamento Petit Park,PROSA
+1472,Royal Park,PROSA
+1473,de Andrade,PROSA
+1474,Carolina,PROSA
+1475,Municipal Guaicurus,PROSA
+1476,Municipal Paulo VI,PROSA
+1477,Nazaré,PROSA
+1478,Dalva III,PROSA
+1479,da Esperança,PROSA
+1480,Jardim Autonomista,PROSA
+1481,Vila Cacique,PROSA
+1482,Coophabanco,PROSA
+1483,Chácara Cachoeira,PROSA
+1484,Residencial Itacolomi,PROSA
+1485,Jardim Marabá,PROSA
+1486,Loteamento Municipal Verde Brasil,PROSA
+1487,Mata do Jacinto,PROSA
+1488,Favela do Limão,PROSA
+1489,Loteamento Abaeté,PROSA
+1490,Taquaral Bosque,PROSA
+1491,Beirute Residence Park,PROSA
+1492,Jardim Autonomista II,PROSA
+1493,Vila Pagé,PROSA
+1494,Vila Boa Esperança,PROSA
+1495,Tropical Park,PROSA
+1496,Loteamento Municipal Joaquim Euzébio,PROSA
+1497,Núcleo Marabá,PROSA
+1498,Conjunto Mata do Jacinto,PROSA
+1499,Loteamento Municipal Ceasa,PROSA
+1500,Loteamento Sóter,PROSA
+1501,Veraneio,PROSA
+1502,Bosque da Esperança II,PROSA
+1503,Jardim Autonomista III,PROSA
+1504,Jardim Vitrine,PROSA
+1505,Coophafé,PROSA
+1506,Chácara Cachoeira II,PROSA
+1507,Loteamento Residencial Via Park,PROSA
+1508,Loteamento,PROSA
+1509,Carandá Bosque,PROSA
+1510,Loteamento Municipal,PROSA
+1511,Novos Estados,PROSA
+1512,Jardim Veraneio,PROSA
+1513,Chácara dos Poderes,PROSA
+1514,Jardim Giocondo Orsi,PROSA
+1515,Vila Orsi,PROSA
+1516,Santa Fé,PROSA
+1517,Cachoeirinha,PROSA
+1518,Residencial Via Park Itália,PROSA
+1519,Jardim Montevidéu,PROSA
+1520,Vila Futurista,PROSA
+1521,Jardim Giocondo Orsi II,PROSA
+1522,Vila Cruzeiro do Sul,PROSA
+1523,Jatiúca Park,PROSA
+1524,Margarida,PROSA
+1525,Conjunto Residencial Novo Amazonas,PROSA
+1526,Vila Danúbio Azul,PROSA
+1527,Vila Monte Carlo,PROSA
+1528,Vila Santos Gomes,PROSA
+1529,Vila Miguel Couto,PROSA
+1530,Vila Margarida,PROSA
+1531,Conjunto Residencial Nova Bahia,PROSA
+1532,Jardim Tayana,PROSA
+1533,Jardim Pinheiros,PROSA
+1534,Vila Rica,PROSA
+1535,Vila Lucinda,PROSA
+1536,Conjunto Residencial Novo Pernambuco,PROSA
+1537,Vila Abdalla,PROSA
+1538,Jardim Cabral,PROSA
+1539,Conjunto Residencial Nova Ipanema,PROSA
+1540,Vila,PROSA
+1541,Vila Catarina,PROSA
+1542,Conjunto Residencial Novo Rio Grande do Sul,PROSA
+1543,Desbarrancado,PROSA
+1544,Vila Telma,PROSA
+1545,Miguel Couto,PROSA
+1546,Vila Catarina II,PROSA
+1547,Conjunto Residencial Novo Maranhão,PROSA
+1548,Jardim Arco-Íris,PROSA
+1549,Vila Raquel,PROSA
+1550,Vivendas do Bosque,PROSA
+1551,Vila Manoel da Costa Lima,PROSA
+1552,Conjunto Residencial Novo Sergipe,PROSA
+1553,Loteamento Bosque,PROSA
+1554,Vila Sônia,PROSA
+1555,Jardim Umuarama,PROSA
+1556,Cidade Jardim,PROSA
+1557,San Marino Park,PROSA
+1558,Nahima Park,PROSA
+1559,Altos da Afonso Pena,PROSA
+1560,Carandá,PROSA
+1561,Carandá Bosque II,PROSA
+1562,Carandá Bosque III,PROSA
+1563,Golden Gate Park,PROSA
+1564,Portal Itayara,PROSA
+1565,Vila do Polonês,PROSA
+1566,Tayamã Park,PROSA
+1567,Vila Nascente,PROSA
+1568,Loteamento Copacabana,PROSA
+1569,Loteamento Municipal Mário,PROSA
+1570,Conjunto Residencial Novo São Paulo,PROSA
+1571,Conjunto Residencial Novo Alagoas,PROSA
+1572,Conjunto Residencial Novo Minas Gerais,PROSA
+1573,Conjunto Residencial Novo Paraná,PROSA
+1574,Jardim Jacarandá,PROSA
+1575,Alphaville Campo Grande,PROSA
+1576,Alphaville Campo Grande II,PROSA
+1577,Alphaville Campo Grande III e Alphaville Campo Grande IV,PROSA
+1578,Estrela Dalva,PROSA
+1579,Jardim Estrela Dalva I,PROSA
+1580,Jardim Estrela Dalva II,PROSA
+1581,Jardim Estrela,PROSA
+1582,Noroeste,PROSA
+1583,Jardim Noroeste,PROSA
+1584,Loteamento Nova Serrana,PROSA
+1585,Serraville,PROSA
+1586,Centro,CENTRO
+1587,Cidade,CENTRO
+1588,Vila Alta,CENTRO
+1589,Vila General Wolfgrand,CENTRO
+1590,Vila América,CENTRO
+1591,Vila Ilgenfritz,CENTRO
+1592,Vila Clementina,CENTRO
+1593,Jardim Aclimação ,CENTRO
+1594,Vila Bartiria,CENTRO
+1595,São Francisco,CENTRO
+1596,Vila São Francisco,CENTRO
+1597,Vila Helena,CENTRO
+1598,Vila Anfe,CENTRO
+1599,Vila Cristina,CENTRO
+1600,Vila São Sebastião,CENTRO
+1601,Vila Aprazível,CENTRO
+1602,Jardim Cidade,CENTRO
+1603,Jardim Brasil,CENTRO
+1604,Vila Alto das Paineiras,CENTRO
+1605,Desmembramento Sanziro Katayama,CENTRO
+1606,Vila São Thomé,CENTRO
+1607,Vila Capri,CENTRO
+1608,Vila Benjamim,CENTRO
+1609,Nossa Senhora de Fátima ,CENTRO
+1610,Monte Castelo ,CENTRO
+1611,Vila Esplanada,CENTRO
+1612,Vila São Luís,CENTRO
+1613,Cofermat,CENTRO
+1614,Vila Santa Bárbara,CENTRO
+1615,Vila Lídia ,CENTRO
+1616,Cascudo,CENTRO
+1617,Cruzeiro,CENTRO
+1618,Clube Campestre Ypê,CENTRO
+1619,Coronel Antonino ,CENTRO
+1620,Vila Rosa,CENTRO
+1621,Vila Marman,CENTRO
+1622,Vila Gomes,CENTRO
+1623,Vila Célia,CENTRO
+1624,Vila Sílvia,CENTRO
+1625,Coophagrande (Conjunto Eudes Costa),CENTRO
+1626,Vila Suíça,CENTRO
+1627,Conjunto Residencial Monte Castelo,CENTRO
+1628,Coophaban,CENTRO
+1629,Jardim dos Estados,CENTRO
+1630,Vila Santa Odete,CENTRO
+1631,Vila Guaraciaba,CENTRO
+1632,Vila Tupaceretan,CENTRO
+1633,Vila Esportiva,CENTRO
+1634,Vila XV de Novembro,CENTRO
+1635,Jardim 7 de Setembro,CENTRO
+1636,Vila Mandeta,CENTRO
+1638,Vila São Jorge,CENTRO
+1639,Cachoeira,CENTRO
+1640,Vila Onze,CENTRO
+1641,Vila São Gabriel,CENTRO
+1642,Vila Mariana,CENTRO
+1643,Vila Bernardo Goldman,CENTRO
+1644,Vila Isís,CENTRO
+1645,Vila Abdo,CENTRO
+1646,Vila Alto Campo de Marte,CENTRO
+1647,Vila Santério,CENTRO
+1648,Vila da Saúde,CENTRO
+1649,Vila Paulistana,CENTRO
+1650,Vila Paraíso,CENTRO
+1651,Vila Paraíso Suplemento,CENTRO
+1652,Vila São Elias,CENTRO
+1653,Vila Lia,CENTRO
+1654,Chácara dos Coqueiros,CENTRO
+1655,Vila Rolim,CENTRO
+1656,Desmembramento Clara Goldman,CENTRO
+1657,Desmembramento Hugo Zapata,CENTRO
+1658,Vila Santos Gomes ,CENTRO
+1659,Vila Suburbano,CENTRO
+1660,Vila Sant’ana,CENTRO
+1661,Vila Maria,CENTRO
+1662,Chácara Cachoeira ,CENTRO
+1663,Bela Vista,CENTRO
+1664,Jardim Bela Vista,CENTRO
+1665,Vila Costa Lima,CENTRO
+1666,Jardim Santa Catarina,CENTRO
+1667,Chácara Vendas,CENTRO
+1668,Jardim Nova Era,CENTRO
+1669,Residencial Village,CENTRO
+1670,Vila Antônio Vendas ,CENTRO
+1671,Desmembramento Antônio Vendas,CENTRO
+1672,Vila Miguel Couto ,CENTRO
+1673,Desmembramento Chácara Vendas,CENTRO
+1674,Chácara Boa Vista,CENTRO
+1675,Villa Di Parma,CENTRO
+1676,Itanhangá,CENTRO
+1677,Itanhangá Park,CENTRO
+1678,Jardim Piracicaba,CENTRO
+1679,Vila Gatão,CENTRO
+1680,Vila Rosa Pires,CENTRO
+1681,Vila Dr. João Rosa,CENTRO
+1682,Vila Rezende,CENTRO
+1683,Jardim Vista Alegre,CENTRO
+1684,Vila Joselito,CENTRO
+1685,Coophamorena,CENTRO
+1686,Desmembramento Glaucos da Costa Marques,CENTRO
+1687,São Bento,CENTRO
+1688,Jardim São Bento,CENTRO
+1689,Vila Nova São Bento,CENTRO
+1690,Jardim Guarujá,CENTRO
+1691,Vila Galvão,CENTRO
+1692,Monte Líbano,CENTRO
+1693,Jardim Monte Líbano,CENTRO
+1694,Vila Santo André,CENTRO
+1695,Jardim de Allah,CENTRO
+1696,Vila Antônio Inácio de Souza,CENTRO
+1697,Glória,CENTRO
+1698,Vila Glória,CENTRO
+1699,Vila Fortuna,CENTRO
+1700,Vila Eva,CENTRO
+1701,Vila Oriente,CENTRO
+1702,Vila Gaspar,CENTRO
+1703,Vila Taveira,CENTRO
+1704,Vila Sol Nascente,CENTRO
+1705,Vila Ornelas,CENTRO
+1706,Vila Santa Filomena,CENTRO
+1707,Vila São Miguel,CENTRO
+1708,Vila Castelo,CENTRO
+1709,Vila Jardim Alvorada,CENTRO
+1710,Vila Liberdade,CENTRO
+1711,Vila Santa Dorothea,CENTRO
+1712,Carvalho,CENTRO
+1713,Vila Carvalho,CENTRO
+1714,Vila Nossa Senhora de Lourdes,CENTRO
+1715,Vila São José,CENTRO
+1716,Vila Santa Maria,CENTRO
+1717,Vila Quito,CENTRO
+1718,Vila Carvalho Baís,CENTRO
+1719,Desmembramento Emílio Cury,CENTRO
+1720,Vila São Rafael,CENTRO
+1721,Vila Oliveira,CENTRO
+1722,Vila Americana,CENTRO
+1723,Vila Santa Luiza,CENTRO
+1724,Amambaí,CENTRO
+1725,Vila Perseverança,CENTRO
+1726,Vila Maracajú,CENTRO
+1727,Vila Guenka,CENTRO
+1728,Vila São João,CENTRO
+1729,Vila Santo Antônio,CENTRO
+1730,Vila Olga,CENTRO
+1731,Vila Barão do Rio Branco,CENTRO
+1732,Vila Aurora,CENTRO
+1733,Vila Warde,CENTRO
+1734,Vila Floresta,CENTRO
+1735,Vila Portão de Ferro,CENTRO
+1736,Vila Orpheu Baís,CENTRO
+1737,Vila São Vicente,CENTRO
+1738,Cohasmat (Sargento Amaral),CENTRO
+1739,Cabreúva,CENTRO
+1740,Vila Feliciana Carolina ,CENTRO
+1741,Vila Santa Rosa ,CENTRO
+1742,Vila Marisa,CENTRO
+1743,Vila Guarani,CENTRO
+1744,Vila Independência,CENTRO
+1745,Planalto,CENTRO
+1746,Vila Planalto,CENTRO
+1747,Vila Soares,CENTRO
+1748,Vila São Manoel,CENTRO
+1749,Vila Santa Tereza,CENTRO
+1750,Vila Estephania,CENTRO
+1751,Vila Alto Sumaré,CENTRO
+1752,Vila Corumbá,CENTRO
+1753,Vila Santos,CENTRO
+1754,Vila Boa Vista,CENTRO
+1755,Monte Verde,CENTRO
+1756,Colinas de Campo Grande,CENTRO
+1757,Sky Residence,CENTRO
+1758,Vila Vilas Boas,BANDEIRA

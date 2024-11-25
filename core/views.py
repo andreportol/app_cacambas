@@ -60,7 +60,7 @@ def processar_orcamento_campo_grande(request, form=None):
     produto_desejado = orcamento_data.get('produto')
     
     try:
-        bairro = Bairros_CG.objects.get(nome_bairro__icontains=bairro_usuario)
+        bairro = Bairros_CG.objects.filter(nome_bairro__icontains=bairro_usuario).first()
         regiao_selecionada = buscar_regiao_por_bairro(bairro.nome_bairro)
     except Bairros_CG.DoesNotExist:        
         return render(request, 'regiao_nao_encontrado.html', {

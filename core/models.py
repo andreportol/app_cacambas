@@ -43,7 +43,7 @@ class Regiao_CG(models.Model):
         return self.nome_regiao
 
 class Bairros_CG(models.Model):
-    nome_bairro = models.CharField(verbose_name='Bairro', max_length=150)
+    nome_bairro = models.CharField(verbose_name='Bairro', max_length=150, unique=True)
     nome_regiao_regioes = models.ForeignKey(Regiao_CG,to_field='nome_regiao',  verbose_name='Nome Região', on_delete=models.PROTECT)
     
     class Meta:
