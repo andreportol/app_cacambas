@@ -38,7 +38,7 @@
         <div class="container pt-3">
             <form class="form-control text-bg-dark p-3" method="post" action="{% url 'core:resultado_orcamento' %}">      
                 {% csrf_token %}
-                <h3 class=" fs-2 text-center">Orçamento</h3>
+                <h3 class=" fs-2 text-center text-warning">Orçamento Grátis</h3>
                 <div class="row pt-3 border border-warning rounded p-2">
                     <div class="col-lg-12">
                         <div class="input-group mb-2 pt-3">
@@ -67,29 +67,22 @@
                             </label>
                         </div>
                         <div class="form-check">
-                            <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_B" id="flexCheck_B">
-                            <label class="form-check-label" for="flexCheck_B">
-                                CLASSE B - Restos de madeira, metal, plástico, papel, papelão, vidros.
-                            </label>
-                        </div>
-                        <div class="form-check">
                             <input name="tipo_residuo"class="form-check-input" type="radio" value="classe_A/B" id="flexCheck_AB">
                             <label class="form-check-label" for="flexCheck_AB">
                                 CLASSE A/B - Resíduos com materiais classe A e classe B.
                             </label>
-                        </div>
-                        
+                        </div>                
                         <div class="form-check">
-                            <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_C" id="flexCheck_C">
-                            <label class="form-check-label" for="flexCheck_C">
-                                CLASSE C - Resíduos sem tecnologia para reciclagem (gesso e isopor).
+                            <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_B" id="flexCheck_B">
+                            <label class="form-check-label" for="flexCheck_B">
+                                CLASSE B - Restos de madeira, metal, plástico, papel, papelão, vidros.
                             </label>
-                        </div>
-                        
+                        </div>                        
+                                                
                         <div class="form-check">
                             <input name="tipo_residuo" class="form-check-input" type="radio" value="classe_D" id="flexCheck_D">
                             <label class="form-check-label" for="flexCheck_D">
-                                CLASSE D - Resíduos perigosos, tais como tintas, solventes, óleos e outros, ou aqueles contaminados procedente de obras em clínicas radiológicas, hospitais, instalações industriais, etc..
+                                MASSA VERDE - Resíduos oriundos das atividades de capina, remoção de árvores mortas ou condenadas, entre outras atividades de manejo florestal e jardinagem.
                             </label>
                         </div>
                     </div>
