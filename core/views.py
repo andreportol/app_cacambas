@@ -61,21 +61,31 @@ def processar_orcamento_campo_grande(request, form=None):
     
     try:
         bairro = Bairros_CG.objects.filter(nome_bairro__icontains=bairro_usuario).first()
-        regiao_selecionada = buscar_regiao_por_bairro(bairro.nome_bairro)
-    except Bairros_CG.DoesNotExist:        
+        print(bairro)
+        if not bairro:
+            raise Bairros_CG.DoesNotExist
+
+        regioes_selecionadas = buscar_regiao_por_bairro(bairro.nome_bairro)
+        print(regioes_selecionadas)
+        if not regioes_selecionadas.exists():
+            raise Bairros_CG.DoesNotExist
+
+    except Bairros_CG.DoesNotExist:
         return render(request, 'regiao_nao_encontrado.html', {
             'bairro': bairro_usuario,
             'logradouro': logradouro,
             'numero': num_porta,
         })
 
-    # Continue o processamento com a região selecionada
-    transportadores = buscar_transportadores_por_regiao(regiao_selecionada)  
+    # Busque transportadores para todas as regiões encontradas
+    transportadores = buscar_transportadores_por_regioes(regioes_selecionadas)
+
+    # Continue com o processamento normal
     produto = verificar_produto(produto_desejado)
-     
+
     if not produto:
-        return produto_nao_encontrado(request) 
-    
+        return produto_nao_encontrado(request)
+
     transportadores_com_produto = verificar_transportadores_com_produto(
         transportadores, produto_desejado, produto, quantidade_desejada
     )
@@ -83,7 +93,7 @@ def processar_orcamento_campo_grande(request, form=None):
     return render(request, 'resultado_orcamento.html', {
         'form': form,
         'transportadores_com_produto': transportadores_com_produto,
-        'regiao_selecionada': regiao_selecionada,
+        'regioes_selecionadas': regioes_selecionadas,
         'produto_desejado': produto,
         'quantidade_desejada': quantidade_desejada,
         'tipo_entulho': tipo_entulho,
@@ -96,6 +106,8 @@ def processar_orcamento_campo_grande(request, form=None):
     })
 
 
+from django.shortcuts import get_object_or_404
+
 def processar_orcamento_regiao_manual(request):
     if request.method == 'POST':
         # Obtém os dados do orçamento da sessão
@@ -107,7 +119,7 @@ def processar_orcamento_regiao_manual(request):
         num_porta = orcamento_data.get('num_porta', 'Número não informado')
         cidade = orcamento_data.get('cidade', 'Cidade não informada')
         bairro_usuario = orcamento_data.get('bairro', '')
-        
+        print(bairro_usuario)
         # Recupera a quantidade do produto selecionado
         quantidade_desejada = orcamento_data.get('quantidade_desejada')
         
@@ -115,13 +127,21 @@ def processar_orcamento_regiao_manual(request):
         regiao_selecionada = request.POST.get('regiao_urbana', '').upper()
         
         if regiao_selecionada:
+            # Tenta buscar a instância correspondente de Regiao_CG
+            try:
+                regiao_obj = Regiao_CG.objects.get(nome_regiao=regiao_selecionada)
+            except Regiao_CG.DoesNotExist:
+                return render(request, 'regiao_nao_encontrado.html', {
+                    'erro': 'Região não encontrada. Por favor, selecione uma região válida.'
+                })
+
             # Atualiza os dados do orçamento com a região selecionada
             orcamento_data.update({'regiao': regiao_selecionada})
             request.session['orcamento'] = orcamento_data
 
             # Processa os dados com base na região e no orçamento
-            transportadores = buscar_transportadores_por_regiao(regiao_selecionada)
-          
+            transportadores = buscar_transportadores_por_regioes([regiao_obj])  # Passa a instância
+            
             produto_desejado = orcamento_data.get('produto')   
             produto = verificar_produto(produto_desejado)
             
@@ -153,20 +173,12 @@ def processar_orcamento_regiao_manual(request):
         })
 
 
-def buscar_regiao_por_bairro(bairro_usuario):
-    """
-    Busca a região da cidade de acordo com o bairro informado.
-    """
-    bairro = Bairros_CG.objects.get(nome_bairro__icontains=bairro_usuario)
-    return bairro.nome_regiao_regioes
+def buscar_regiao_por_bairro(nome_bairro):
+    return Regiao_CG.objects.filter(bairros_cg__nome_bairro__icontains=nome_bairro)
 
 
-def buscar_transportadores_por_regiao(nome_regiao):
-    try:
-        regiao = Regiao_CG.objects.get(nome_regiao=nome_regiao)
-        return Transportador.objects.filter(regioes_trabalho=regiao)
-    except Regiao_CG.DoesNotExist:
-        return []
+def buscar_transportadores_por_regioes(regioes):
+    return Transportador.objects.filter(regioes_trabalho__in=regioes).distinct()
 
 
 def verificar_produto(produto_desejado):
