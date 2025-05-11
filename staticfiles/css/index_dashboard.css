@@ -1,0 +1,19 @@
+body {
+    background-color: #323237; /* fundo claro */
+    color: #333; /* texto em cor escura */
+}
+.card {
+    background-color: #ffffff; /* cor clara para os mostradores */
+    color: #333;
+    border: 1px solid #ccc; /* borda sutil */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-title {
+    font-size: 1.5rem;
+}
+.card-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
