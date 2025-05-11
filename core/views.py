@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView
 from .forms import ResultadoOrcamentoForm, ConfirmarPedidoForm, AvisoConfirmacaoForm, CadastroUsuarioForm
-from .models import TransportadorProduto, Produto, Bairros_CG, Transportador, Regiao_CG
+from .models import TransportadorProduto, Produto, Bairros_CG, Transportador, Regiao_CG, Pedido
 from datetime import datetime
 
 # Create your views here.
@@ -34,6 +34,7 @@ def resultado_orcamento(request):
                     'data_inicio': str(form.cleaned_data.get('data_inicio')),  # Adicionado
                     'data_retirada': str(form.cleaned_data.get('data_retirada')),  # Adicionado
                 }
+                print()
                 return processar_orcamento_campo_grande(request, form)
             else:
                 return cidade_nao_atendida(request)
@@ -304,25 +305,84 @@ def confirmar_pedido(request):
     return render(request, 'confirmar_pedido.html', {'form': form, 'orcamento_data': orcamento_data})
 
 
-# Método aviso_confirmacao
+# Método aviso_confirmacao ---> pedido realizado
+
+from decimal import Decimal
+
 def aviso_confirmacao(request):
     if request.method == 'POST':
         form = AvisoConfirmacaoForm(request.POST)
         if form.is_valid():
+            # Dados do formulário final
             nome_cliente = form.cleaned_data.get('nome_cliente')
             telefone_cliente = form.cleaned_data.get('telefone_cliente')
-        # Recupera ou inicializa pedido_data com os dados existentes na sessão
-        pedido_data = request.session.get('pedido_data', {})
-        # Adiciona novos valores ao dicionário pedido_data
-        pedido_data.update({
-            'nome_cliente': nome_cliente,
-            'telefone_cliente': telefone_cliente,
-        })
-        # Atualiza a sessão com o dicionário pedido_data modificado
-        request.session['pedido_data'] = pedido_data
-    return render(request, 'aviso_confirmacao.html', pedido_data)
 
-    
+            # Recupera ou atualiza os dados da sessão
+            pedido_data = request.session.get('pedido_data', {})
+            pedido_data.update({
+                'nome_cliente': nome_cliente,
+                'telefone_cliente': telefone_cliente,
+            })
+            request.session['pedido_data'] = pedido_data
+           
+            try:
+                # Mapeia o nome exibido para o valor do campo choices
+                produto_map = dict((v, k) for k, v in Produto.NOME_PRODUTO_CHOICES)
+                produto_display = pedido_data['produto']  # Ex: "Caçamba 4m³"
+                produto_valor = produto_map.get(produto_display)
+                
+                if not produto_valor:
+                    raise ValueError(f"Produto inválido: {produto_display}")
+
+                # Recupera os objetos necessários
+                transportador = Transportador.objects.get(nome_fantasia=pedido_data['transportador'])
+                produto = Produto.objects.get(nome=produto_valor)
+                print(produto)
+                # Converte os dados do dicionário
+                data_inicio = datetime.strptime(pedido_data['data_inicio'], '%d-%m-%Y').date()
+                data_retirada = datetime.strptime(pedido_data['data_retirada'], '%d-%m-%Y').date()
+                quantidade_desejada = int(pedido_data['quantidade_desejada'])
+                preco = Decimal(pedido_data['preco'].replace(',', '.'))
+
+                # Cria o pedido
+                pedido = Pedido.objects.create(
+                    transportador=transportador,
+                    produto=produto,
+                    tipo_entulho=pedido_data['tipo_entulho'],
+                    quantidade_desejada=quantidade_desejada,
+                    logradouro=pedido_data['logradouro'],
+                    num_porta=pedido_data['num_porta'],
+                    bairro=pedido_data['bairro'],
+                    cidade=pedido_data['cidade'],
+                    data_inicio=data_inicio,
+                    data_retirada=data_retirada,
+                    nome_cliente=nome_cliente,
+                    telefone_cliente=telefone_cliente,
+                    preco=preco,
+                    status_pedido='NOVO',
+                )
+                
+                # Limpa os dados da sessão
+                request.session.pop('pedido_data', None)
+
+                return render(request, 'aviso_confirmacao.html', {
+                    'nome_cliente': nome_cliente,
+                    'telefone_cliente':telefone_cliente,
+                })
+
+            except Exception as e:
+                return render(request, 'erro.html', {
+                    'mensagem': 'Erro ao processar os dados do pedido.',
+                    'erro': str(e)
+                })
+
+    else:
+        form = AvisoConfirmacaoForm()
+
+    return render(request, 'aviso_confirmacao.html', {'form': form})
+
+
+  
     '''
     Recuperar um dicionário chamado pedido_data que foi salvo em request.session
     Se pedido_data não estiver presente na sessão, será retornado um dicionário vazio {} para evitar erros de chave inexistente.

@@ -1,0 +1,111 @@
+{% load static %}
+
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <div class="position-sticky pt-3">
+    <img class="d-block mx-auto" src="{% static 'img/logo_cacamba_branco.png' %}" alt="logomarca_caçamba" width="150" height="auto">
+    <ul class="nav flex-column">
+      <!-- Administrativo -->
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'admin:index' %}">
+          <span data-feather="home"></span> <!-- Ícone para Administrativo -->
+          ADMINISTRATIVO
+        </a>
+      </li>
+      
+      <!-- Pedidos -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#collapse_pedido">
+          <span data-feather="box"></span> <!-- Ícone para Pedidos -->
+          PEDIDOS
+        </a>
+      </li>
+      <div class="collapse" id="collapse_pedido">
+        <div class="card card-body mx-3 mt-2">
+          <div class="list-group">
+            <!-- Novos -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_novos' %}">
+              <span data-feather="file-plus"></span> Novos
+            </a>
+      
+            <!-- Pendentes -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_pendentes' %}">
+              <span data-feather="clock"></span> Pendentes
+            </a>
+      
+            <!-- Autorizados -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_atendidos' %}">
+              <span data-feather="check-circle"></span> Atendidos
+            </a>
+      
+            <!-- Finalizados -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_finalizados' %}">
+              <span data-feather="check-square"></span> Finalizados
+            </a>
+      
+            <!-- Cancelados -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_cancelados' %}">
+              <span data-feather="x-circle"></span> Cancelados
+            </a>
+      
+            <!-- Arquivados -->
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'dashboard:tabela_pedidos_arquivados' %}">
+              <span data-feather="archive"></span> Arquivados
+            </a>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Financeiro -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="dollar-sign"></span> <!-- Ícone para Financeiro -->
+          FINANCEIRO
+        </a>
+      </li>
+
+      <!-- Clientes -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="users"></span> <!-- Ícone para Clientes -->
+          CLIENTES
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<script src="https://unpkg.com/feather-icons"></script>
+
+<script>
+  feather.replace(); // Substitui os ícones pelo código SVG
+</script>
+
+<!--
+
+Como Funciona:
+O data-feather="..." é a sintaxe para os ícones do Feather Icons.
+
+Para usar o Feather Icons,
+você precisa garantir que o JavaScript do Feather Icons 
+esteja carregado na sua página. 
+Caso não tenha feito isso ainda, adicione o seguinte 
+script dentro da sua tag <head> para inicializar os 
+ícones corretamente:
+
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+  feather.replace(); // Substitui os ícones pelo código SVG
+</script>
+
+Explicação:
+Cada ícone é colocado dentro da tag <span data-feather="..."></span>.
+
+O feather.replace() garante que os ícones sejam carregados corretamente no seu HTML.
+
+Agora o seu menu terá ícones para cada uma das seções e 
+o comportamento de colapso do menu de Pedidos vai 
+continuar funcionando normalmente.
+
+-->

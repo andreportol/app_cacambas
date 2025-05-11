@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, Transportador, Regiao_CG, Bairros_CG,Produto, TransportadorProduto
+from .models import Usuario, Transportador, Regiao_CG, Bairros_CG,Produto, TransportadorProduto, Pedido
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
@@ -49,3 +49,36 @@ class Bairros_CGAdmin(admin.ModelAdmin):
     list_filter = ('nome_regiao_regioes',)
     # ordena por ordem alfabética
     ordering = ['nome_bairro']
+
+
+@admin.register(Pedido)
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = (
+        'numero_pedido','status_pedido', 'nome_cliente', 'telefone_cliente',
+        'transportador', 'produto', 'quantidade_desejada',
+        'data_inicio', 'data_retirada', 'preco','recebido', 'observacao'
+    )
+    list_filter = ('status_pedido', 'data_inicio', 'data_retirada', 'transportador','recebido')
+    search_fields = ('numero_pedido', 'nome_cliente', 'telefone_cliente', 'transportador__nome_fantasia')
+    readonly_fields = ('numero_pedido',)
+
+    fieldsets = (
+        ('Identificação', {
+            'fields': ('numero_pedido', 'status_pedido')
+        }),
+        ('Dados do Cliente', {
+            'fields': ('nome_cliente', 'telefone_cliente')
+        }),
+        ('Endereço da Obra', {
+            'fields': ('logradouro', 'num_porta', 'bairro', 'cidade')
+        }),
+        ('Dados do Pedido', {
+            'fields': ('transportador', 'produto', 'tipo_entulho', 'quantidade_desejada', 'preco')
+        }),
+        ('Datas', {
+            'fields': ('data_inicio', 'data_retirada')
+        }),
+        ('Observação', {
+            'fields': ('observacao',)
+        }),
+    )

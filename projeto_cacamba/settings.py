@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 #SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-#DEBUG = config('DEBUG', default=False)
+#DEBUG = config('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['entulhofacil.up.railway.app']
 #ALLOWED_HOSTS = ['*']
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # My apps
     'core',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -91,11 +92,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('TEST_DATABASE_NAME'),
-        'USER': config('TEST_DATABASE_USER'),
-        'PASSWORD': config('TEST_DATABASE_PASSWORD'),
-        'HOST': config('TEST_DATABASE_HOST'),
-        'PORT': config('TEST_DATABASE_PORT', default='5432'),  # Padrão é vazio
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD':config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT', default='5432'),  # Padrão é vazio
     }
 }
 '''
@@ -144,4 +145,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Define para onde redirecionar o usuário após o logout
-LOGOUT_REDIRECT_URL = 'core:index'
+LOGOUT_REDIRECT_URL = '/'

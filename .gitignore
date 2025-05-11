@@ -3,3 +3,4 @@ __pycache__
 .venv
 db.sqlite3
 connection_railway.txt
+requirements.txt

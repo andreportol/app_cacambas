@@ -61,8 +61,8 @@ class Produto(models.Model):
         ('caminhao_5m', 'Caminhão 5m³'),
         ('caminhao_12m', 'Caminhão 12m³'),
         ('caminhao_25m', 'Caminhão 25m³'),
-        ('roll_roll_25', 'Roll Roll 25m³'),
-        ('roll_roll_32', 'Roll Roll 32m³'),
+        ('roll_roll_25m', 'Roll Roll 25m³'),
+        ('roll_roll_32m', 'Roll Roll 32m³'),
     ]
     nome = models.CharField(max_length=50, choices=NOME_PRODUTO_CHOICES, unique=True)
 
@@ -118,5 +118,52 @@ class TransportadorProduto(models.Model):
     def __str__(self):
         return f"{self.transportador.nome_fantasia} - {self.produto.get_nome_display()} - R${self.preco}"
 
+
+class Pedido(Base):
+    numero_pedido = models.IntegerField(verbose_name="Número do Pedido", unique=True, editable=False)
+
+    STATUS_CHOICES = [
+        ('NOVO', 'NOVO'),
+        ('PENDENTE', 'PENDENTE'),
+        ('ATENDIDO', 'ATENDIDO'),
+        ('FINALIZADO', 'FINALIZADO'),
+        ('CANCELADO', 'CANCELADO'),
+        ('ARQUIVADO', 'ARQUIVADO'),
+    ]
+    status_pedido = models.CharField(verbose_name='Status', choices=STATUS_CHOICES, max_length=10, default='NOVO')
+
+    #usuario = models.ForeignKey(Usuario, verbose_name="Usuário", on_delete=models.CASCADE)
+    transportador = models.ForeignKey('Transportador', verbose_name="Transportador", on_delete=models.CASCADE)
+    produto = models.ForeignKey('Produto', verbose_name="Produto", on_delete=models.CASCADE)
+
+    tipo_entulho = models.CharField(max_length=20, verbose_name="Tipo de Entulho")
+    quantidade_desejada = models.IntegerField(verbose_name="Quantidade Desejada")
+
+    logradouro = models.CharField(max_length=255)
+    num_porta = models.CharField(max_length=10)
+    bairro = models.CharField(max_length=100, default='Não informado')
+    cidade = models.CharField(max_length=100)
+
+    data_inicio = models.DateField(verbose_name="Data de Início")
+    data_retirada = models.DateField(verbose_name="Data de Retirada")
+
+    nome_cliente = models.CharField(max_length=255)
+    telefone_cliente = models.CharField(max_length=20)
+    preco = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço")
+    recebido = models.BooleanField(verbose_name= "Recebido", default=False)
+    observacao = models.TextField(verbose_name='Obs:', null=True, blank=True)
+    
+    class Meta:
+        verbose_name = 'Pedido'
+        verbose_name_plural = 'Pedidos'
+
+    def __str__(self):
+        return f'Pedido #{self.numero_pedido} - {self.nome_cliente}'
+
+    def save(self, *args, **kwargs):
+        if not self.numero_pedido:
+            ultimo_pedido = Pedido.objects.all().order_by('-numero_pedido').first()
+            self.numero_pedido = (ultimo_pedido.numero_pedido + 1) if ultimo_pedido else 1
+        super().save(*args, **kwargs)
 
 
