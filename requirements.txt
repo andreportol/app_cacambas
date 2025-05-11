@@ -7,7 +7,8 @@ gunicorn==23.0.0
 packaging==24.1
 Pillow
 progressbar2==3.43.1
-
+psycopg2
+psycopg2-binary
 python-decouple==3.8
 python-utils==2.3.0
 pytz==2019.2
