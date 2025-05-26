@@ -13,7 +13,8 @@
                         <img class="img-fluid w-50" style="max-width: 100px; height: auto;" src="{% static 'img/pessoa.png' %}" alt="pessoa">
                     </th>
                     <td>
-                        <input name="nome_cliente" class="form-control" type="text" autofocus autocomplete="" placeholder="Responsável" required>
+                        <input name="nome_cliente" class="form-control" type="text" autofocus autocomplete="" required>
+                        <small class="text-start d-block"><i>O nome do <u>responsável</u> pelo recebimento da caçamba.</i></small>
                     </td>                   
                 </tr>
                 <tr>                    
@@ -21,8 +22,8 @@
                         <img class="img-fluid w-50" style="max-width: 100px; height: auto;" src="{% static 'img/whatsapp.png' %}" alt="telefone">
                     </th>                
                     <td>
-                        <input name="telefone_cliente" class="form-control" type="tel" placeholder="(67) 99252-0749" 
-                            pattern="^\(\d{2}\) \d{5}-\d{4}$" maxlength="15" required oninput="formatarTelefone(this)">
+                        <input name="telefone_cliente" class="form-control" type="tel" pattern="^\(\d{2}\) \d{5}-\d{4}$" maxlength="15" required oninput="formatarTelefone(this)">
+                        <small class="text-start d-block">Digite <u><i>somente</i></u> os números com o código de área. Exemplo:(67)99252-0749</small>
                     </td>                                                            
                 </tr>               
             </tbody>

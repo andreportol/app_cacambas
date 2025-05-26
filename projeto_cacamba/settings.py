@@ -30,9 +30,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 #DEBUG = config('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['entulhofacil.up.railway.app']
+ALLOWED_HOSTS = ['entulhofacil.up.railway.app', 'www.entulhofacil.com.br', 'entulhofacil.com.br']
 #ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app','https://entulhofacil.com.br','https://www.entulhofacil.com.br']
 
 
 # Application definition
