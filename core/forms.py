@@ -1,7 +1,7 @@
 from datetime import timedelta
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Usuario
+from .models import Usuario, Transportador
 
 # formulário de validação do template orcamento.html
 class ResultadoOrcamentoForm(forms.Form):
@@ -98,3 +98,17 @@ class CadastroUsuarioForm(forms.ModelForm):
             'nome_usuario',
             'telefone',
         ]
+
+
+class TransportadorLoginForm(forms.Form):
+    cnpj = forms.CharField(label='CNPJ', max_length=18)
+    password = forms.CharField(label='Senha', widget=forms.PasswordInput)
+
+# forms.py
+from django import forms
+from .models import Transportador
+
+class TransportadorForm(forms.ModelForm):
+    class Meta:
+        model = Transportador
+        exclude = ['senha']  # você pode também usar `fields = [...]` para escolher campos específicos

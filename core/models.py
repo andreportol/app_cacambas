@@ -1,4 +1,5 @@
 from django.db import models 
+from django.contrib.auth.hashers import make_password, check_password
 
 # Create your models here.
 class Base(models.Model):
@@ -72,10 +73,12 @@ class Produto(models.Model):
 class Transportador(Base):
     # Contato
     nome_fantasia = models.CharField(verbose_name='Nome transportador', max_length=150, unique=True)
+    cnpj = models.CharField(verbose_name='CNPJ', max_length=18, unique=True, blank=True, null=True)
     telefone_fixo = models.CharField(verbose_name='Telefone Fixo', max_length=16, blank=True)
     telefone_extra = models.CharField(verbose_name='Telefone Extra', max_length=16, blank=True)
     telefone_celular = models.CharField(verbose_name='Telefone celular', max_length=16, blank=True)
-    email = models.CharField(verbose_name='E-mail', max_length=150, blank=False)
+    email = models.EmailField(verbose_name='E-mail', max_length=150, blank=False)
+    senha = models.CharField(max_length=128, blank=True, null=True)
     # Endereço
     logradouro = models.CharField(verbose_name='Logradouro', max_length=200)
     nr_porta = models.CharField(verbose_name='Número de porta', max_length=5)
@@ -103,7 +106,13 @@ class Transportador(Base):
     class Meta:
         verbose_name = 'Transportador'
         verbose_name_plural = 'Transportadores'
-    
+        ordering = ['is_ativo', 'nome_fantasia']   
+    def set_senha(self, raw_password):
+        self.senha = make_password(raw_password)
+
+    def check_senha(self, raw_password):
+        return check_password(raw_password, self.senha)
+
     def __str__(self):
         return self.nome_fantasia
 

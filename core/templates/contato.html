@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block header %}
   <header class="mb-auto">
@@ -14,11 +15,26 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="pb-5">Entulho Fácil.</h1>
-<button type="button" class="btn btn-success">Whatsapp</button>
-<button type="button" class="btn btn-primary">Telefone</button>
-<button type="button" class="btn btn-warning text-white">E-mail</button>
-<p class="lead pt-5">
-    <a href="{% url 'core:index' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Voltar</a>
-</p>
+<div class="text-center mt-5">
+  <h1 class="pb-4 fw-bold">Entulho Fácil</h1>
+
+  <div class="d-flex justify-content-center gap-4 mb-4">
+    <a class="btn btn-success d-flex align-items-center gap-2 px-4 py-2" 
+       href="https://wa.me/5567992520749?text=Olá,%20gostaria%20de%20entrar%20em%20contato%20com%20você." 
+       target="_blank" style="font-size: 1.2rem;">
+      <img src="{% static 'img/whatsapp.png' %}" alt="WhatsApp" width="24" height="24">
+      WhatsApp
+    </a>
+
+    <a class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2" 
+       href="tel:+5567992520749" style="font-size: 1.2rem;">
+      <img src="{% static 'img/icons8-telefone-100.png' %}" alt="Telefone" width="24" height="24">
+      Telefone
+    </a>
+  </div>
+
+  <p class="lead pt-5">
+    <a href="{% url 'core:index' %}" class="btn btn-lg btn-outline-secondary fw-bold">Voltar</a>
+  </p>
+</div>
 {% endblock %}

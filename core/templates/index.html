@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-lg-0" aria-label="breadcrumb">
           <li class="nav-item">
-            <a class="nav-link text-white px-0" href="#">Transportadores</a>
+            <a class="nav-link text-white px-0" href="{% url 'core:login_transportador' %}">Transportadores</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white px-0" href="{% url 'admin:index' %}">Administração</a>
@@ -26,15 +26,20 @@
     </div>
     
     <!-- Espaço para o nome do usuário alinhado à direita -->
-    <span class="navbar-text text-white">
+    <span class="navbar-text text-white d-flex align-items-center gap-3">
       {% if user.is_authenticated %}
-        Olá, {{ user.first_name }} {{ user.last_name}}
+        <span>Olá, {{ user.first_name }} {{ user.last_name }}</span>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+        </form>
       {% else %}
-      <button class="border border-1 border-white rounded bg-dark text-white p-2" type="button" aria-expanded="false" aria-label="Toggle navigation">
-        <a class="py-3 my-3 fs-6 text-light" href="{% url 'core:cadastro_usuario' %}">Entrar</a>
-      </button>      
+        <button class="border border-1 border-white rounded bg-dark text-white p-2" type="button" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="py-3 my-3 fs-6 text-light text-decoration-none" href="{% url 'core:cadastro_usuario' %}">Entrar</a>
+        </button>
       {% endif %}
     </span>
+
   </div>
 </nav>
 
@@ -51,7 +56,7 @@
 {% endblock %}
     
 {% block content %}
-    <h1>Entulho Fácil.</h1>
+    <h1 class="pt-5 mt-2">Entulho Fácil.</h1>
     <p class="lead">Na nossa empresa, facilitamos a busca por transportadores de entulho de forma rápida, segura e econômica. Estamos aqui para tornar o seu processo mais simples e eficiente.</p>
     <p class="lead pt-3">
         <a href="{% url 'core:orcamento' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Solicitar</a>

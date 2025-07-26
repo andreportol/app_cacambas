@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 mb-3" style="max-width: 500px;">
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">Login do Transportador</h3>
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label for="cnpj" class="form-label text-start d-block">LOGIN:</label>
+          <input
+            type="text"
+            name="cnpj"
+            id="cnpj"
+            class="form-control {% if form.cnpj.errors %}is-invalid{% endif %}"
+            placeholder="Digite seu CNPJ"
+            value="{{ form.cnpj.value|default:'' }}"
+            required
+          >
+          {% for error in form.cnpj.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label text-start d-block">PASSWORD:</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+            placeholder="Digite sua senha"
+            required
+          >
+          {% for error in form.password.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-success btn-lg rounded-pill">Entrar</button>
+        </div>
+
+        <div class="text-center mt-3">
+          <a href="{% url 'core:index' %}" class="text-decoration-none text-muted">← Voltar à página inicial</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
