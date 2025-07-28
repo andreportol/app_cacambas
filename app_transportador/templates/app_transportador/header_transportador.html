@@ -1,0 +1,12 @@
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3  py-3" href="#"><span class="fs-4 text-warning">ENTULHO FÁCIL</span></a>
+    <div class="navbar-nav">
+      <div class="nav-item text-nowrap">
+        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="nav-link px-3 text-warning bg-dark border-0"><span class="fs-4">Sair</span></button>
+      </form>
+
+      </div>
+    </div>
+</header>

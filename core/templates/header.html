@@ -1,0 +1,52 @@
+{% load static %}
+<link href="{% static 'css/my_css.css' %}" rel="stylesheet">
+<nav class="navbar cover-container pb-4 text-start">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div>
+      <button class="navbar-toggler bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-lg-0" aria-label="breadcrumb">
+          <li class="nav-item">
+            <a class="nav-link text-white px-0" href="{% url 'transportador:login_transportador' %}">Transportadores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white px-0" href="{% url 'admin:index' %}">Administração</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white px-0" href="{% url 'dashboard:index_dashboard' %}">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Espaço para o nome do usuário alinhado à direita -->
+    <span class="navbar-text text-white d-flex align-items-center gap-3">
+      {% if user.is_authenticated %}
+        <span>Olá, {{ user.first_name }} {{ user.last_name }}</span>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+        </form>
+      {% else %}
+        <button class="border border-1 border-white rounded bg-dark text-white p-2" type="button" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="py-3 my-3 fs-6 text-light text-decoration-none" href="{% url 'core:cadastro_usuario' %}">Entrar</a>
+        </button>
+      {% endif %}
+    </span>
+
+  </div>
+</nav>
+
+<header class="mb-auto">
+    <div>     
+      <h3 class="float-md-start mb-0">Entulho Fácil</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{% url 'core:index' %}">Início</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:sobrenos' %}">Sobre Nós</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:contato' %}">Contato</a>
+        </nav>
+    </div>
+  </header>

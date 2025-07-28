@@ -1,0 +1,103 @@
+{% extends 'app_transportador/base_transportador.html' %}
+{% load static %}
+
+{% block content %}
+<main class="col-md-12 ms-sm-auto col-lg-12">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2 text-warning mt-3 d-flex align-items-center">
+      <span data-feather="settings" class="me-2"></span>
+      PAINEL
+    </h1>
+  </div>
+  
+
+    <div class="container marketing">
+
+        <div class="container mt-5">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5 class="card-title text-info">Novos</h5>
+                        <p class="card-value text-info" id="novos">0</p>
+                        <!-- Adiciona o botão "OK" para parar o som 
+                        <button onclick="pararBipe()" class="btn btn-primary mt-4" id="btn-ok">Seguinte</button>
+                      -->
+                </div>
+                    
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5 class="card-title text-danger">Pendentes</h5>
+                        <p class="card-value text-danger" id="pendentes">0</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5 class="card-title text-warning">Atendidos</h5>
+                        <p class="card-value text-warning" id="atendidos">0</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card p-3">
+                        <h5 class="card-title text-success">Finalizados</h5>
+                        <p class="card-value text-success" id="finalizados">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Tabela de pedidos -->
+<div id="tabela-pedidos-container" class="mt-4">
+  {% include 'app_transportador/table_pedidos.html' %}
+</div>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+  feather.replace()
+</script>
+
+<script>
+    let contagemAnterior = 0;
+    const audio = new Audio("{% static 'audio/bip.mp3' %}");
+    let tocando = false;
+  
+    async function atualizarDados() {
+      const response = await fetch("{% url 'dashboard:dados_pedidos' %}");
+      const dados = await response.json();
+  
+      // Atualiza contadores
+      document.getElementById('novos').textContent = dados.novos;
+      document.getElementById('pendentes').textContent = dados.pendentes;
+      document.getElementById('atendidos').textContent = dados.atendidos;
+      document.getElementById('finalizados').textContent = dados.finalizados;
+  
+      // Verifica novo pedido
+      if (dados.atualizar_tabela) {
+        atualizarTabelaPedidos();
+        if (!tocando) {
+          audio.play();
+          tocando = true;
+        }
+      }
+  
+      contagemAnterior = dados.novos;
+    }
+  
+    async function atualizarTabelaPedidos() {
+      const response = await fetch("{% url 'dashboard:tabela_pedidos' %}");
+      const html = await response.text();
+      document.getElementById('tabela-pedidos-container').innerHTML = html;
+    }
+  
+    function pararBipe() {
+      audio.pause();
+      audio.currentTime = 0;
+      tocando = false;
+    }
+  
+    setInterval(atualizarDados, 10000);
+    atualizarDados();
+  </script>
+{% endblock %}

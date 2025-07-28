@@ -100,15 +100,4 @@ class CadastroUsuarioForm(forms.ModelForm):
         ]
 
 
-class TransportadorLoginForm(forms.Form):
-    cnpj = forms.CharField(label='CNPJ', max_length=18)
-    password = forms.CharField(label='Senha', widget=forms.PasswordInput)
 
-# forms.py
-from django import forms
-from .models import Transportador
-
-class TransportadorForm(forms.ModelForm):
-    class Meta:
-        model = Transportador
-        exclude = ['senha']  # você pode também usar `fields = [...]` para escolher campos específicos

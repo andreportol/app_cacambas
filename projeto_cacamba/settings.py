@@ -44,11 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # My apps
-    'core',
-    'dashboard',
     # adicionais
     'widget_tweaks',
+    # My apps
+    'core', # aplicação principal
+    'dashboard', # aplicação da empresa
+    'app_transportador', # aplicação do transportador    
 ]
 
 MIDDLEWARE = [
