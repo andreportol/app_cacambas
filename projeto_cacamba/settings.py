@@ -27,12 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 #SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 #DEBUG = config('DEBUG', default=True)
 
 ALLOWED_HOSTS = ['entulhofacil.up.railway.app', 'www.entulhofacil.com.br', 'entulhofacil.com.br']
 #ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app','https://entulhofacil.com.br','http://www.entulhofacil.com.br']
+CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app','https://entulhofacil.com.br','https://www.entulhofacil.com.br']
 
 
 # Application definition

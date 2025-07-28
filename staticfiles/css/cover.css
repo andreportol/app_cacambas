@@ -11,6 +11,10 @@
   text-shadow: none; /* Prevent inheritance from `body` */
 }
 
+main {
+  flex: 1;
+}
+
 
 /*
  * Base structure

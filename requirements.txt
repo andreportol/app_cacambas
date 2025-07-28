@@ -6,10 +6,10 @@ django-stdimage==5.0.1
 django-widget-tweaks==1.5.0
 gunicorn==23.0.0
 packaging==24.1
-Pillow
+pillow==11.1.0
 progressbar2==3.43.1
-psycopg2
-psycopg2-binary
+psycopg2==2.9.10
+psycopg2-binary==2.9.10
 python-decouple==3.8
 python-utils==2.3.0
 pytz==2019.2
