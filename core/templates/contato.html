@@ -6,7 +6,7 @@
     <div>     
       <h3 class="float-md-start mb-0">Entulho Fácil</h3>
         <nav class="nav nav-masthead justify-content-center float-md-end">
-          <a class="nav-link fw-bold py-1 px-0" aria-current="page" href="{% url 'core:index' %}">Início</a>
+          <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:index' %}">Início</a>
           <a class="nav-link fw-bold py-1 px-0" href="{% url 'core:sobrenos' %}">Sobre Nós</a>
           <a class="nav-link fw-bold py-1 px-0 active" href="{% url 'core:contato' %}">Contato</a>
         </nav>
@@ -15,10 +15,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="text-center mt-5">
-  <h1 class="pb-4 fw-bold">Entulho Fácil</h1>
-
-  <div class="d-flex justify-content-center gap-4 mb-4">
+<div class="text-center mt-5 pb-3 pt-3">
+  <div class="d-flex justify-content-center gap-4 mb-4 pt-5">
     <a class="btn btn-success d-flex align-items-center gap-2 px-4 py-2" 
        href="https://wa.me/5567992520749?text=Olá,%20gostaria%20de%20entrar%20em%20contato%20com%20você." 
        target="_blank" style="font-size: 1.2rem;">
@@ -32,9 +30,8 @@
       Telefone
     </a>
   </div>
-
   <p class="lead pt-5">
-    <a href="{% url 'core:index' %}" class="btn btn-lg btn-outline-secondary fw-bold">Voltar</a>
+    <a href="{% url 'core:index' %}" class="btn btn-lg btn-warning fw-bold bg-warning btn-outline-hover">Voltar</a>
   </p>
 </div>
 {% endblock %}

@@ -24,14 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-#SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #DEBUG = config('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['entulhofacil.up.railway.app', 'www.entulhofacil.com.br', 'entulhofacil.com.br']
-#ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['entulhofacil.up.railway.app', 'www.entulhofacil.com.br', 'entulhofacil.com.br']
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://entulhofacil.up.railway.app','https://entulhofacil.com.br','https://www.entulhofacil.com.br']
 
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'projeto_cacamba.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
     # Configuração para produção (ou ambiente principal)
-
+'''
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age = 600),
 }
@@ -102,7 +102,7 @@ DATABASES = {
         'PORT': config('DATABASE_PORT', default='5432'),  # Padrão é vazio
     }
 }
-'''
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

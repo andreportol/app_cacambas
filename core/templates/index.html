@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
-  
+ 
 {% block content %}
     <h1 class="pt-5 mt-2">Entulho Fácil.</h1>
     <p class="lead">Na nossa empresa, facilitamos a busca por transportadores de entulho de forma rápida, segura e econômica. Estamos aqui para tornar o seu processo mais simples e eficiente.</p>
     <p class="lead pt-3">
-        <a href="{% url 'core:orcamento' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">Solicitar</a>
+        <a href="{% url 'core:orcamento' %}" class="btn btn-lg btn-warning fw-bold bg-warning btn-outline-hover">Solicitar</a>
     </p>
 {% endblock %}
+
+
     

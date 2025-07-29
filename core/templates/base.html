@@ -36,16 +36,16 @@
       </symbol>
     </svg>
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      {% include 'header.html' %}
-      <main class="px-3">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">   
+      {% block header %}
+        {% include 'header.html' %}
+      {% endblock %}    
+      <main class="px-3 pb-5">
         {% block content %}
         
         {% endblock %}
       </main>
-      <footer class="mt-auto text-white-50">
-        <p> Uma empresa feita para você.</p>
-      </footer>
+      {% include 'footer.html' %}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
