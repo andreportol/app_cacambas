@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block login_transportador %}
+<link rel="stylesheet" href="{% static 'css/app_transportador/tela_login.css' %}">
 <div class="container mt-5 mb-5" style="max-width: 500px;">
   <h1>Entulho Fácil</h1>
-  <div class="card shadow-lg rounded-4">
+  <div class="card shadow-lg rounded-4 card-custom">
     <div class="card-body">
       <h3 class="text-center mb-4">Acesse sua conta</h3>
       <form method="post" novalidate>
@@ -52,11 +53,11 @@
         </div>
 
         <div class="text-center mt-3">
-          <a href="{% url 'core:index' %}" class="text-decoration-none text-muted">← Voltar à página inicial</a>
+          <a href="{% url 'core:index' %}" class="text-decoration-none text-white">← Voltar à página inicial</a>
         </div>
       </form>
     </div>
   </div>
 </div>
-<script src="{% static 'js/mascara_cnpj_transportador.js' %}"></script>
+<script src="{% static 'js/app_transportador/mascara_cnpj_transportador.js' %}"></script>
 {% endblock %}

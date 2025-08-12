@@ -1,14 +1,23 @@
 from django.urls import path
-from .views import login_transportador, editar_dados_transportador, IndexTemplateView
-            
+from .views import (
+    login_transportador, 
+    editar_dados_transportador, 
+    IndexTemplateView,
+    dados_pedidos,
+    tabela_pedidos,
+    detalhes_pedido,
+    alterar_status_pedido,
+)
 
-from django.urls import path
-from . import views
-
-app_name = 'transportador' # se no módulo urls.py do projeto tem o namespace, esse atributo é obrigatorio 
+app_name = 'transportador'
 
 urlpatterns = [
     path('login_transportador/', login_transportador, name='login_transportador'),
     path('index_transportador/', IndexTemplateView.as_view(), name='index_transportador'),
-    path('cadastro/', views.editar_dados_transportador, name='cadastro'),
+    path('cadastro/', editar_dados_transportador, name='cadastro'),
+    path('dados_pedidos/', dados_pedidos, name='dados_pedidos'),
+    path('tabela_pedidos/', tabela_pedidos, name='tabela_pedidos'),
+    path('pedido/<int:pedido_id>/', detalhes_pedido, name='detalhes_pedido'),
+    path('pedido/<int:pedido_id>/alterar_status/', alterar_status_pedido, name='alterar_status_pedido'),
+    
 ]

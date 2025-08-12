@@ -2,102 +2,261 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+  /* Estilos para a tabela de pedidos */
+  #tabela-pedidos-container .table {
+    background-color: #ffffff; /* Fundo branco */
+    color: #212529; /* Texto escuro */
+  }
+  
+  #tabela-pedidos-container .table th {
+    background-color: #f8f9fa; /* Cor de fundo do cabeçalho */
+    color: #495057;
+  }
+  
+  #tabela-pedidos-container .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02); /* Listras suaves */
+  }
+  
+  #tabela-pedidos-container .table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Efeito hover */
+  }
+  
+  /* Melhoria para os badges de status */
+  .badge.bg-info { background-color: #0dcaf0!important; }
+  .badge.bg-danger { background-color: #dc3545!important; }
+  .badge.bg-warning { color: #000; background-color: #ffc107!important; }
+  .badge.bg-success { background-color: #198754!important; }
+
+  /* Estilos gerais */
+  .card {
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .spin {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Notificação de novo pedido */
+  .toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+  }
+</style>
+
 <main class="col-md-12 ms-sm-auto col-lg-12">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2 text-warning mt-3 d-flex align-items-center">
-      <span data-feather="settings" class="me-2"></span>
-      PAINEL
+      <span data-feather="truck" class="me-2"></span>
+      PAINEL DO TRANSPORTADOR
     </h1>
-  </div>
-  
-
-    <div class="container marketing">
-
-        <div class="container mt-5">
-            <div class="row text-center">
-                <div class="col-md-3">
-                    <div class="card p-3">
-                        <h5 class="card-title text-info">Novos</h5>
-                        <p class="card-value text-info" id="novos">0</p>
-                        <!-- Adiciona o botão "OK" para parar o som 
-                        <button onclick="pararBipe()" class="btn btn-primary mt-4" id="btn-ok">Seguinte</button>
-                      -->
-                </div>
-                    
-                </div>
-                <div class="col-md-3">
-                    <div class="card p-3">
-                        <h5 class="card-title text-danger">Pendentes</h5>
-                        <p class="card-value text-danger" id="pendentes">0</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card p-3">
-                        <h5 class="card-title text-warning">Atendidos</h5>
-                        <p class="card-value text-warning" id="atendidos">0</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card p-3">
-                        <h5 class="card-title text-success">Finalizados</h5>
-                        <p class="card-value text-success" id="finalizados">0</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="btn-group">
+      <button onclick="atualizarDadosManual()" class="btn btn-sm btn-outline-secondary">
+        <span data-feather="refresh-cw"></span> Atualizar
+      </button>
     </div>
+  </div>
 
+  <div class="container mt-4">
+    <div class="row g-4">
+      <!-- Cartões de Status -->
+      <div class="col-md-3">
+        <div class="card border-info shadow-sm h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-info">NOVOS</h5>
+            <p class="card-value display-6 text-info" id="novos">0</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card border-danger shadow-sm h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-danger">PENDENTES</h5>
+            <p class="card-value display-6 text-danger" id="pendentes">0</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card border-warning shadow-sm h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-warning">ATENDIDOS</h5>
+            <p class="card-value display-6 text-warning" id="atendidos">0</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card border-success shadow-sm h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-success">FINALIZADOS</h5>
+            <p class="card-value display-6 text-success" id="finalizados">0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de pedidos -->
+  <div id="tabela-pedidos-container" class="mt-4">
+    {% include 'app_transportador/table_pedidos.html' %}
+  </div>
 </main>
 
-<!-- Tabela de pedidos -->
-<div id="tabela-pedidos-container" class="mt-4">
-  {% include 'app_transportador/table_pedidos.html' %}
-</div>
+<!-- Ícones Feather -->
 <script src="https://unpkg.com/feather-icons"></script>
 <script>
-  feather.replace()
-</script>
+  // Inicializa os ícones
+  feather.replace();
+  
+  // Variáveis globais
+  let contagemAnterior = 0;
+  const audio = new Audio("{% static 'audio/bip.mp3' %}");
+  let tocando = false;
+  let intervaloAtualizacao;
+  let primeiraAtualizacao = true;
 
-<script>
-    let contagemAnterior = 0;
-    const audio = new Audio("{% static 'audio/bip.mp3' %}");
-    let tocando = false;
-  
-    async function atualizarDados() {
-      const response = await fetch("{% url 'dashboard:dados_pedidos' %}");
+  // Função principal para atualizar dados
+  async function atualizarDados() {
+    try {
+      const response = await fetch("{% url 'transportador:dados_pedidos' %}");
+      
+      if (response.status === 401) {  // Não autenticado
+        window.location.href = "{% url 'transportador:login_transportador' %}";
+        return;
+      }
+      
+      if (!response.ok) {
+        throw new Error('Erro ao carregar dados');
+      }
+      
       const dados = await response.json();
-  
+      
+      if (dados.error) {
+        console.error(dados.error);
+        return;
+      }
+
+      // Verifica se há novos pedidos
+      const novosPedidos = parseInt(dados.novos) || 0;
+      const temNovosPedidos = novosPedidos > contagemAnterior && !primeiraAtualizacao;
+
       // Atualiza contadores
       document.getElementById('novos').textContent = dados.novos;
       document.getElementById('pendentes').textContent = dados.pendentes;
       document.getElementById('atendidos').textContent = dados.atendidos;
       document.getElementById('finalizados').textContent = dados.finalizados;
-  
-      // Verifica novo pedido
-      if (dados.atualizar_tabela) {
-        atualizarTabelaPedidos();
-        if (!tocando) {
-          audio.play();
-          tocando = true;
-        }
+
+      // Atualiza a tabela se necessário
+      if (dados.atualizar_tabela || temNovosPedidos) {
+        await atualizarTabelaPedidos();
       }
-  
-      contagemAnterior = dados.novos;
+
+      // Toca o áudio apenas se houver novos pedidos (exceto na primeira atualização)
+      if (temNovosPedidos && !tocando) {
+        audio.play().catch(e => console.error('Erro ao reproduzir áudio:', e));
+        tocando = true;
+        mostrarNotificacao(novosPedidos - contagemAnterior);
+      }
+
+      contagemAnterior = novosPedidos;
+      primeiraAtualizacao = false;
+    } catch (error) {
+      console.error('Erro na atualização:', error);
     }
-  
-    async function atualizarTabelaPedidos() {
-      const response = await fetch("{% url 'dashboard:tabela_pedidos' %}");
+  }
+
+  // Atualiza a tabela de pedidos
+  async function atualizarTabelaPedidos() {
+    try {
+      const response = await fetch("{% url 'transportador:tabela_pedidos' %}");
       const html = await response.text();
       document.getElementById('tabela-pedidos-container').innerHTML = html;
+      feather.replace();
+    } catch (error) {
+      console.error('Erro ao atualizar tabela:', error);
+      document.getElementById('tabela-pedidos-container').innerHTML = `
+        <div class="alert alert-danger">
+          Erro ao carregar pedidos. Tente novamente.
+        </div>
+      `;
     }
-  
-    function pararBipe() {
-      audio.pause();
-      audio.currentTime = 0;
-      tocando = false;
-    }
-  
-    setInterval(atualizarDados, 10000);
+  }
+
+  // Mostra notificação de novos pedidos
+  function mostrarNotificacao(quantidade) {
+    const notification = document.createElement('div');
+    notification.className = 'toast-notification';
+    notification.innerHTML = `
+      <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-primary text-white">
+          <strong class="me-auto">Novo(s) Pedido(s)</strong>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close" onclick="this.parentElement.parentElement.remove()"></button>
+        </div>
+        <div class="toast-body">
+          Você tem ${quantidade} novo(s) pedido(s)!
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 5000);
+  }
+
+  // Atualização manual
+  function atualizarDadosManual() {
+    // Desativa o áudio temporariamente para atualizações manuais
+    const audioOriginal = audio;
+    audio = new Audio(); // Audio vazio
+    
+    atualizarDados().finally(() => {
+      audio = audioOriginal; // Restaura o áudio original
+    });
+    
+    // Feedback visual
+    const btn = event.currentTarget;
+    btn.innerHTML = '<span data-feather="refresh-cw" class="spin"></span> Atualizando...';
+    feather.replace();
+    setTimeout(() => {
+      btn.innerHTML = '<span data-feather="refresh-cw"></span> Atualizar';
+      feather.replace();
+    }, 1000);
+  }
+
+  // Parar o som de notificação
+  function pararBipe() {
+    audio.pause();
+    audio.currentTime = 0;
+    tocando = false;
+  }
+
+  // Inicialização
+  document.addEventListener('DOMContentLoaded', () => {
+    // Primeira atualização não toca áudio
+    primeiraAtualizacao = true;
     atualizarDados();
-  </script>
+    
+    // Configura atualização periódica
+    intervaloAtualizacao = setInterval(atualizarDados, 10000);
+  });
+
+  // Pausa atualizações quando a página não está visível
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearInterval(intervaloAtualizacao);
+    } else {
+      atualizarDados();
+      intervaloAtualizacao = setInterval(atualizarDados, 10000);
+    }
+  });
+</script>
 {% endblock %}
