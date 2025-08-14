@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 from .views import (
     login_transportador, 
     editar_dados_transportador, 
@@ -8,6 +9,7 @@ from .views import (
     detalhes_pedido,
     alterar_status_pedido,
 )
+
 
 app_name = 'transportador'
 
@@ -19,5 +21,4 @@ urlpatterns = [
     path('tabela_pedidos/', tabela_pedidos, name='tabela_pedidos'),
     path('pedido/<int:pedido_id>/', detalhes_pedido, name='detalhes_pedido'),
     path('pedido/<int:pedido_id>/alterar_status/', alterar_status_pedido, name='alterar_status_pedido'),
-    
 ]

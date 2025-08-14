@@ -1,12 +1,40 @@
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3  py-3" href="#"><span class="fs-4 text-warning">ENTULHO FÁCIL</span></a>
-    <div class="navbar-nav">
-      <div class="nav-item text-nowrap">
-        <form action="{% url 'logout' %}" method="POST" style="display: inline;">
-          {% csrf_token %}
-          <button type="submit" class="nav-link px-3 text-warning bg-dark border-0"><span class="fs-4">Sair</span></button>
-      </form>
-
-      </div>
+<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #1a2d4a;">
+    <!-- Botão Hamburguer (mobile) - Offcanvas -->
+    <button class="navbar-toggler d-md-none mx-2 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar">
+        <span data-feather="menu"></span>
+    </button>
+    
+    <!-- Logo -->
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-4 py-3 d-flex align-items-center" href="{% url 'transportador:index_transportador' %}">
+        <span class="fs-4 fw-bold text-warning d-flex align-items-center gap-2">
+            <span data-feather="truck" style="width: 24px; height: 24px;"></span>
+            <span class="d-none d-sm-inline">ENTULHO FÁCIL</span>
+        </span>
+    </a>
+    
+    <!-- Menu de Usuário -->
+    <div class="navbar-nav ms-auto">
+        <div class="nav-item text-nowrap d-flex align-items-center">
+            <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="nav-link px-3 text-warning bg-transparent border-0 d-flex align-items-center gap-2">
+                    <span data-feather="log-out" class="d-none d-md-inline"></span>
+                    <span class="fs-6 fw-medium">SAIR</span>
+                </button>
+            </form>
+        </div>
     </div>
 </header>
+
+<!-- Offcanvas Sidebar (mobile) -->
+<div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel" style="background-color: #1e3656;">
+    <div class="offcanvas-header border-bottom border-secondary">
+        <h5 class="offcanvas-title text-warning" id="offcanvasSidebarLabel">
+            <span data-feather="menu"></span> Menu
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        {% include 'app_transportador/SideBarMenu_transportador.html' %}
+    </div>
+</div>

@@ -1,98 +1,132 @@
-{% load static %}
+<div class="sidebar-custom">
+  <div class="sidebar-header text-center py-3">
+      <h4 class="text-white mb-0 fs-5">
+          <span data-feather="truck" class="me-2"></span>
+          TRANSPORTADOR
+      </h4>
+  </div>
+  
+  <ul class="nav flex-column pt-3">
+      <!-- Painel -->
+      <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 active" href="{% url 'transportador:index_transportador' %}">
+              <span data-feather="layout"></span> 
+              <span>PAINEL</span>
+              <span class="ms-auto badge bg-warning text-dark" id="badge-novos">0</span>
+          </a>
+      </li>
+      
+      <!-- Pedidos (com colapso) -->
+      <li class="nav-item mt-2">
+          <a class="nav-link d-flex align-items-center gap-2 collapsed" data-bs-toggle="collapse" href="#collapse_pedido" role="button" aria-expanded="false" aria-controls="collapse_pedido">
+              <span data-feather="box"></span>
+              <span>PEDIDOS</span>
+              <span class="ms-auto feather-chevron-down"></span>
+          </a>
+          <div class="collapse mt-1" id="collapse_pedido">
+              <div class="list-group list-group-flush submenu">
+                  <a href="{% url 'transportador:tabela_pedidos' %}?status=NOVO" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                      <span data-feather="file-plus"></span> Novos
+                      <span class="ms-auto badge bg-info" id="badge-novos-count">0</span>
+                  </a>
+                  <a href="{% url 'transportador:tabela_pedidos' %}?status=PENDENTE" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                      <span data-feather="clock"></span> Pendentes
+                      <span class="ms-auto badge bg-danger" id="badge-pendentes-count">0</span>
+                  </a>
+                  <a href="{% url 'transportador:tabela_pedidos' %}?status=ATENDIDO" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                      <span data-feather="check-circle"></span> Atendidos
+                      <span class="ms-auto badge bg-warning text-dark" id="badge-atendidos-count">0</span>
+                  </a>
+                  <a href="{% url 'transportador:tabela_pedidos' %}?status=FINALIZADO" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                      <span data-feather="check-square"></span> Finalizados
+                      <span class="ms-auto badge bg-success" id="badge-finalizados-count">0</span>
+                  </a>
+              </div>
+          </div>
+      </li>
 
-<nav id="sidebarMenu" class="bg-light border border-warning border-4 rounded">
-  <ul class="nav flex-column pt-5">
-    <!-- Painel -->
-    <li class="nav-item">
-      <a class="nav-link d-flex align-items-center gap-2" href="{% url 'transportador:index_transportador' %}">
-        <span data-feather="layout"></span> <span>PAINEL</span>
-      </a>
-    </li>
-    <!-- Pedidos (com colapso) -->
-    <li class="nav-item mt-3">
-      <a class="nav-link d-flex align-items-center gap-2" data-bs-toggle="collapse" href="#collapse_pedido" role="button" aria-expanded="false" aria-controls="collapse_pedido">
-        <span data-feather="box"></span>
-        <span>PEDIDOS</span>
-      </a>
-      <div class="collapse mt-2" id="collapse_pedido">
-        <div class="list-group list-group-flush">
-          <a href="{% url 'dashboard:tabela_pedidos_novos' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="file-plus"></span> Novos
+      <!-- Cadastro -->
+      <li class="nav-item mt-2">
+          <a class="nav-link d-flex align-items-center gap-2" href="{% url 'transportador:cadastro' %}">
+              <span data-feather="edit-3"></span> 
+              <span>MEU CADASTRO</span>
           </a>
-          <a href="{% url 'dashboard:tabela_pedidos_pendentes' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="clock"></span> Pendentes
-          </a>
-          <a href="{% url 'dashboard:tabela_pedidos_atendidos' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="check-circle"></span> Atendidos
-          </a>
-          <a href="{% url 'dashboard:tabela_pedidos_finalizados' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="check-square"></span> Finalizados
-          </a>
-          <a href="{% url 'dashboard:tabela_pedidos_cancelados' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="x-circle"></span> Cancelados
-          </a>
-          <a href="{% url 'dashboard:tabela_pedidos_arquivados' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
-            <span data-feather="archive"></span> Arquivados
-          </a>
-        </div>
-      </div>
+      </li>
+
+      <!-- Cadastro -->
+      <li class="nav-item mt-2">
+        <a class="nav-link d-flex align-items-center gap-2" href="{% url 'transportador:cadastro' %}">
+            <span data-feather="dollar-sign"></span> 
+            <span>FINANCEIRO</span>
+        </a>
     </li>
 
     <!-- Cadastro -->
-    <li class="nav-item mt-3">
+    <li class="nav-item mt-2">
       <a class="nav-link d-flex align-items-center gap-2" href="{% url 'transportador:cadastro' %}">
-        <span data-feather="edit"></span> <span>CADASTRO</span>
+          <span data-feather="calendar"></span> 
+          <span>AGENDA</span>
       </a>
-    </li>
-
-    <!-- Financeiro -->
-    <li class="nav-item mt-2">
-      <a class="nav-link d-flex align-items-center gap-2" href="#">
-        <span data-feather="dollar-sign"></span> <span>FINANCEIRO</span>
-      </a>
-    </li>
-
-    <!-- Clientes -->
-    <li class="nav-item mt-2">
-      <a class="nav-link d-flex align-items-center gap-2" href="#">
-        <span data-feather="users"></span> <span>CLIENTES</span>
-      </a>
-    </li>
-    
+  </li>
   </ul>
-</nav>
+</div>
 
-<!-- Feather Icons -->
-<script src="https://unpkg.com/feather-icons"></script>
+<style>
+  .sidebar-custom .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 12px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      transition: all 0.3s;
+  }
+  
+  .sidebar-custom .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+  }
+  
+  .sidebar-custom .nav-link.active {
+      background-color: rgba(30, 144, 255, 0.2);
+      color: white;
+      font-weight: 500;
+  }
+  
+  .sidebar-custom .submenu {
+      background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-custom .submenu .list-group-item {
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      border: none;
+      padding: 10px 15px 10px 40px;
+      font-size: 0.9rem;
+  }
+  
+  .sidebar-custom .submenu .list-group-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+  }
+  
+  .feather-chevron-down {
+      transition: transform 0.3s;
+  }
+  
+  .nav-link.collapsed .feather-chevron-down {
+      transform: rotate(-90deg);
+  }
+  
+  .offcanvas {
+      width: 280px !important;
+  }
+</style>
+
 <script>
-  feather.replace();
+  document.addEventListener('DOMContentLoaded', function() {
+      // Adiciona chevron-down dinamicamente
+      const chevron = document.createElement('span');
+      chevron.className = 'feather-chevron-down';
+      chevron.innerHTML = feather.icons['chevron-down'].toSvg();
+      document.querySelector('[data-bs-toggle="collapse"]').appendChild(chevron);
+  });
 </script>
-
-
-<!--
-
-Como Funciona:
-O data-feather="..." é a sintaxe para os ícones do Feather Icons.
-
-Para usar o Feather Icons,
-você precisa garantir que o JavaScript do Feather Icons 
-esteja carregado na sua página. 
-Caso não tenha feito isso ainda, adicione o seguinte 
-script dentro da sua tag <head> para inicializar os 
-ícones corretamente:
-
-<script src="https://unpkg.com/feather-icons"></script>
-<script>
-  feather.replace(); // Substitui os ícones pelo código SVG
-</script>
-
-Explicação:
-Cada ícone é colocado dentro da tag <span data-feather="..."></span>.
-
-O feather.replace() garante que os ícones sejam carregados corretamente no seu HTML.
-
-Agora o seu menu terá ícones para cada uma das seções e 
-o comportamento de colapso do menu de Pedidos vai 
-continuar funcionando normalmente.
-
--->
