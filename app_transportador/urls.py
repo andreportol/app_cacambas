@@ -6,8 +6,10 @@ from .views import (
     IndexTemplateView,
     dados_pedidos,
     tabela_pedidos,
+    tabela_pedidos_filtrado,
     detalhes_pedido,
     alterar_status_pedido,
+    cancelar_pedido,
 )
 
 
@@ -19,6 +21,8 @@ urlpatterns = [
     path('cadastro/', editar_dados_transportador, name='cadastro'),
     path('dados_pedidos/', dados_pedidos, name='dados_pedidos'),
     path('tabela_pedidos/', tabela_pedidos, name='tabela_pedidos'),
+    path('tabela_pedidos_filtrado/', tabela_pedidos_filtrado, name='tabela_pedidos_filtrado'),
     path('pedido/<int:pedido_id>/', detalhes_pedido, name='detalhes_pedido'),
     path('pedido/<int:pedido_id>/alterar_status/', alterar_status_pedido, name='alterar_status_pedido'),
+    path('pedido/<int:pedido_id>/cancelar/', cancelar_pedido, name='cancelar_pedido'),
 ]

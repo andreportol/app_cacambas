@@ -142,19 +142,63 @@ def dados_pedidos(request):
 def tabela_pedidos(request):
     transportador_id = request.session.get('transportador_id')
     if not transportador_id:
-        return render(request, 'app_transportador/table_pedidos.html', {'pedidos': []})
+        return render(request, 'app_transportador/tabela_pedidos.html', {'pedidos': []})
     
     try:
         transportador = Transportador.objects.get(id=transportador_id)
-        pedidos = Pedido.objects.filter(
-            transportador=transportador
-        ).order_by('-criado')
         
-        return render(request, 'app_transportador/table_pedidos.html', {
-            'pedidos': pedidos
+        # Obter o parâmetro de status da URL (default: None)
+        status = request.GET.get('status')
+        
+        # Filtrar pedidos por transportador
+        pedidos = Pedido.objects.filter(transportador=transportador)
+        
+        # Aplicar filtro adicional se status for especificado
+        if status:
+            pedidos = pedidos.filter(status_pedido=status)
+
+        # Ordenar por data de criação (mais recentes primeiro)
+        pedidos = pedidos.order_by('-criado')
+        
+        return render(request, 'app_transportador/tabela_pedidos.html', {
+            'pedidos': pedidos,
+            'status_filtro': status # opcional: passar para o template
         })
+
     except Transportador.DoesNotExist:
-        return render(request, 'app_transportador/table_pedidos.html', {
+        return render(request, 'app_transportador/tabela_pedidos.html', {
+            'pedidos': []
+        })
+
+@require_http_methods(["GET"])
+def tabela_pedidos_filtrado(request):
+    transportador_id = request.session.get('transportador_id')
+    if not transportador_id:
+        return render(request, 'app_transportador/tabela_pedidos_filtrado.html', {'pedidos': []})
+    
+    try:
+        transportador = Transportador.objects.get(id=transportador_id)
+        
+        # Obter o parâmetro de status da URL (default: None)
+        status = request.GET.get('status')
+        
+        # Filtrar pedidos por transportador
+        pedidos = Pedido.objects.filter(transportador=transportador)
+        
+        # Aplicar filtro adicional se status for especificado
+        if status:
+            pedidos = pedidos.filter(status_pedido=status)
+
+        # Ordenar por data de criação (mais recentes primeiro)
+        pedidos = pedidos.order_by('-criado')
+        
+        return render(request, 'app_transportador/tabela_pedidos_filtrado.html', {
+            'pedidos': pedidos,
+            'status_filtro': status # opcional: passar para o template
+        })
+
+    except Transportador.DoesNotExist:
+        return render(request, 'app_transportador/tabela_pedidos_filtrado.html', {
             'pedidos': []
         })
 
@@ -195,3 +239,32 @@ def alterar_status_pedido(request, pedido_id):
     
     pedido.save()
     return redirect('transportador:detalhes_pedido', pedido_id=pedido.id)
+
+def cancelar_pedido(request, pedido_id):
+    if request.method == 'POST':
+        pedido = get_object_or_404(Pedido, id=pedido_id)
+        motivo = request.POST.get('motivo_cancelamento', '').strip()
+        
+        if not motivo:
+            messages.error(request, 'Por favor, informe o motivo do cancelamento.')
+            return redirect('transportador:detalhes_pedido', pedido_id=pedido_id)
+        
+        # Atualiza o status e salva o motivo no campo observacao
+        pedido.status_pedido = 'CANCELADO'
+        
+        # Formata o motivo para incluir data/hora e identificação
+        from django.utils.timezone import now
+        motivo_formatado = f"\n\n--- CANCELAMENTO ({now().strftime('%d/%m/%Y %H:%M')}) ---\nMotivo: {motivo}\n"
+        
+        # Adiciona ao campo observacao mantendo o conteúdo anterior se existir
+        if pedido.observacao:
+            pedido.observacao += motivo_formatado
+        else:
+            pedido.observacao = motivo_formatado
+            
+        pedido.save()
+        
+        messages.success(request, 'Pedido cancelado com sucesso.')
+        return redirect('transportador:detalhes_pedido', pedido_id=pedido_id)
+    
+    return redirect('transportador:index_transportador')

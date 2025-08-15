@@ -62,48 +62,59 @@
 
   <div class="container mt-4">
     <div class="row g-4">
-      <!-- Cartões de Status -->
+      <!-- Card Novos -->
       <div class="col-md-3">
-        <div class="card border-info shadow-sm h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title text-info">NOVOS</h5>
-            <p class="card-value display-6 text-info" id="novos">0</p>
+        <a href="{% url 'transportador:tabela_pedidos_filtrado' %}?status=NOVO" class="text-decoration-none">
+          <div class="card border-info shadow-sm h-100 hover-scale">
+            <div class="card-body text-center">
+              <h5 class="card-title text-info">NOVOS</h5>
+              <p class="card-value display-6 text-info" id="novos">0</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
       
+      <!-- Card Pendentes -->
       <div class="col-md-3">
-        <div class="card border-danger shadow-sm h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title text-danger">PENDENTES</h5>
-            <p class="card-value display-6 text-danger" id="pendentes">0</p>
+        <a href="{% url 'transportador:tabela_pedidos_filtrado' %}?status=PENDENTE" class="text-decoration-none">
+          <div class="card border-danger shadow-sm h-100 hover-scale">
+            <div class="card-body text-center">
+              <h5 class="card-title text-danger">PENDENTES</h5>
+              <p class="card-value display-6 text-danger" id="pendentes">0</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
       
+      <!-- Card Atendidos -->
       <div class="col-md-3">
-        <div class="card border-warning shadow-sm h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title text-warning">ATENDIDOS</h5>
-            <p class="card-value display-6 text-warning" id="atendidos">0</p>
+        <a href="{% url 'transportador:tabela_pedidos_filtrado' %}?status=ATENDIDO" class="text-decoration-none">
+          <div class="card border-warning shadow-sm h-100 hover-scale">
+            <div class="card-body text-center">
+              <h5 class="card-title text-warning">ATENDIDOS</h5>
+              <p class="card-value display-6 text-warning" id="atendidos">0</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
       
+      <!-- Card Finalizados -->
       <div class="col-md-3">
-        <div class="card border-success shadow-sm h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title text-success">FINALIZADOS</h5>
-            <p class="card-value display-6 text-success" id="finalizados">0</p>
+        <a href="{% url 'transportador:tabela_pedidos_filtrado' %}?status=FINALIZADO" class="text-decoration-none">
+          <div class="card border-success shadow-sm h-100 hover-scale">
+            <div class="card-body text-center">
+              <h5 class="card-title text-success">FINALIZADOS</h5>
+              <p class="card-value display-6 text-success" id="finalizados">0</p>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
 
   <!-- Tabela de pedidos -->
   <div id="tabela-pedidos-container" class="mt-4">
-    {% include 'app_transportador/table_pedidos.html' %}
+    {% include 'app_transportador/tabela_pedidos.html' %}
   </div>
 </main>
 
@@ -121,54 +132,71 @@
   let primeiraAtualizacao = true;
 
   // Função principal para atualizar dados
-  async function atualizarDados() {
+  async function atualizarDadosCompletos() {
     try {
       const response = await fetch("{% url 'transportador:dados_pedidos' %}");
       
-      if (response.status === 401) {  // Não autenticado
+      if (response.status === 401) {
         window.location.href = "{% url 'transportador:login_transportador' %}";
         return;
       }
       
-      if (!response.ok) {
-        throw new Error('Erro ao carregar dados');
-      }
+      if (!response.ok) throw new Error('Erro ao carregar dados');
       
       const dados = await response.json();
       
-      if (dados.error) {
-        console.error(dados.error);
-        return;
-      }
-
-      // Verifica se há novos pedidos
-      const novosPedidos = parseInt(dados.novos) || 0;
-      const temNovosPedidos = novosPedidos > contagemAnterior && !primeiraAtualizacao;
-
-      // Atualiza contadores
+      // Atualiza os cards principais
       document.getElementById('novos').textContent = dados.novos;
       document.getElementById('pendentes').textContent = dados.pendentes;
       document.getElementById('atendidos').textContent = dados.atendidos;
       document.getElementById('finalizados').textContent = dados.finalizados;
-
-      // Atualiza a tabela se necessário
-      if (dados.atualizar_tabela || temNovosPedidos) {
+      
+      // Atualiza os badges do sidebar
+      atualizarBadgesSidebar(dados);
+      
+      // Restante da sua lógica (tabela, notificações, etc.)
+      if (dados.atualizar_tabela) {
         await atualizarTabelaPedidos();
       }
-
-      // Toca o áudio apenas se houver novos pedidos (exceto na primeira atualização)
-      if (temNovosPedidos && !tocando) {
-        audio.play().catch(e => console.error('Erro ao reproduzir áudio:', e));
-        tocando = true;
-        mostrarNotificacao(novosPedidos - contagemAnterior);
-      }
-
-      contagemAnterior = novosPedidos;
-      primeiraAtualizacao = false;
+      
     } catch (error) {
       console.error('Erro na atualização:', error);
     }
   }
+
+  // Função específica para atualizar os badges do sidebar
+  function atualizarBadgesSidebar(dados) {
+    const badges = {
+      'badge-novos-count': dados.novos,
+      'badge-pendentes-count': dados.pendentes,
+      'badge-atendidos-count': dados.atendidos,
+      'badge-finalizados-count': dados.finalizados
+    };
+    
+    for (const [id, valor] of Object.entries(badges)) {
+      const elemento = document.getElementById(id);
+      if (elemento) {
+        elemento.textContent = valor;
+        elemento.style.display = valor > 0 ? 'inline-flex' : 'none';
+      }
+    }
+    
+    // Atualiza o total no sidebar
+    const total = (dados.novos || 0) + (dados.pendentes || 0) + 
+                 (dados.atendidos || 0) + (dados.finalizados || 0);
+    const totalElement = document.getElementById('pedidos-total-count');
+    if (totalElement) {
+      totalElement.textContent = total;
+      totalElement.style.display = total > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  // Modifique sua inicialização para usar a nova função
+  document.addEventListener('DOMContentLoaded', () => {
+    feather.replace();
+    atualizarDadosCompletos();
+    intervaloAtualizacao = setInterval(atualizarDadosCompletos, 10000);
+  });
 
   // Atualiza a tabela de pedidos
   async function atualizarTabelaPedidos() {
