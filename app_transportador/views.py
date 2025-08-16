@@ -202,26 +202,24 @@ def tabela_pedidos_filtrado(request):
             'pedidos': []
         })
 
-def detalhes_pedido(request, pedido_id):
+def detalhes_pedido(request, numero_pedido):
     transportador_id = request.session.get('transportador_id')
     if not transportador_id:
         return redirect('transportador:login_transportador')
     
     try:
         transportador = Transportador.objects.get(id=transportador_id)
-        pedido = Pedido.objects.get(id=pedido_id, transportador=transportador)
+        pedido = Pedido.objects.get(numero_pedido=numero_pedido, transportador=transportador)
         return render(request, 'app_transportador/detalhes_pedido.html', {'pedido': pedido})
     except Transportador.DoesNotExist:
         raise Http404("Transportador não encontrado")
-    except Pedido.DoesNotExist:
-        raise Http404("Pedido não encontrado")
-
-def alterar_status_pedido(request, pedido_id):
+    
+def alterar_status_pedido(request, numero_pedido):
     if not request.session.get('transportador_id'):
         return redirect('transportador:login_transportador')
     
     transportador = get_object_or_404(Transportador, id=request.session['transportador_id'])
-    pedido = get_object_or_404(Pedido, id=pedido_id, transportador=transportador)
+    pedido = get_object_or_404(Pedido, numero_pedido=numero_pedido, transportador=transportador)
     
     # Lógica de transição de status
     if pedido.status_pedido == 'NOVO':
@@ -235,19 +233,34 @@ def alterar_status_pedido(request, pedido_id):
         messages.success(request, 'Caçamba retirada e serviço finalizado!')
     else:
         messages.warning(request, 'Não é possível alterar o status atual.')
-        return redirect('transportador:detalhes_pedido', pedido_id=pedido.id)
+        return redirect('transportador:detalhes_pedido', pedido.numero_pedido)
     
     pedido.save()
-    return redirect('transportador:detalhes_pedido', pedido_id=pedido.id)
+    return redirect('transportador:detalhes_pedido', pedido.numero_pedido)
 
-def cancelar_pedido(request, pedido_id):
+from django.http import JsonResponse
+
+def atualizar_observacao(request, numero_pedido):
     if request.method == 'POST':
-        pedido = get_object_or_404(Pedido, id=pedido_id)
+        try:
+            pedido = get_object_or_404(Pedido, numero_pedido=numero_pedido)
+            nova_observacao = request.POST.get('observacao', '')
+            pedido.observacao = nova_observacao
+            pedido.save()
+            messages.success(request, 'Observações atualizadas com sucesso!')
+        except Exception as e:
+            messages.error(request, 'Erro ao salvar observações')
+    
+    return redirect('transportador:detalhes_pedido', numero_pedido=numero_pedido)
+
+def cancelar_pedido(request, numero_pedido):
+    if request.method == 'POST':
+        pedido = get_object_or_404(Pedido, numero_pedido=numero_pedido)
         motivo = request.POST.get('motivo_cancelamento', '').strip()
         
         if not motivo:
             messages.error(request, 'Por favor, informe o motivo do cancelamento.')
-            return redirect('transportador:detalhes_pedido', pedido_id=pedido_id)
+            return redirect('transportador:detalhes_pedido', numero_pedido=numero_pedido)
         
         # Atualiza o status e salva o motivo no campo observacao
         pedido.status_pedido = 'CANCELADO'
@@ -265,7 +278,7 @@ def cancelar_pedido(request, pedido_id):
         pedido.save()
         
         messages.success(request, 'Pedido cancelado com sucesso.')
-        return redirect('transportador:detalhes_pedido', pedido_id=pedido_id)
+        return redirect('transportador:detalhes_pedido', pedido.numero_pedido)
     
     return redirect('transportador:index_transportador')
 

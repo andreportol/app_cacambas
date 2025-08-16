@@ -61,7 +61,7 @@
         </td>
         <td>{{ pedido.criado|date:"d/m/Y H:i" }}</td>
         <td>
-          <a href="{% url 'transportador:detalhes_pedido' pedido.id %}" class="btn btn-sm btn-primary">
+          <a href="{% url 'transportador:detalhes_pedido' pedido.numero_pedido %}" class="btn btn-sm btn-primary">
             Detalhes
           </a>
         </td>

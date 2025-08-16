@@ -137,7 +137,6 @@ class Pedido(Base):
         ('ATENDIDO', 'ATENDIDO'),
         ('FINALIZADO', 'FINALIZADO'),
         ('CANCELADO', 'CANCELADO'),
-        ('ARQUIVADO', 'ARQUIVADO'),
     ]
     status_pedido = models.CharField(verbose_name='Status', choices=STATUS_CHOICES, max_length=10, default='NOVO')
 

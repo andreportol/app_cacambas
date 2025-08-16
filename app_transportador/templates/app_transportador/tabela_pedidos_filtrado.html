@@ -51,8 +51,8 @@
             <td>{{ pedido.criado|date:"d/m/Y H:i" }}</td>
             <td>
               <div class="btn-group" role="group">
-                <a href="{% url 'transportador:detalhes_pedido' pedido.id %}" class="btn btn-outline-primary btn rounded-pill border-2">
-                    <i class="fas fa-search me-2"></i> Visualizar
+                <a href="{% url 'transportador:detalhes_pedido' pedido.numero_pedido %}" class="btn btn-outline-primary btn rounded-pill border-2">
+                    <i class="fas fa-search me-2"></i> Detalhes
                 </a>
               </div>
             </td>
