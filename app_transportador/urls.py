@@ -10,6 +10,7 @@ from .views import (
     detalhes_pedido,
     alterar_status_pedido,
     cancelar_pedido,
+    Regulamentos,
 )
 
 
@@ -25,4 +26,5 @@ urlpatterns = [
     path('pedido/<int:pedido_id>/', detalhes_pedido, name='detalhes_pedido'),
     path('pedido/<int:pedido_id>/alterar_status/', alterar_status_pedido, name='alterar_status_pedido'),
     path('pedido/<int:pedido_id>/cancelar/', cancelar_pedido, name='cancelar_pedido'),
+    path('regulamentos/', Regulamentos.as_view(), name='regulamentos'),
 ]

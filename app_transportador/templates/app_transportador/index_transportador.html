@@ -181,14 +181,6 @@
       }
     }
     
-    // Atualiza o total no sidebar
-    const total = (dados.novos || 0) + (dados.pendentes || 0) + 
-                 (dados.atendidos || 0) + (dados.finalizados || 0);
-    const totalElement = document.getElementById('pedidos-total-count');
-    if (totalElement) {
-      totalElement.textContent = total;
-      totalElement.style.display = total > 0 ? 'inline-flex' : 'none';
-    }
   }
 
   // Modifique sua inicialização para usar a nova função

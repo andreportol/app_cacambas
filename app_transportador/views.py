@@ -268,3 +268,45 @@ def cancelar_pedido(request, pedido_id):
         return redirect('transportador:detalhes_pedido', pedido_id=pedido_id)
     
     return redirect('transportador:index_transportador')
+
+class Regulamentos(TemplateView):
+    template_name = 'app_transportador/regulamentos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'titulo': 'Regulamentos da Plataforma',
+            'regras': [
+                {
+                    'categoria': 'Cadastro e Perfil',
+                    'itens': [
+                        'Todos os dados cadastrais devem ser verídicos e atualizados',
+                        'É obrigatório manter foto atualizada no perfil',
+                        'Documentação deve estar sempre válida'
+                    ]
+                },
+                {
+                    'categoria': 'Operação e Serviços',
+                    'itens': [
+                        'Horário de atendimento: 06h às 22h',
+                        'Tolerância máxima de atraso: 15 minutos',
+                        'Proibido aceitar pagamento em dinheiro diretamente do cliente'
+                    ]
+                },
+                {
+                    'categoria': 'Pagamentos',
+                    'itens': [
+                        'Taxa de serviço: 5% do valor total do pedido',
+                        'Pagamentos processados em até 3 dias após a entrega da caçamba',
+                    ]
+                },
+                {
+                    'categoria': 'Conduta',
+                    'itens': [
+                        'Proibido qualquer tipo de discriminação',
+                        'Respeitar todas as normas de trânsito'
+                    ]
+                }
+            ]
+        })
+        return context
