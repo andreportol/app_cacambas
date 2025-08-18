@@ -89,6 +89,17 @@
             box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
             border-radius: 0.5rem;
         }
+        
+        /* Estilos para os novos botões de ação */
+        .btn-action-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .btn-action {
+            flex: 1;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -151,24 +162,53 @@
                             <div class="ps-3">
                                 {{ pedido.logradouro }}, {{ pedido.bairro }} - {{ pedido.cidade }} - MS
                                 {% if pedido.status_pedido != 'NOVO' %}
-                                <div class="info-sensivel mt-2">
-                                    Número: {{ pedido.num_porta }}
-                                </div>
+                                    <div class="info-sensivel mt-2">
+                                        Número: {{ pedido.num_porta }}
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- Botão do Google Maps (visível para status PENDENTE ou superior) -->
+                                {% if pedido.status_pedido != 'NOVO' %}
+                                    <div class="btn-action-group">
+                                        <a href="https://www.google.com/maps/dir/?api=1&destination={{ pedido.logradouro|urlencode }},{{ pedido.num_porta|urlencode }},{{ pedido.bairro|urlencode }},{{ pedido.cidade|urlencode }}" 
+                                        class="btn btn-primary btn-action" target="_blank">
+                                            <i class="fas fa-map-marked-alt me-1"></i> Ver Rota
+                                        </a>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
                         
+                        <!-- Informações do cliente (só aparecem após aceite) -->
                         {% if pedido.status_pedido != 'NOVO' %}
-                        <div class="d-flex mb-3">
-                            <span class="info-label me-2">Cliente:</span>
-                            <span class="info-sensivel">{{ pedido.nome_cliente }}</span>
-                        </div>
-                        <div class="d-flex mb-3">
-                            <span class="info-label me-2">Telefone:</span>
-                            <span class="info-sensivel">{{ pedido.telefone_cliente }}</span>
-                        </div>
+                            <!-- Informações do cliente (só aparece após aceite) -->
+                            <div class="d-flex mb-3">
+                                <span class="info-label me-2">Cliente:</span>
+                                <span class="info-sensivel">{{ pedido.nome_cliente }}</span>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <span class="info-label me-2">Telefone:</span>
+                                <span class="info-sensivel">{{ pedido.telefone_cliente }}</span>
+                            </div>
+                    
+                            <!-- Botões de ação (só aparecem se houver telefone) -->
+                            {% if pedido.telefone_cliente %}
+                            <div class="btn-action-group">
+                                <!-- Botão Ligar -->
+                                <a href="tel:{{ pedido.telefone_cliente|cut:' '|cut:'('|cut:')'|cut:'-'|cut:'+' }}" 
+                                class="btn btn-outline-primary btn-action">
+                                    <i class="fas fa-phone me-1"></i> Ligar
+                                </a>
+                                
+                                <!-- Botão WhatsApp com mensagem padrão -->
+                                <a href="https://wa.me/55{{ pedido.telefone_cliente|cut:' '|cut:'('|cut:')'|cut:'-'|cut:'+' }}?text=Olá%20{{ pedido.nome_cliente|urlencode }}%2C%20informamos%20que%20seu%20pedido%20%23{{ pedido.numero_pedido|urlencode }}%20foi%20recebido%20pelo%20transportador%20e%20está%20em%20andamento.%20Em%20breve%2C%20o%20transportador%20irá%20entrar%20em%20contato%20para%20combinar%20os%20detalhes%20da%20entrega.%20Agradecemos%20pela%20confiança%21"
+                                    class="btn btn-success btn-action" target="_blank">
+                                    <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                                </a>
+                            </div>
+                            {% endif %}
                         {% endif %}
-                    </div>
+                    </div>            
                 </div>
                 
                 <!-- Valor e Observações -->
@@ -299,17 +339,12 @@
                     </div>
                     
                     <div class="mb-3">
-                        <p>Por favor, ligue para o cliente no telefone abaixo para:</p>
+                        <p>Ao confirmar o aceite, você estará assumindo a responsabilidade por este pedido e deverá:</p>
                         <ul>
-                            <li>Confirmar o recebimento do pedido</li>
+                            <li>Confirmar o recebimento do pedido com o cliente</li>
                             <li>Acertar o horário de entrega da caçamba</li>
                             <li>Verificar qualquer informação adicional</li>
                         </ul>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <i class="fas fa-phone me-2"></i>
-                        <strong>Telefone do Cliente:</strong> {{ pedido.telefone_cliente|default:"Não disponível" }}
                     </div>
                 </div>
                 <div class="modal-footer">
