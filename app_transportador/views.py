@@ -242,8 +242,6 @@ def alterar_status_pedido(request, numero_pedido):
     pedido.save()
     return redirect('transportador:detalhes_pedido', pedido.numero_pedido)
 
-from django.http import JsonResponse
-
 def atualizar_observacao(request, numero_pedido):
     if request.method == 'POST':
         try:
@@ -332,7 +330,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, FormView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.db.models import Sum
 from django import forms
 
 from core.models import Pedido, Transportador, Pagamento
@@ -389,7 +386,7 @@ class PagamentosPedidos(TemplateView):
         # todos os pagamentos recebidos pelo transportador na variavel 'pagamentos'
         total_recebido = sum(p.valor for p in pagamentos)
         #todos os pagamentos pendentes
-        porcentagem = Decimal(0.05) # 5% do valor recebido 
+        porcentagem = Decimal(0.07) # 7% do valor recebido 
         total_a_repassar = (sum(p.valor for p in pagamentos_pendentes)) * porcentagem
         
         return {
@@ -407,7 +404,6 @@ class PagamentosPedidos(TemplateView):
             'total_recebido': 0,
             'total_a_receber': 0,
         }
-
 
 # --------------------------
 # Formulário vazio apenas para o ConfirmarPagamento

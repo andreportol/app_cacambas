@@ -19,38 +19,233 @@
                 O não cumprimento destas regras pode resultar em suspensão da conta.
             </div>
             
+            <!-- Introdução -->
+            <div class="alert alert-info mb-4">
+                <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Bem-vindo à Plataforma Entulho Fácil</h5>
+                <p class="mb-0">Estas regras têm como objetivo garantir um serviço de qualidade para nossos clientes e um ambiente justo de trabalho para todos os transportadores.</p>
+            </div>
+            
             <!-- Lista de Regulamentos -->
             <div class="accordion" id="regulamentosAccordion">
-                {% for regra in regras %}
+                <!-- Responsabilidades do Transportador -->
                 <div class="accordion-item border-0 mb-3">
-                    <h3 class="accordion-header" id="heading{{ forloop.counter }}">
-                        <button class="accordion-button collapsed bg-light text-primary" type="button" 
-                                data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" 
-                                aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
-                            <i class="fas fa-folder-open me-2"></i>{{ regra.categoria }}
+                    <h3 class="accordion-header" id="heading1">
+                        <button class="accordion-button bg-light text-primary" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse1" 
+                                aria-expanded="true" aria-controls="collapse1">
+                            <i class="fas fa-user-check me-2"></i>Responsabilidades do Transportador
                         </button>
                     </h3>
-                    <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" 
-                         aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#regulamentosAccordion">
+                    <div id="collapse1" class="accordion-collapse collapse show" 
+                         aria-labelledby="heading1" data-bs-parent="#regulamentosAccordion">
                         <div class="accordion-body">
                             <ul class="list-group list-group-flush">
-                                {% for item in regra.itens %}
                                 <li class="list-group-item border-0 py-2">
-                                    <i class="fas fa-circle text-primary small me-2"></i>{{ item }}
+                                    <i class="fas fa-circle text-primary small me-2"></i>Manter todos os dados cadastrais atualizados e verídicos
                                 </li>
-                                {% endfor %}
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Entregar a caçamba na data e horário combinados com o cliente
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Esclarecer ao cliente os tipos de entulho permitidos para descarte
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Realizar a coleta na data marcada com o cliente
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Fazer o descarte regular dos resíduos em locais apropriados
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Seguir todas as normas da Agetran para estacionamento e operação
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+                
+                <!-- Aspectos Financeiros -->
+                <div class="accordion-item border-0 mb-3">
+                    <h3 class="accordion-header" id="heading2">
+                        <button class="accordion-button collapsed bg-light text-primary" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse2" 
+                                aria-expanded="false" aria-controls="collapse2">
+                            <i class="fas fa-money-bill-wave me-2"></i>Aspectos Financeiros
+                        </button>
+                    </h3>
+                    <div id="collapse2" class="accordion-collapse collapse" 
+                         aria-labelledby="heading2" data-bs-parent="#regulamentosAccordion">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O transportador é responsável pelo recebimento do valor do pedido
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O valor deve ser recebido no momento da entrega da caçamba
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>É obrigatório repassar <strong>7%</strong> do valor total à plataforma
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O repasse deve ser feito <strong>após a entrega</strong> da caçamba no local determinado
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O não pagamento em até <strong>3 dias úteis</strong> levará à desativação do transportador
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Empresas em atraso não aparecerão nas pesquisas até a regularização
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O repasse deve ser feito através da conta fornecida em contrato
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fluxo de Status dos Pedidos -->
+                <div class="accordion-item border-0 mb-3">
+                    <h3 class="accordion-header" id="heading3">
+                        <button class="accordion-button collapsed bg-light text-primary" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse3" 
+                                aria-expanded="false" aria-controls="collapse3">
+                            <i class="fas fa-exchange-alt me-2"></i>Fluxo de Status dos Pedidos
+                        </button>
+                    </h3>
+                    <div id="collapse3" class="accordion-collapse collapse" 
+                         aria-labelledby="heading3" data-bs-parent="#regulamentosAccordion">
+                        <div class="accordion-body">
+                            <div class="status-flow mb-4">
+                                <div class="d-flex justify-content-between align-items-center position-relative mb-3">
+                                    <div class="status-item text-center">
+                                        <div class="status-icon bg-info text-white rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <h6 class="mb-0">NOVO</h6>
+                                        <small class="text-muted">Pedido recebido</small>
+                                    </div>
+                                    <div class="arrow"><i class="fas fa-arrow-right text-muted"></i></div>
+                                    <div class="status-item text-center">
+                                        <div class="status-icon bg-danger text-white rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <h6 class="mb-0">PENDENTE</h6>
+                                        <small class="text-muted">Aceito pelo transportador</small>
+                                    </div>
+                                    <div class="arrow"><i class="fas fa-arrow-right text-muted"></i></div>
+                                    <div class="status-item text-center">
+                                        <div class="status-icon bg-warning text-dark rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-truck-loading"></i>
+                                        </div>
+                                        <h6 class="mb-0">ATENDIDO</h6>
+                                        <small class="text-muted">Caçamba entregue</small>
+                                    </div>
+                                    <div class="arrow"><i class="fas fa-arrow-right text-muted"></i></div>
+                                    <div class="status-item text-center">
+                                        <div class="status-icon bg-success text-white rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <h6 class="mb-0">CONCLUÍDO</h6>
+                                        <small class="text-muted">Caçamba retirada</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O transportador pode cancelar pedidos com status <span class="badge bg-info">NOVO</span>
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Para cancelar pedidos <span class="badge bg-danger">PENDENTE</span>, deve-se solicitar à plataforma
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>É necessário justificar o motivo do cancelamento
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O repasse de 7% deve ser feito quando o pedido estiver com status <span class="badge bg-warning text-dark">ATENDIDO</span>
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>A atualização de status do pedido é de responsabilidade do transportador.</span>
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>O status do pedido deve estar sempre atualizado.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cancelamento de Pedidos -->
+                <div class="accordion-item border-0 mb-3">
+                    <h3 class="accordion-header" id="heading4">
+                        <button class="accordion-button collapsed bg-light text-primary" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse4" 
+                                aria-expanded="false" aria-controls="collapse4">
+                            <i class="fas fa-ban me-2"></i>Política de Cancelamento
+                        </button>
+                    </h3>
+                    <div id="collapse4" class="accordion-collapse collapse" 
+                         aria-labelledby="heading4" data-bs-parent="#regulamentosAccordion">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Cancelamentos só são permitidos para pedidos com status <span class="badge bg-info">NOVO</span>
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Para pedidos com status <span class="badge bg-danger">PENDENTE</span>, o cancelamento deve ser solicitado à plataforma
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>É obrigatório informar o motivo do cancelamento
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-primary small me-2"></i>Cancelamentos frequentes sem justificativa adequada podem resultar em penalidades
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consequências por Não Pagamento -->
+                <div class="accordion-item border-0 mb-3">
+                    <h3 class="accordion-header" id="heading5">
+                        <button class="accordion-button collapsed bg-light text-primary" type="button" 
+                                data-bs-toggle="collapse" data-bs-target="#collapse5" 
+                                aria-expanded="false" aria-controls="collapse5">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Consequências por Não Pagamento
+                        </button>
+                    </h3>
+                    <div id="collapse5" class="accordion-collapse collapse" 
+                         aria-labelledby="heading5" data-bs-parent="#regulamentosAccordion">
+                        <div class="accordion-body">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-ban me-2"></i>
+                                <strong>Atenção:</strong> O não cumprimento dos prazos de pagamento acarretará em:
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-danger small me-2"></i>Desativação das pesquisas após <strong>3 dias úteis</strong> de atraso
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-danger small me-2"></i>O nome da empresa não aparecerá para os clientes
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-danger small me-2"></i>Perda de oportunidades de novos pedidos
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-danger small me-2"></i>Reativação somente após pagamento das taxas em atraso
+                                </li>
+                                <li class="list-group-item border-0 py-2">
+                                    <i class="fas fa-circle text-danger small me-2"></i>Multas adicional podem ser aplicadas em casos de reincidência
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Bloco de Contato -->
             <div class="card mt-4 border-primary">
                 <div class="card-body">
                     <h5 class="card-title text-primary">
-                        <i class="fas fa-question-circle me-2"></i>Dúvidas?
+                        <i class="fas fa-question-circle me-2"></i>Dúvidas ou Precisa Cancelar um Pedido?
                     </h5>
                     <p class="card-text">Entre em contato com nosso suporte:</p>
                     <ul class="list-unstyled">
@@ -59,14 +254,19 @@
                         <li><i class="fas fa-clock me-2 text-primary"></i> Seg-Sex: 8h-18h</li>
                         <li><i class="fas fa-clock me-2 text-primary"></i> Sábado: 8h-12h</li>
                     </ul>
+                    <div class="mt-3 p-3 bg-light rounded">
+                        <h6 class="text-primary"><i class="fas fa-info-circle me-2"></i>Para Pagamentos:</h6>
+                        <p class="mb-0">Utilize a conta bancária fornecida em contrato para realizar o repasse dos 7% após a entrega da caçamba.</p>
+                    </div>
                 </div>
             </div>
         </div>
         
         <!-- Rodapé -->
         <div class="card-footer bg-light text-end">
+            <small class="text-muted me-3">Última atualização: {% now "d/m/Y" %}</small>
             <a href="{% url 'transportador:index_transportador' %}" class="btn btn-primary">
-                <i class="fas fa-arrow-left me-2"></i>Voltar
+                <i class="fas fa-arrow-left me-2"></i>Voltar ao Início
             </a>
         </div>
     </div>
@@ -76,6 +276,7 @@
     .accordion-button:not(.collapsed) {
         background-color: #e7f1ff;
         color: #0d6efd;
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
     }
     .list-group-item {
         padding-left: 2rem;
@@ -84,6 +285,38 @@
     .accordion-body {
         padding-left: 0;
         padding-right: 0;
+    }
+    .status-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    .status-item {
+        flex: 1;
+    }
+    .arrow {
+        padding: 0 10px;
+    }
+    .bg-info {
+        background-color: #0dcaf0 !important; /* Azul celeste para NOVO */
+    }
+    .bg-danger {
+        background-color: #dc3545 !important; /* Vermelho para PENDENTE */
+    }
+    .bg-warning {
+        background-color: #ffc107 !important; /* Amarelo para ATENDIDO */
+    }
+    .bg-success {
+        background-color: #198754 !important; /* Verde para CONCLUÍDO */
+    }
+    @media (max-width: 768px) {
+        .status-flow .d-flex {
+            flex-direction: column;
+        }
+        .arrow {
+            padding: 10px 0;
+            transform: rotate(90deg);
+        }
     }
 </style>
 {% endblock %}
