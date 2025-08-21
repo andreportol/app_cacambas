@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Usuario, Transportador, Regiao_CG, Bairros_CG,Produto, TransportadorProduto, Pedido
+from .models import Usuario, Transportador, Regiao_CG, Bairros_CG,Produto, \
+    TransportadorProduto, Pedido, Pagamento
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
@@ -82,3 +83,31 @@ class PedidoAdmin(admin.ModelAdmin):
             'fields': ('observacao',)
         }),
     )
+
+@admin.register(Pagamento)
+class PagamentoAdmin(admin.ModelAdmin):
+    list_display = ['pedido', 'status', 'metodo', 'valor', 'confirmado_por', 'criado']
+    list_filter = ['status', 'metodo', 'criado']
+    ordering = ['criado', '-pedido__numero_pedido']
+    search_fields = ['pedido__numero_pedido']
+    readonly_fields = ['criado', 'modificado', 'confirmado_por']  # Campos somente leitura
+    date_hierarchy = 'criado'  # Navegação por data de criação
+    
+    fieldsets = (
+        ('Status Pagamento', {
+            'fields': ('pedido', 'status', 'metodo', 'valor')
+        }),
+        ('Comprovante', {
+            'fields': ('comprovante', 'observacoes'),
+            'classes': ('collapse',)
+        }),
+        ('Auditoria', {
+            'fields': ('criado', 'modificado', 'confirmado_por'),
+            'classes': ('collapse',)  # Colapsável para economizar espaço
+        }),
+    )
+    
+    def save_model(self, request, obj, form, change):
+        if obj.status == 'CONCLUIDO' and not obj.confirmado_por:
+            obj.confirmado_por = request.user
+        super().save_model(request, obj, form, change)

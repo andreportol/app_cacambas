@@ -1,5 +1,6 @@
 from django.db import models 
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Base(models.Model):
@@ -175,3 +176,47 @@ class Pedido(Base):
         super().save(*args, **kwargs)
 
 
+    @property
+    def status_pagamento(self):
+        if hasattr(self, 'pagamento'):
+            return self.pagamento.status
+        return 'PENDENTE'
+    
+    @property
+    def pagamento_confirmado(self):
+        return self.status_pagamento == 'CONCLUIDO'
+
+class Pagamento(Base):
+    STATUS_PAGAMENTO_CHOICES = [
+        ('PENDENTE', 'Pendente'),
+        ('CONCLUIDO', 'Concluído'),
+        ('CANCELADO', 'Cancelado'),
+        ('AGUARDANDO', 'AGUARDANDO'),
+    ]
+    
+    METODO_PAGAMENTO_CHOICES = [
+        ('CARTAO', 'Cartão'),
+        ('PIX', 'PIX'),
+        ('BOLETO', 'Boleto'),
+        ('DINHEIRO', 'Dinheiro'),
+    ]   
+    pedido = models.OneToOneField('Pedido', on_delete=models.CASCADE, related_name='pagamento')
+    status = models.CharField(max_length=10, choices=STATUS_PAGAMENTO_CHOICES, default='PENDENTE')
+    metodo = models.CharField(max_length=10, choices=METODO_PAGAMENTO_CHOICES)
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
+    confirmado_por = models.ForeignKey(
+        User, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        verbose_name="Confirmado por"
+    )
+    comprovante = models.FileField(upload_to='comprovantes/', null=True, blank=True)
+    observacoes = models.TextField(blank=True)
+    
+    class Meta:
+        verbose_name = 'Pagamento'
+        verbose_name_plural = 'Pagamentos'
+    
+    def __str__(self):
+        return f'Pagamento #{self.id} - {self.pedido.numero_pedido}'

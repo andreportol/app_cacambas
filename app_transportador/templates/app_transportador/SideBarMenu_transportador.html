@@ -51,10 +51,21 @@
 
         <!-- Financeiro -->
         <li class="nav-item mt-2">
-          <a class="nav-link d-flex align-items-center gap-2" href="">
-              <span data-feather="dollar-sign"></span> 
-              <span>FINANCEIRO</span>
-          </a>
+            <a class="nav-link d-flex align-items-center gap-2 collapsed" data-bs-toggle="collapse" href="#collapse_financeiro" role="button" aria-expanded="false" aria-controls="collapse_financeiro">
+                <span data-feather="dollar-sign"></span> 
+                <span>FINANCEIRO</span>
+                <span class="ms-auto feather-chevron-down"></span>
+            </a>
+            <div class="collapse mt-1" id="collapse_financeiro">
+            <div class="list-group list-group-flush submenu">
+                <a href="{% url 'transportador:pagamentos_pedidos' %}" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                    <span data-feather="credit-card"></span> Pagamentos
+                </a>
+                <a href="" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                    <span data-feather="bar-chart"></span> Relatórios
+                </a>
+            </div>
+            </div>
         </li>
 
         <!-- Agenda -->

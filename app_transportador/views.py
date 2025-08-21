@@ -6,7 +6,12 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic import TemplateView
-from core.models import Transportador, TransportadorProduto, Pedido
+from core.models import Transportador, TransportadorProduto, Pedido, Pagamento
+from django import forms
+from django.db.models import Sum
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import FormView
 
 # Create your views here.
 def login_transportador(request):
@@ -86,7 +91,6 @@ def login_transportador(request):
 
 class IndexTemplateView(TemplateView):
     template_name = 'app_transportador/index_transportador.html'
-
 
 @require_http_methods(["GET", "POST"])
 def editar_dados_transportador(request):
@@ -323,3 +327,136 @@ class Regulamentos(TemplateView):
             ]
         })
         return context
+
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import TemplateView, FormView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.db.models import Sum
+from django import forms
+
+from core.models import Pedido, Transportador, Pagamento
+
+
+# --------------------------
+# Pagamentos e Pedidos
+# --------------------------
+class PagamentosPedidos(TemplateView):
+    template_name = 'app_transportador/pagamentos_transportador.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        transportador_id = self.request.session.get('transportador_id')
+
+        if not transportador_id:
+            context['pedidos'] = []
+            context.update(self._estatisticas_vazias())
+            return context
+
+        transportador = get_object_or_404(Transportador, id=transportador_id)
+
+        # Todos os pedidos 'ATENDIDOS e FINALIZADOS' do transportador(transportador já recebeu ao deixar a caçamba)
+        pedidos = Pedido.objects.filter(
+            transportador=transportador,
+            status_pedido__in = ['ATENDIDO','FINALIZADO']
+            ).order_by('-criado')
+        
+        # Garante que cada pedido tenha um pagamento PENDENTE
+        for pedido in pedidos:
+            if not hasattr(pedido, 'pagamento'):
+                Pagamento.objects.create(
+                    pedido=pedido,
+                    valor=pedido.preco,
+                    status='PENDENTE',
+                    metodo='',
+                )
+
+        context['pedidos'] = pedidos
+        context.update(self._calcular_estatisticas(pedidos))
+        return context
+
+    def _calcular_estatisticas(self, pedidos):
+        """
+        Calcula totais e separa pendentes e concluídos.
+        Considera o objeto Pagamento associado a cada pedido.
+        """
+        pagamentos = [getattr(pedido, 'pagamento', None) for pedido in pedidos if hasattr(pedido, 'pagamento')]
+        pagamentos_pendentes = [p for p in pagamentos if p and p.status == 'PENDENTE']
+        pagamentos_aguardados = [p for p in pagamentos if p and p.status == 'AGUARDANDO']
+        pagamentos_concluidos = [p for p in pagamentos if p and p.status == 'CONCLUIDO']
+       
+        from decimal import Decimal
+        # todos os pagamentos recebidos pelo transportador na variavel 'pagamentos'
+        total_recebido = sum(p.valor for p in pagamentos)
+        #todos os pagamentos pendentes
+        porcentagem = Decimal(0.05) # 5% do valor recebido 
+        total_a_repassar = (sum(p.valor for p in pagamentos_pendentes)) * porcentagem
+        
+        return {
+            'pagamentos_pendentes': pagamentos_pendentes,
+            'pagamentos_aguardados': pagamentos_aguardados,
+            'pagamentos_concluidos': pagamentos_concluidos,
+            'total_recebido': total_recebido,
+            'total_a_repassar': total_a_repassar,
+        }
+
+    def _estatisticas_vazias(self):
+        return {
+            'pagamentos_pendentes': [],
+            'pagamentos_concluidos': [],
+            'total_recebido': 0,
+            'total_a_receber': 0,
+        }
+
+
+# --------------------------
+# Formulário vazio apenas para o ConfirmarPagamento
+# --------------------------
+class ConfirmarPagamentoForm(forms.Form):
+    """Formulário vazio usado apenas para disparar a ação de confirmação."""
+    pass
+
+
+# --------------------------
+# Confirmação de pagamento Vem do template pagamentos_transportador.html, através de um modal 
+# --------------------------
+class ConfirmarPagamento(FormView):
+    form_class = ConfirmarPagamentoForm
+    template_name = "app_transportador/confirmar_pagamento.html"  # caso queira exibir algo
+
+    def get_success_url(self):
+        return reverse_lazy('transportador:pagamentos_pedidos')
+
+    def form_valid(self, form):
+        transportador_id = self.request.session.get('transportador_id')
+        if not transportador_id:
+            messages.error(self.request, 'Você precisa estar logado como transportador.')
+            return redirect('transportador:login_transportador')
+
+        transportador = get_object_or_404(Transportador, id=transportador_id)
+        pagamento_id = self.kwargs.get('pagamento_id')
+
+        pagamento = get_object_or_404(
+            Pagamento,
+            id=pagamento_id,
+            pedido__transportador=transportador
+        )
+
+        if pagamento.status == 'PENDENTE':
+            pagamento.status = 'AGUARDANDO'
+            pagamento.save()
+            messages.success(
+                self.request,
+                f'Pagamento do Pedido #{pagamento.pedido.numero_pedido} aguardando confirmação!'
+            )
+        else:
+            messages.warning(self.request, 'Este pagamento já foi confirmado anteriormente.')
+
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        """
+        Para chamadas GET, redireciona para post() simulando a confirmação
+        sem precisar exibir um formulário real.
+        """
+        return self.post(request, *args, **kwargs)
