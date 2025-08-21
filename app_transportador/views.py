@@ -145,28 +145,22 @@ def dados_pedidos(request):
 @require_http_methods(["GET"])
 def tabela_pedidos(request):
     transportador_id = request.session.get('transportador_id')
+    
     if not transportador_id:
+        print("Redirecionando: transportador_id não encontrado")
         return render(request, 'app_transportador/tabela_pedidos.html', {'pedidos': []})
     
     try:
         transportador = Transportador.objects.get(id=transportador_id)
-        
-        # Obter o parâmetro de status da URL (default: None)
-        status = request.GET.get('status')
-        
+                
         # Filtrar pedidos por transportador
         pedidos = Pedido.objects.filter(transportador=transportador)
         
-        # Aplicar filtro adicional se status for especificado
-        if status:
-            pedidos = pedidos.filter(status_pedido=status)
-
         # Ordenar por data de criação (mais recentes primeiro)
         pedidos = pedidos.order_by('-criado')
         
         return render(request, 'app_transportador/tabela_pedidos.html', {
             'pedidos': pedidos,
-            'status_filtro': status # opcional: passar para o template
         })
 
     except Transportador.DoesNotExist:

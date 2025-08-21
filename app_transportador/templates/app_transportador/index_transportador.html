@@ -118,88 +118,62 @@
   </div>
 </main>
 
+
 <!-- Ícones Feather -->
 <script src="https://unpkg.com/feather-icons"></script>
 <script>
-  // Inicializa os ícones
-  feather.replace();
-  
-  // Variáveis globais
-  let contagemAnterior = 0;
-  const audio = new Audio("{% static 'audio/bip.mp3' %}");
-  let tocando = false;
+  // ==============================
+  // VARIÁVEIS GLOBAIS
+  // ==============================
+  let contagemAnterior = null; // começa como null para não disparar som na primeira carga
   let intervaloAtualizacao;
-  let primeiraAtualizacao = true;
+  const audio = new Audio("{% static 'audio/bip.mp3' %}");
+  audio.preload = "auto"; // garante pré-carregamento do áudio
 
-  // Função principal para atualizar dados
-  async function atualizarDadosCompletos() {
+  // ==============================
+  // FUNÇÕES DE ATUALIZAÇÃO
+  // ==============================
+
+  // Atualiza cards e badges
+  function atualizarDashboard(dados) {
+    document.getElementById("novos").textContent = dados.novos;
+    document.getElementById("pendentes").textContent = dados.pendentes;
+    document.getElementById("atendidos").textContent = dados.atendidos;
+    document.getElementById("finalizados").textContent = dados.finalizados;
+
+    const badges = {
+      "badge-novos-count": dados.novos,
+      "badge-pendentes-count": dados.pendentes,
+      "badge-atendidos-count": dados.atendidos,
+      "badge-finalizados-count": dados.finalizados,
+    };
+
+    for (const [id, valor] of Object.entries(badges)) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = valor;
+        el.style.display = valor > 0 ? "inline-flex" : "none";
+      }
+    }
+  }
+
+  // Atualiza tabela de pedidos (HTML vindo da view)
+  async function atualizarTabelaPedidos() {
     try {
-      const response = await fetch("{% url 'transportador:dados_pedidos' %}");
-      
+      const response = await fetch("{% url 'transportador:tabela_pedidos' %}");
+
       if (response.status === 401) {
         window.location.href = "{% url 'transportador:login_transportador' %}";
         return;
       }
-      
-      if (!response.ok) throw new Error('Erro ao carregar dados');
-      
-      const dados = await response.json();
-      
-      // Atualiza os cards principais
-      document.getElementById('novos').textContent = dados.novos;
-      document.getElementById('pendentes').textContent = dados.pendentes;
-      document.getElementById('atendidos').textContent = dados.atendidos;
-      document.getElementById('finalizados').textContent = dados.finalizados;
-      
-      // Atualiza os badges do sidebar
-      atualizarBadgesSidebar(dados);
-      
-      // Restante da sua lógica (tabela, notificações, etc.)
-      if (dados.atualizar_tabela) {
-        await atualizarTabelaPedidos();
-      }
-      
-    } catch (error) {
-      console.error('Erro na atualização:', error);
-    }
-  }
+      if (!response.ok) throw new Error("Erro ao carregar tabela");
 
-  // Função específica para atualizar os badges do sidebar
-  function atualizarBadgesSidebar(dados) {
-    const badges = {
-      'badge-novos-count': dados.novos,
-      'badge-pendentes-count': dados.pendentes,
-      'badge-atendidos-count': dados.atendidos,
-      'badge-finalizados-count': dados.finalizados
-    };
-    
-    for (const [id, valor] of Object.entries(badges)) {
-      const elemento = document.getElementById(id);
-      if (elemento) {
-        elemento.textContent = valor;
-        elemento.style.display = valor > 0 ? 'inline-flex' : 'none';
-      }
-    }
-    
-  }
-
-  // Modifique sua inicialização para usar a nova função
-  document.addEventListener('DOMContentLoaded', () => {
-    feather.replace();
-    atualizarDadosCompletos();
-    intervaloAtualizacao = setInterval(atualizarDadosCompletos, 10000);
-  });
-
-  // Atualiza a tabela de pedidos
-  async function atualizarTabelaPedidos() {
-    try {
-      const response = await fetch("{% url 'transportador:tabela_pedidos' %}");
       const html = await response.text();
-      document.getElementById('tabela-pedidos-container').innerHTML = html;
+      document.getElementById("tabela-pedidos-container").innerHTML = html;
       feather.replace();
     } catch (error) {
-      console.error('Erro ao atualizar tabela:', error);
-      document.getElementById('tabela-pedidos-container').innerHTML = `
+      console.error("Erro ao atualizar tabela:", error);
+      document.getElementById("tabela-pedidos-container").innerHTML = `
         <div class="alert alert-danger">
           Erro ao carregar pedidos. Tente novamente.
         </div>
@@ -207,71 +181,105 @@
     }
   }
 
-  // Mostra notificação de novos pedidos
+  // Atualiza dados gerais e dispara notificações/som
+  async function atualizarDadosCompletos() {
+    try {
+      const response = await fetch("{% url 'transportador:dados_pedidos' %}");
+
+      if (response.status === 401) {
+        window.location.href = "{% url 'transportador:login_transportador' %}";
+        return;
+      }
+      if (!response.ok) throw new Error("Erro ao carregar dados");
+
+      const dados = await response.json();
+      console.log(dados.novos)
+      console.log(contagemAnterior)
+      // Detecta aumento de pedidos novos
+    if (contagemAnterior !== null && dados.novos > contagemAnterior) {
+      const novosPedidos = dados.novos - contagemAnterior;
+      mostrarNotificacao(novosPedidos);
+
+        audio.currentTime = 0; // reinicia áudio sempre
+        audio.play().catch(err =>
+          console.warn("Erro ao reproduzir áudio:", err)
+        );
+      }
+      contagemAnterior = dados.novos;
+
+      // Atualiza interface
+      atualizarDashboard(dados);
+      await atualizarTabelaPedidos();
+
+    } catch (error) {
+      console.error("Erro na atualização:", error);
+    }
+  }
+
+  // ==============================
+  // NOTIFICAÇÕES
+  // ==============================
   function mostrarNotificacao(quantidade) {
-    const notification = document.createElement('div');
-    notification.className = 'toast-notification';
+    const notification = document.createElement("div");
+    notification.className = "toast-notification";
     notification.innerHTML = `
       <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header bg-primary text-white">
           <strong class="me-auto">Novo(s) Pedido(s)</strong>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close" onclick="this.parentElement.parentElement.remove()"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+            aria-label="Close" onclick="this.closest('.toast-notification').remove()"></button>
         </div>
         <div class="toast-body">
           Você tem ${quantidade} novo(s) pedido(s)!
         </div>
       </div>
     `;
-    
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 5000);
   }
 
-  // Atualização manual
-  function atualizarDadosManual() {
-    // Desativa o áudio temporariamente para atualizações manuais
-    const audioOriginal = audio;
-    audio = new Audio(); // Audio vazio
-    
-    atualizarDados().finally(() => {
-      audio = audioOriginal; // Restaura o áudio original
-    });
-    
-    // Feedback visual
+  // ==============================
+  // INTERAÇÕES
+  // ==============================
+  function atualizarDadosManual(event) {
     const btn = event.currentTarget;
-    btn.innerHTML = '<span data-feather="refresh-cw" class="spin"></span> Atualizando...';
+    const originalHtml = btn.innerHTML;
+
+    btn.innerHTML =
+      '<span data-feather="refresh-cw" class="spin"></span> Atualizando...';
     feather.replace();
-    setTimeout(() => {
-      btn.innerHTML = '<span data-feather="refresh-cw"></span> Atualizar';
-      feather.replace();
-    }, 1000);
+
+    atualizarDadosCompletos().finally(() => {
+      setTimeout(() => {
+        btn.innerHTML = originalHtml;
+        feather.replace();
+      }, 1000);
+    });
   }
 
-  // Parar o som de notificação
-  function pararBipe() {
-    audio.pause();
-    audio.currentTime = 0;
-    tocando = false;
-  }
+  // ==============================
+  // INICIALIZAÇÃO
+  // ==============================
+  document.addEventListener("DOMContentLoaded", () => {
+    feather.replace();
 
-  // Inicialização
-  document.addEventListener('DOMContentLoaded', () => {
-    // Primeira atualização não toca áudio
-    primeiraAtualizacao = true;
-    atualizarDados();
-    
-    // Configura atualização periódica
-    intervaloAtualizacao = setInterval(atualizarDados, 10000);
+    // Primeira atualização
+    atualizarDadosCompletos();
+
+    // Atualização periódica (10s)
+    intervaloAtualizacao = setInterval(atualizarDadosCompletos, 10000);
   });
 
-  // Pausa atualizações quando a página não está visível
-  document.addEventListener('visibilitychange', () => {
+  // Pausa/retoma quando aba perde foco
+  document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       clearInterval(intervaloAtualizacao);
     } else {
-      atualizarDados();
-      intervaloAtualizacao = setInterval(atualizarDados, 10000);
+      atualizarDadosCompletos();
+      intervaloAtualizacao = setInterval(atualizarDadosCompletos, 10000);
     }
   });
 </script>
+
+
 {% endblock %}

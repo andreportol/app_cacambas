@@ -1,41 +1,12 @@
-<style>
-/* Define um tamanho fixo para todos os badges */
-.badge-status {
-  width: 100px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border-radius: 4px;
-}
-
-/* Cores específicas para cada status */
-.badge-novo {
-  background-color: #0dcaf0;
-  color: white;
-}
-
-.badge-pendente {
-  background-color: #dc3545;
-  color: white;
-}
-
-.badge-atendido {
-  background-color: #ffc107;
-  color: black;
-}
-
-.badge-finalizado {
-  background-color: #198754;
-  color: white;
-}
-</style>
-
-<div class="table-responsive">  <!-- Adicione esta div wrapper -->
+<div class="table-responsive">
+  {% if not pedidos %}
+  <div class="alert alert-info mb-3">
+    Aguarde! Nenhum pedido encontrado.
+  </div>
+  {% endif %}
+  
   <table class="table table-striped table-hover">
-    <thead class="table-light">  <!-- Adicione table-light para o cabeçalho -->
+    <thead class="table-light">
       <tr>
         <th>Nº Pedido</th>
         <th>Produto</th>
@@ -70,7 +41,3 @@
     </tbody>
   </table>
 </div>
-
-{% if not pedidos %}
-  <div class="alert alert-info">Nenhum pedido "NOVO" recebido.</div>
-{% endif %}
