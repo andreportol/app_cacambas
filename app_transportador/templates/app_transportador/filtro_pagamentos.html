@@ -1,0 +1,33 @@
+{% load static %}
+<body>
+    <table class="table table-primary table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Pedido</th>
+                <th>Valor Recebido</th>
+                <th>Valor a Repassar</th>
+                <th>Status</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            {% with pagamento=pedido.pagamento %}
+            <tr>
+                <td>#{{ pedido.numero_pedido }}</td>
+                <td>R$ {{ pagamento.valor|floatformat:2 }}</td>     
+                <td>R$ {{ pagamento.total_a_repassar|floatformat:2 }}</td>                           
+                <td>
+                    <span class="badge {% if pagamento.status == 'CONCLUIDO' %}bg-success{% elif pagamento.status == 'AGUARDANDO' %}bg-warning{% else %}bg-danger{% endif %}">
+                        {{ pagamento.get_status_display }}
+                    </span>
+                </td>
+                <td>{{ pagamento.criado|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+        </tbody>
+    </table>    
+
+</body>
+</html>

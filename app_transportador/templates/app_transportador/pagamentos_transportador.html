@@ -174,7 +174,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="get" class="row g-3">
+                <form method="get" class="row g-3" action="{% url 'transportador:filtro_pagamentos' %}">
                     <div class="col-12">
                         <label class="form-label">Status</label>
                         <select name="status_pedido" class="form-select bg-secondary text-white">

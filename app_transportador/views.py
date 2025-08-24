@@ -448,4 +448,19 @@ class ConfirmarPagamento(FormView):
         """
         return self.post(request, *args, **kwargs)
 
+# criando a função para uso do filtro no template de pagamento
+def filtro_pagamentos(request):
+    # pega todos os pedidos
+    pedidos = Pedido.objects.all().select_related('pagamento')
 
+    # Na requisição pega o status enviado pelo modal
+    status_pagamento = request.GET.get('status_pedido')
+
+    if status_pagamento:
+        # filtra pedidos que tenham pagamento com o status escolhido
+        pedidos = pedidos.filter(pagamento__status=status_pagamento)
+
+    context = {
+        'pedidos': pedidos
+    }
+    return render(request, 'app_transportador/filtro_pagamentos.html', context)

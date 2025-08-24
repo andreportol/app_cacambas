@@ -14,6 +14,7 @@ from .views import (
     Regulamentos,
     PagamentosPedidos,
     ConfirmarPagamento,
+    filtro_pagamentos,
 )
 
 
@@ -33,4 +34,5 @@ urlpatterns = [
     path('regulamentos/', Regulamentos.as_view(), name='regulamentos'),
     path('pagamentos/', PagamentosPedidos.as_view(), name='pagamentos_pedidos'),
     path('pagamentos/confirmar/<int:pagamento_id>/', ConfirmarPagamento.as_view(), name='confirmar_pagamento'),
+    path('filtro_pagamentos/', filtro_pagamentos, name='filtro_pagamentos'),
 ]
