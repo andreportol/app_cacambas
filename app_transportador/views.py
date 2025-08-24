@@ -367,22 +367,18 @@ class PagamentosPedidos(TemplateView):
         return context
 
     def _calcular_estatisticas(self, pedidos):
-        """
-        Calcula totais e separa pendentes e concluídos.
-        Considera o objeto Pagamento associado a cada pedido.
-        """
         pagamentos = [getattr(pedido, 'pagamento', None) for pedido in pedidos if hasattr(pedido, 'pagamento')]
+        
         pagamentos_pendentes = [p for p in pagamentos if p and p.status == 'PENDENTE']
         pagamentos_aguardados = [p for p in pagamentos if p and p.status == 'AGUARDANDO']
         pagamentos_concluidos = [p for p in pagamentos if p and p.status == 'CONCLUIDO']
-       
-        from decimal import Decimal
-        # todos os pagamentos recebidos pelo transportador na variavel 'pagamentos'
-        total_recebido = sum(p.valor for p in pagamentos)
-        #todos os pagamentos pendentes
-        porcentagem = Decimal(0.07) # 7% do valor recebido 
-        total_a_repassar = (sum(p.valor for p in pagamentos_pendentes)) * porcentagem
-        
+
+        # Total recebido (soma de todos os pagamentos)
+        total_recebido = sum((p.valor for p in pagamentos if p), 0)
+
+        # Total a repassar (soma das comissões dos pagamentos pendentes)
+        total_a_repassar = sum((p.comissao for p in pagamentos_pendentes if p.comissao), 0)
+
         return {
             'pagamentos_pendentes': pagamentos_pendentes,
             'pagamentos_aguardados': pagamentos_aguardados,
@@ -390,6 +386,7 @@ class PagamentosPedidos(TemplateView):
             'total_recebido': total_recebido,
             'total_a_repassar': total_a_repassar,
         }
+
 
     def _estatisticas_vazias(self):
         return {
@@ -450,3 +447,5 @@ class ConfirmarPagamento(FormView):
         sem precisar exibir um formulário real.
         """
         return self.post(request, *args, **kwargs)
+
+

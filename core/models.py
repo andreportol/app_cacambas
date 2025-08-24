@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models 
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.models import User
@@ -204,6 +205,7 @@ class Pagamento(Base):
     status = models.CharField(max_length=10, choices=STATUS_PAGAMENTO_CHOICES, default='PENDENTE')
     metodo = models.CharField(max_length=10, choices=METODO_PAGAMENTO_CHOICES)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
+    comissao = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     confirmado_por = models.ForeignKey(
         User, 
         on_delete=models.SET_NULL, 
@@ -220,3 +222,14 @@ class Pagamento(Base):
     
     def __str__(self):
         return f'Pagamento #{self.id} - {self.pedido.numero_pedido}'
+
+    
+    def save(self, *args, **kwargs):
+        # Se a comissão ainda não foi definida, calcula com a regra vigente
+        if self.comissao is None:
+            self.comissao = self.valor * Decimal("0.07")  # aqui você fixa a % atual
+        super().save(*args, **kwargs)
+
+    @property
+    def total_a_repassar(self):
+        return self.comissao

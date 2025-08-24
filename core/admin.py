@@ -86,7 +86,7 @@ class PedidoAdmin(admin.ModelAdmin):
 
 @admin.register(Pagamento)
 class PagamentoAdmin(admin.ModelAdmin):
-    list_display = ['pedido', 'status', 'metodo', 'valor', 'confirmado_por', 'criado']
+    list_display = ['pedido', 'status', 'metodo', 'valor','comissao', 'confirmado_por', 'criado']
     list_filter = ['status', 'metodo', 'criado']
     ordering = ['criado', '-pedido__numero_pedido']
     search_fields = ['pedido__numero_pedido']
@@ -95,7 +95,7 @@ class PagamentoAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Status Pagamento', {
-            'fields': ('pedido', 'status', 'metodo', 'valor')
+            'fields': ('pedido', 'status', 'metodo', 'valor', 'comissao')
         }),
         ('Comprovante', {
             'fields': ('comprovante', 'observacoes'),
