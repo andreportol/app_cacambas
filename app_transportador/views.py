@@ -448,19 +448,33 @@ class ConfirmarPagamento(FormView):
         """
         return self.post(request, *args, **kwargs)
 
-# criando a função para uso do filtro no template de pagamento
+
 def filtro_pagamentos(request):
-    # pega todos os pedidos
-    pedidos = Pedido.objects.all().select_related('pagamento')
+    # Recupera transportador da sessão
+    transportador_id = request.session.get('transportador_id')
+    if not transportador_id:
+        return render(request, 'app_transportador/erro.html', {
+            'mensagem': 'Nenhum transportador selecionado.'
+        })
 
-    # Na requisição pega o status enviado pelo modal
-    status_pagamento = request.GET.get('status_pedido')
-
+    
+    transportador = get_object_or_404(Transportador, id=transportador_id)
+    
+    # Filtra sempre pelo transportador
+    pedidos = Pedido.objects.filter(
+            transportador=transportador,
+            status_pedido__in = ['ATENDIDO','FINALIZADO']
+            ).select_related('pagamento')
+       
+    # Captura status vindo do modal
+    status_pagamento = request.GET.get('status_pagamento')
+    
     if status_pagamento:
-        # filtra pedidos que tenham pagamento com o status escolhido
+        # restringe mais ainda pelo status
         pedidos = pedidos.filter(pagamento__status=status_pagamento)
-
+        
     context = {
-        'pedidos': pedidos
+        'pedidos': pedidos,
+        'status_pagamento': status_pagamento
     }
-    return render(request, 'app_transportador/filtro_pagamentos.html', context)
+    return render(request, 'app_transportador/pagamentos_transportador_filtrado.html', context)

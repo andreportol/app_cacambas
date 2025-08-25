@@ -1,0 +1,69 @@
+{% extends 'app_transportador/base_transportador.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Título -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white mb-0">
+            <i data-feather="filter" class="me-2"></i> Pagamentos Filtrados
+        </h2>
+        <a href="{% url 'transportador:index_transportador' %}" class="btn btn-warning">
+            <i data-feather="arrow-left" class="me-1"></i> Voltar
+        </a>
+    </div>
+
+    <!-- Card com Tabela -->
+    <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead class="bg-gradient text-uppercase small text-secondary">
+                        <tr>
+                            <th class="px-3 py-3">Pedido</th>
+                            <th class="px-3 py-3">Valor Recebido</th>
+                            <th class="px-3 py-3">Valor a Repassar</th>
+                            <th class="px-3 py-3">Status</th>
+                            <th class="px-3 py-3">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pedido in pedidos %}
+                        {% with pagamento=pedido.pagamento %}
+                        <tr>
+                            <td class="fw-bold text-info">#{{ pedido.numero_pedido }}</td>
+                            <td>R$ {{ pagamento.valor|floatformat:2 }}</td>     
+                            <td class="text-warning">R$ {{ pagamento.total_a_repassar|floatformat:2 }}</td>                           
+                            <td>
+                                <span class="badge px-3 py-2 fs-6 
+                                    {% if pagamento.status == 'CONCLUIDO' %}bg-success
+                                    {% elif pagamento.status == 'AGUARDANDO' %}bg-warning text-dark
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ pagamento.get_status_display }}
+                                </span>
+                            </td>
+                            <td>{{ pagamento.criado|date:"d/m/Y H:i" }}</td>
+                        </tr>
+                        {% endwith %}
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i data-feather="inbox" class="mb-2" style="width:32px; height:32px;"></i>
+                                <p class="mb-0">Nenhum pagamento encontrado.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Ativar ícones Feather -->
+<script>
+    feather.replace()
+</script>
+{% endblock %}

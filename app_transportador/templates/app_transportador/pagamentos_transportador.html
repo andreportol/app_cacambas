@@ -121,29 +121,6 @@
                                     {% endif %}
                                 </td>
                             </tr>
-
-                            <!-- Modal único para cada pagamento -->
-                            <div class="modal fade" id="confirmarPagamentoModal{{ pagamento.id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content bg-dark text-white">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Confirmar Pagamento</h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Confirmar pagamento do Pedido #{{ pedido.numero_pedido }}?</p>
-                                            <p><strong>Valor:</strong> R$ {{ total_a_repassar|floatformat:2 }}</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <form method="post" action="{% url 'transportador:confirmar_pagamento' pagamento.id %}">
-                                                {% csrf_token %}
-                                                <button type="submit" class="btn btn-success">Confirmar Pagamento</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             {% endwith %}
                             {% empty %}
                             <tr>
@@ -177,11 +154,11 @@
                 <form method="get" class="row g-3" action="{% url 'transportador:filtro_pagamentos' %}">
                     <div class="col-12">
                         <label class="form-label">Status</label>
-                        <select name="status_pedido" class="form-select bg-secondary text-white">
+                        <select name="status_pagamento" class="form-select bg-secondary text-white">
                             <option value="">Todos</option>
-                            <option value="PENDENTE" {% if request.GET.status_pedido == 'PENDENTE' %}selected{% endif %}>Pendente</option>
-                            <option value="CONCLUIDO" {% if request.GET.status_pedido == 'CONCLUIDO' %}selected{% endif %}>Concluído</option>
-                            <option value="CANCELADO" {% if request.GET.status_pedido == 'CANCELADO' %}selected{% endif %}>Cancelado</option>
+                            <option value="PENDENTE" {% if request.GET.status_pagamento == 'PENDENTE' %}selected{% endif %}>Pendente</option>
+                            <option value="CONCLUIDO" {% if request.GET.status_pagamento == 'CONCLUIDO' %}selected{% endif %}>Concluído</option>
+                            <option value="CANCELADO" {% if request.GET.status_pagamento == 'CANCELADO' %}selected{% endif %}>Cancelado</option>
                         </select>
                     </div>
                     
