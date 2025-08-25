@@ -86,10 +86,10 @@ class PedidoAdmin(admin.ModelAdmin):
 
 @admin.register(Pagamento)
 class PagamentoAdmin(admin.ModelAdmin):
-    list_display = ['pedido', 'status', 'metodo', 'valor','comissao', 'confirmado_por', 'criado']
-    list_filter = ['status', 'metodo', 'criado']
+    list_display = ['pedido', 'get_transportador', 'status', 'metodo', 'valor', 'comissao', 'confirmado_por', 'criado']
+    list_filter = ['status', 'metodo', 'criado', 'pedido__transportador']
     ordering = ['criado', '-pedido__numero_pedido']
-    search_fields = ['pedido__numero_pedido']
+    search_fields = ['pedido__numero_pedido', 'pedido__transportador__nome']
     readonly_fields = ['criado', 'modificado', 'confirmado_por']  # Campos somente leitura
     date_hierarchy = 'criado'  # Navegação por data de criação
     
@@ -106,7 +106,12 @@ class PagamentoAdmin(admin.ModelAdmin):
             'classes': ('collapse',)  # Colapsável para economizar espaço
         }),
     )
-    
+
+    def get_transportador(self, obj):
+        return obj.pedido.transportador  # Busca direto no pedido
+    get_transportador.short_description = 'Transportador'
+    get_transportador.admin_order_field = 'pedido__transportador'
+
     def save_model(self, request, obj, form, change):
         if obj.status == 'CONCLUIDO' and not obj.confirmado_por:
             obj.confirmado_por = request.user
